@@ -6,7 +6,11 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "node --loader ts-node/esm prisma/seed.ts || npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "6.4.1",
