@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: eshetu_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword2026!
+      POSTGRES_DB: eshetu_melese_portal
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - eshetu_network
+
+  # Next.js Application & CMS
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eshetu_app
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgrespassword2026!@postgres:5432/eshetu_melese_portal?schema=public"
+      NEXT_PUBLIC_SITE_URL: "http://localhost:3000"
+      JWT_SECRET: "eshetu_super_secret_jwt_key_2026_change_in_production_min32chars"
+      ADMIN_EMAIL: "admin@eshetumelese.com"
+      ADMIN_PASSWORD: "AdminPassword2026!"
+      STORAGE_PROVIDER: "local"
+    ports:
+      - "3000:3000"
+    volumes:
+      - app_uploads:/app/public/uploads
+    networks:
+      - eshetu_network
+
+volumes:
+  postgres_data:
+  app_uploads:
+
+networks:
+  eshetu_network:
+    driver: bridge

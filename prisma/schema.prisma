@@ -1,0 +1,177 @@
+// Prisma Schema for Eshetu Melese Member Portal & CMS
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum RoleType {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum MemberStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+model User {
+  id            String     @id @default(uuid())
+  email         String     @unique
+  name          String
+  passwordHash  String
+  role          RoleType   @default(VIEWER)
+  isActive      Boolean    @default(true)
+  lastLogin     DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  auditLogs     AuditLog[]
+  contentEdits  SiteContent[] @relation("ContentUpdater")
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  permissions Json     // List of permission keys: ["members:view", "members:approve", "cms:edit", etc.]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tier {
+  id                String         @id @default(uuid())
+  name              String         @unique
+  priceEtb          Float          @default(0)
+  priceUsd          Float          @default(0)
+  currency          String         @default("ETB")
+  description       String
+  perks             Json           // Array of perk strings
+  badgeColor        String         @default("#E5A93C") // Primary accent for tier badge
+  templateImageUrl  String?        // Base template background image
+  layoutConfig      Json?          // Dynamic fields configuration
+  aspectRatio       String         @default("85.60:53.98")
+  displayOrder      Int            @default(0)
+  isActive          Boolean        @default(true)
+  isFeatured        Boolean        @default(false)
+  ctaText           String         @default("Register for Tier")
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  members           Member[]
+  cardTemplates     CardTemplate[]
+}
+
+model Member {
+  id                 String       @id @default(uuid())
+  membershipCode     String       @unique // e.g., EM-2026-0001
+  fullName           String
+  country            String       @default("Ethiopia")
+  countryCode        String       @default("+251")
+  phoneNumber        String
+  normalizedPhone    String       @unique // +251911234567 for fast lookups & duplicate detection
+  email              String?
+  photoUrl           String?
+  tierId             String
+  tier               Tier         @relation(fields: [tierId], references: [id])
+  paymentMethod      String       // Telebirr, CBE Birr, Awash Bank, Bank Transfer, Stripe, PayPal, Cash
+  paymentReference   String
+  paymentReceiptUrl  String?      // JPG, PNG, PDF receipt path
+  status             MemberStatus @default(PENDING)
+  rejectionReason    String?
+  generatedBadgeUrl  String?      // Stored high-res badge image
+  badgeGeneratedAt   DateTime?
+  approvedAt         DateTime?
+  isDeleted          Boolean      @default(false)
+  deletedAt          DateTime?
+  deletedBy          String?
+  notionPageId       String?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  @@index([normalizedPhone])
+  @@index([membershipCode])
+  @@index([status])
+}
+
+model SiteContent {
+  id           String   @id @default(uuid())
+  key          String   @unique // e.g., "hero.headline", "footer.copyright"
+  contentType  String   @default("text") // text, html, image, json, link
+  value        String
+  page         String   @default("home")
+  section      String   @default("global")
+  displayOrder Int      @default(0)
+  isVisible    Boolean  @default(true)
+  updatedBy    String?
+  updater      User?    @relation("ContentUpdater", fields: [updatedBy], references: [id])
+  updatedAt    DateTime @updatedAt
+}
+
+model SiteSection {
+  id            String   @id @default(uuid())
+  page          String   @default("home")
+  sectionType   String   // hero, benefits, tiers, how_it_works, card_showcase, stats, testimonials, faq, cta, social_footer
+  title         String
+  configuration Json     // Flexible content & style configuration
+  displayOrder  Int      @default(0)
+  isVisible     Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([displayOrder])
+}
+
+model Theme {
+  id            String   @id @default(uuid())
+  name          String   @unique
+  configuration Json     // Colors, typography, spacing, border radius, shadows
+  isActive      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model CardTemplate {
+  id           String   @id @default(uuid())
+  tierId       String
+  tier         Tier     @relation(fields: [tierId], references: [id], onDelete: Cascade)
+  name         String
+  baseDesignUrl String?
+  width        Int      @default(1050)
+  height       Int      @default(600)
+  aspectRatio  String   @default("85.60:53.98")
+  layoutConfig Json     // Array of draggable dynamic fields: name, id, photo, qr, tier, barcode, dates, fonts, styles
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  action     String   // e.g., "MEMBER_APPROVED", "TIER_PRICE_CHANGED", "SECTION_REORDERED"
+  entityType String   // Member, Tier, SiteSection, SiteContent, Theme, User
+  entityId   String?
+  oldValue   Json?
+  newValue   Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([action])
+  @@index([createdAt])
+}
+
+model NotionSyncLog {
+  id            String   @id @default(uuid())
+  status        String   // SUCCESS, FAILED, PARTIAL
+  recordsSynced Int      @default(0)
+  errorDetails  String?
+  triggeredBy   String?
+  createdAt     DateTime @default(now())
+}
