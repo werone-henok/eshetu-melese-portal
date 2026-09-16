@@ -6,16 +6,14 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint",
-    "postinstall": "prisma generate"
+    "lint": "eslint"
   },
   "prisma": {
-    "seed": "node --loader ts-node/esm prisma/seed.ts || npx tsx prisma/seed.ts"
+    "seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "6.4.1",
     "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^13.0.3",
     "canvas": "^3.2.3",
     "clsx": "^2.1.1",
     "framer-motion": "^13.2.0",
