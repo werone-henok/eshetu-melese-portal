@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { enforceAuth, createAuditLog } from '@/lib/auth';
 
-export const DEFAULT_BRANDING = {
+const DEFAULT_BRANDING = {
   siteName: 'ESHETU MELESE',
   siteNameAm: 'እሸቱ መለሰ',
   tagline: 'Official Member Portal',
