@@ -15,6 +15,8 @@ import {
   Loader2,
   CheckCircle2,
   Trash2,
+  Plus,
+  Share2,
 } from 'lucide-react';
 
 export default function SectionBuilderPage() {
@@ -181,15 +183,99 @@ export default function SectionBuilderPage() {
           </div>
 
           {canEdit && (
-            <button
-              type="button"
-              disabled={saving}
-              onClick={handleSaveOrder}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50"
-            >
-              {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              <span>{savedSuccess ? 'Published to Public Site!' : 'Save & Publish Order'}</span>
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    const res = await fetch('/api/cms/sections', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        sectionType: 'socials',
+                        title: 'Official Social Media & Reach',
+                        displayOrder: 2,
+                        isVisible: true,
+                        configuration: {
+                          heading: 'Official Social Communities & Follower Reach',
+                          headingAm: 'ይፋዊ የማህበራዊ ሚዲያ ገጾች እና ተከታዮች',
+                          subheading: 'Join over 3.2M+ supporters across official YouTube, Telegram, TikTok, and Facebook communities.',
+                          subheadingAm: 'በመላው ዓለም ከ 3.2M+ በላይ ተከታዮች ጋር በቀጥታ ይገናኙ፤ በሁሉም ማህበራዊ አውታሮች ቤተሰብ ይሁኑ።',
+                          socials: [
+                            {
+                              platform: 'youtube',
+                              name: 'YouTube',
+                              nameAm: 'ዩቲዩብ',
+                              handle: '@eshetumelese',
+                              count: '3.2M+',
+                              countLabel: 'Subscribers',
+                              countLabelAm: 'ተመዝጋቢዎች',
+                              url: 'https://youtube.com/@eshetumelese',
+                              color: '#FF0000',
+                            },
+                            {
+                              platform: 'telegram',
+                              name: 'Telegram',
+                              nameAm: 'ቴሌግራም',
+                              handle: 't.me/eshetumelese',
+                              count: '480K+',
+                              countLabel: 'Channel Members',
+                              countLabelAm: 'የቻናል አባላት',
+                              url: 'https://t.me/eshetumelese',
+                              color: '#229ED9',
+                            },
+                            {
+                              platform: 'tiktok',
+                              name: 'TikTok',
+                              nameAm: 'ቲክቶክ',
+                              handle: '@eshetumelese',
+                              count: '1.8M+',
+                              countLabel: 'Followers',
+                              countLabelAm: 'ተከታዮች',
+                              url: 'https://tiktok.com/@eshetumelese',
+                              color: '#FE2C55',
+                            },
+                            {
+                              platform: 'facebook',
+                              name: 'Facebook',
+                              nameAm: 'ፌስቡክ',
+                              handle: 'facebook.com/eshetumelese',
+                              count: '1.2M+',
+                              countLabel: 'Followers',
+                              countLabelAm: 'ተከታዮች',
+                              url: 'https://facebook.com/eshetumelese',
+                              color: '#1877F2',
+                            },
+                          ],
+                        },
+                      }),
+                    });
+                    if (!res.ok) {
+                      const d = await res.json();
+                      throw new Error(d.error || 'Failed to add section');
+                    }
+                    await fetchSections();
+                    alert('Socials Section added! You can now edit its follower numbers and delete the old stats section.');
+                  } catch (e: any) {
+                    alert(e.message);
+                  }
+                }}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 font-bold text-xs shadow-md transition-all cursor-pointer"
+              >
+                <Plus className="w-4 h-4" />
+                <span>+ Add Socials Section</span>
+              </button>
+
+              <button
+                type="button"
+                disabled={saving}
+                onClick={handleSaveOrder}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50"
+              >
+                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                <span>{savedSuccess ? 'Published to Public Site!' : 'Save & Publish Order'}</span>
+              </button>
+            </div>
           )}
         </div>
 
