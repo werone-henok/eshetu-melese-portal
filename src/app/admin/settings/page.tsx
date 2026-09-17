@@ -432,6 +432,59 @@ export default function GeneralSettingsPage() {
                   )}
                 </div>
               </div>
+
+              {/* Payment Accounts & Registration Instructions */}
+              <div className="p-6 sm:p-7 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-5">
+                <div className="flex items-center gap-2 pb-3 border-b border-slate-800 text-sm font-bold text-slate-100">
+                  <ShieldCheck className="w-4 h-4 text-amber-500" />
+                  <span>Registration Payment Accounts & Instructions</span>
+                </div>
+                <p className="text-xs text-slate-400">
+                  This instruction appears prominently on the registration page to inform members where to transfer/deposit their membership fee (e.g. Commercial Bank of Ethiopia, Telebirr, Awash, etc.).
+                </p>
+
+                <div className="space-y-4 text-xs">
+                  {/* Amharic Payment Instruction */}
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">
+                      የክፍያ መመሪያ እና የባንክ/ቴሌብር ቁጥሮች (Amharic)
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={form.paymentInstructionsAm || ''}
+                      onChange={(e) => setForm((prev) => ({ ...prev, paymentInstructionsAm: e.target.value }))}
+                      placeholder="እባክዎ የአባልነት መዋጮ ክፍያዎን በኢትዮጵያ ንግድ ባንክ (CBE) ሂሳብ ቁጥር፡ 1000... ወይም በቴሌብር..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 text-xs focus:outline-none focus:border-amber-400 leading-relaxed font-sans"
+                    />
+                  </div>
+
+                  {/* English Payment Instruction */}
+                  <div>
+                    <label className="block font-bold text-slate-300 mb-1">
+                      Payment Instructions & Bank/Telebirr Details (English)
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={form.paymentInstructions || ''}
+                      onChange={(e) => setForm((prev) => ({ ...prev, paymentInstructions: e.target.value }))}
+                      placeholder="Please deposit the membership fee via Commercial Bank of Ethiopia (CBE): 1000... or Telebirr: 0911..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 text-xs focus:outline-none focus:border-amber-400 leading-relaxed font-sans"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-800 flex items-center justify-end">
+                  {canEdit && (
+                    <button
+                      type="submit"
+                      disabled={saving}
+                      className="px-6 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition-all disabled:opacity-50"
+                    >
+                      {saving ? 'Saving...' : 'Save Payment Instructions'}
+                    </button>
+                  )}
+                </div>
+              </div>
             </form>
           </div>
 

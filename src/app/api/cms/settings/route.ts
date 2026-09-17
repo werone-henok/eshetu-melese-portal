@@ -9,6 +9,8 @@ const DEFAULT_BRANDING = {
   taglineAm: 'ይፋዊ የአባላት ፖርታል',
   logoUrl: '',
   faviconUrl: '',
+  paymentInstructions: 'Please deposit the membership fee via Commercial Bank of Ethiopia (CBE): 1000234567890 (Eshetu Melese) or Telebirr: 0911234567. Then upload your deposit receipt or transfer screenshot below.',
+  paymentInstructionsAm: 'እባክዎ የአባልነት መዋጮ ክፍያዎን በኢትዮጵያ ንግድ ባንክ (CBE) ሂሳብ ቁጥር፡ 1000234567890 (እሸቱ መለሰ) ወይም በቴሌብር (Telebirr) ቁጥር፡ 0911234567 ገቢ ያድርጉ። በመቀጠል የደረሰኙን ስክሪንሾት ወይም ፎቶ ከዚህ በታች ያያይዙ።',
 };
 
 // GET current branding (Public)
@@ -46,7 +48,16 @@ export async function PUT(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { siteName, siteNameAm, tagline, taglineAm, logoUrl, faviconUrl } = body;
+    const {
+      siteName,
+      siteNameAm,
+      tagline,
+      taglineAm,
+      logoUrl,
+      faviconUrl,
+      paymentInstructions,
+      paymentInstructionsAm,
+    } = body;
 
     const newBranding = {
       siteName: siteName?.trim() || DEFAULT_BRANDING.siteName,
@@ -55,6 +66,8 @@ export async function PUT(req: NextRequest) {
       taglineAm: taglineAm?.trim() || DEFAULT_BRANDING.taglineAm,
       logoUrl: logoUrl !== undefined ? logoUrl : '',
       faviconUrl: faviconUrl !== undefined ? faviconUrl : '',
+      paymentInstructions: paymentInstructions !== undefined ? paymentInstructions : DEFAULT_BRANDING.paymentInstructions,
+      paymentInstructionsAm: paymentInstructionsAm !== undefined ? paymentInstructionsAm : DEFAULT_BRANDING.paymentInstructionsAm,
     };
 
     const record = await prisma.siteContent.upsert({

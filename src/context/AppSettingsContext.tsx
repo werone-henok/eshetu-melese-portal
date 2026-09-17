@@ -12,6 +12,8 @@ export interface SiteBranding {
   taglineAm: string;
   logoUrl: string;
   faviconUrl: string;
+  paymentInstructions?: string;
+  paymentInstructionsAm?: string;
 }
 
 export const DEFAULT_BRANDING: SiteBranding = {
@@ -21,6 +23,8 @@ export const DEFAULT_BRANDING: SiteBranding = {
   taglineAm: 'ይፋዊ የአባላት ፖርታል',
   logoUrl: '',
   faviconUrl: '',
+  paymentInstructions: 'Please deposit the membership fee via Commercial Bank of Ethiopia (CBE): 1000234567890 (Eshetu Melese) or Telebirr: 0911234567. Then upload your deposit receipt or transfer screenshot below.',
+  paymentInstructionsAm: 'እባክዎ የአባልነት መዋጮ ክፍያዎን በኢትዮጵያ ንግድ ባንክ (CBE) ሂሳብ ቁጥር፡ 1000234567890 (እሸቱ መለሰ) ወይም በቴሌብር (Telebirr) ቁጥር፡ 0911234567 ገቢ ያድርጉ። በመቀጠል የደረሰኙን ስክሪንሾት ወይም ፎቶ ከዚህ በታች ያያይዙ።',
 };
 
 interface AppSettingsContextType {

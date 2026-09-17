@@ -9,7 +9,7 @@ import { CheckCircle, Upload, ShieldCheck, AlertCircle, ArrowRight, Loader2 } fr
 import { useAppSettings } from '@/context/AppSettingsContext';
 
 function RegisterForm() {
-  const { lang, t } = useAppSettings();
+  const { lang, branding, t } = useAppSettings();
   const searchParams = useSearchParams();
   const router = useRouter();
   const preselectedTier = searchParams.get('tier');
@@ -255,38 +255,18 @@ function RegisterForm() {
           />
         </div>
 
-        {/* Payment Method & Reference */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
-              {lang === 'am' ? 'የክፍያ ዘዴ' : 'Payment Method'} <span className="text-amber-400">*</span>
-            </label>
-            <select
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-amber-400"
-            >
-              <option value="Telebirr">{lang === 'am' ? 'ቴሌብር (Telebirr)' : 'Telebirr (Ethiopia)'}</option>
-              <option value="CBE Birr">{lang === 'am' ? 'የኢትዮጵያ ንግድ ባንክ (CBE Birr)' : 'Commercial Bank of Ethiopia (CBE)'}</option>
-              <option value="Awash Bank">{lang === 'am' ? 'አዋሽ ባንክ (Awash Bank)' : 'Awash Bank'}</option>
-              <option value="Bank of Abyssinia">{lang === 'am' ? 'አቢሲኒያ ባንክ (Bank of Abyssinia)' : 'Bank of Abyssinia'}</option>
-              <option value="International Transfer">{lang === 'am' ? 'ዓለም አቀፍ የባንክ ዝውውር / ሬሚታንስ' : 'International Wire / Remittance'}</option>
-              <option value="Other">{lang === 'am' ? 'ሌላ የባንክ ዝውውር' : 'Other Bank Transfer'}</option>
-            </select>
+        {/* Payment Account Instructions Card */}
+        <div className="p-5 sm:p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-slate-200">
+          <div className="flex items-center gap-2.5 mb-2.5 text-amber-400 font-bold text-sm">
+            <ShieldCheck className="w-5 h-5 shrink-0" />
+            <span>
+              {lang === 'am' ? 'የክፍያ መመሪያ እና የባንክ ሂሳብ ቁጥሮች' : 'Payment Instructions & Bank / Telebirr Details'}
+            </span>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
-              {lang === 'am' ? 'የግብይት መለያ ቁጥር (TxID / Ref)' : 'Payment Reference / TxID'} <span className="text-amber-400">*</span>
-            </label>
-            <input
-              type="text"
-              required
-              value={paymentReference}
-              onChange={(e) => setPaymentReference(e.target.value)}
-              placeholder="e.g. TLB-9382109384"
-              className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
-            />
+          <div className="text-xs sm:text-sm text-slate-300 whitespace-pre-line leading-relaxed font-medium">
+            {lang === 'am'
+              ? (branding.paymentInstructionsAm || branding.paymentInstructions || 'እባክዎ የአባልነት ክፍያዎን በኢትዮጵያ ንግድ ባንክ (CBE)፡ 1000234567890 ወይም በቴሌብር (Telebirr)፡ 0911234567 ገቢ ያድርጉ። በመቀጠል የደረሰኙን ስክሪንሾት ከዚህ በታች ያያይዙ።')
+              : (branding.paymentInstructions || 'Please deposit the membership fee to Commercial Bank of Ethiopia (CBE): 1000234567890 or Telebirr: 0911234567. Then upload your transfer receipt or screenshot below.')}
           </div>
         </div>
 

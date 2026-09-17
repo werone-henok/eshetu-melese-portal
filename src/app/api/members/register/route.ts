@@ -12,14 +12,18 @@ export async function POST(req: NextRequest) {
     const phoneNumber = formData.get('phoneNumber') as string;
     const email = (formData.get('email') as string) || null;
     const tierId = formData.get('tierId') as string;
-    const paymentMethod = formData.get('paymentMethod') as string;
-    const paymentReference = formData.get('paymentReference') as string;
+    const paymentMethod = (formData.get('paymentMethod') as string) || 'Direct Deposit / Telebirr';
+    const paymentReference = (formData.get('paymentReference') as string) || 'Receipt Uploaded';
 
     const receiptFile = formData.get('paymentReceipt') as File | null;
     const photoFile = formData.get('photo') as File | null;
 
-    if (!fullName || !phoneNumber || !tierId || !paymentMethod || !paymentReference) {
+    if (!fullName || !phoneNumber || !tierId) {
       return NextResponse.json({ error: 'Please provide all required registration fields.' }, { status: 400 });
+    }
+
+    if (!receiptFile || receiptFile.size === 0) {
+      return NextResponse.json({ error: 'Please upload your payment receipt or transfer screenshot.' }, { status: 400 });
     }
 
     const normalizedPhone = normalizePhoneNumber(countryCode, phoneNumber);
