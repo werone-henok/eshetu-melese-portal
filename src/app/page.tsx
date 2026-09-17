@@ -85,13 +85,18 @@ export default function HomePage() {
       <NavigationHeader />
 
       <main>
-        {sections.length > 0 ? (
+        {loading ? (
+          <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-slate-400">
+            <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+            <span className="text-xs font-mono tracking-wider text-slate-500 uppercase">Loading Official Portal...</span>
+          </div>
+        ) : sections.length > 0 ? (
           sections.map(renderSection)
         ) : (
-          // Default fallback while initial database connects
+          // Default fallback if database is empty
           <>
             <HeroSection config={{}} />
-            <StatsSection config={{}} />
+            <SocialsSection config={{}} />
             <BenefitsSection config={{}} />
             <TiersSection config={{}} tiers={tiers} />
             <HowItWorksSection config={{}} />
