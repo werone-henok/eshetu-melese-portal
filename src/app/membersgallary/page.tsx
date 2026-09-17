@@ -7,6 +7,7 @@ import {
   Search,
   ShieldCheck,
   Download,
+  Printer,
   Share2,
   AlertCircle,
   Loader2,
@@ -15,6 +16,7 @@ import {
   Users,
   Filter,
   Sparkles,
+  Check,
 } from 'lucide-react';
 import Link from 'next/link';
 import { DigitalCardCanvas } from '@/components/cards/DigitalCardCanvas';
@@ -30,6 +32,146 @@ function GalleryContent() {
   const [members, setMembers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
+  const [downloadingCode, setDownloadingCode] = useState<string | null>(null);
+  const [printingCode, setPrintingCode] = useState<string | null>(null);
+
+  // Download Card as High-Res PNG
+  const handleDownloadCard = async (member: any) => {
+    setDownloadingCode(member.membershipCode);
+    try {
+      if (member.generatedBadgeUrl) {
+        // Direct download
+        const a = document.createElement('a');
+        a.href = member.generatedBadgeUrl;
+        a.download = `Eshetu-Melese-Card-${member.membershipCode}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        // Navigate or open card detail where high-res render is available
+        window.open(`/card/${member.membershipCode}`, '_blank');
+      }
+    } catch (e) {
+      console.error('Download failed:', e);
+      window.open(`/card/${member.membershipCode}`, '_blank');
+    } finally {
+      setTimeout(() => setDownloadingCode(null), 1000);
+    }
+  };
+
+  // Print Card Directly
+  const handlePrintCard = (member: any) => {
+    setPrintingCode(member.membershipCode);
+    try {
+      const cardEl = document.getElementById(`gallery-card-${member.membershipCode}`);
+      const printWindow = window.open('', '_blank', 'width=800,height=600');
+      if (!printWindow) {
+        window.print();
+        return;
+      }
+
+      const cardHtml = cardEl ? cardEl.outerHTML : '';
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Official Digital Card - ${member.fullName} (${member.membershipCode})</title>
+            <style>
+              @page {
+                size: auto;
+                margin: 20mm;
+              }
+              body {
+                margin: 0;
+                padding: 20px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                background: #ffffff;
+                color: #000000;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 90vh;
+              }
+              .print-container {
+                max-width: 650px;
+                width: 100%;
+                text-align: center;
+              }
+              .header {
+                margin-bottom: 24px;
+              }
+              .header h2 {
+                margin: 0 0 6px 0;
+                font-size: 24px;
+                color: #0f172a;
+              }
+              .header p {
+                margin: 0;
+                font-size: 13px;
+                color: #64748b;
+              }
+              .card-wrapper {
+                width: 100%;
+                max-width: 580px;
+                margin: 0 auto 24px auto;
+                border-radius: 24px;
+                overflow: hidden;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+              }
+              .card-wrapper img {
+                width: 100%;
+                height: auto;
+                display: block;
+              }
+              .footer {
+                margin-top: 16px;
+                font-size: 12px;
+                color: #94a3b8;
+              }
+              @media print {
+                body {
+                  -webkit-print-color-adjust: exact;
+                  print-color-adjust: exact;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="print-container">
+              <div class="header">
+                <h2>Eshetu Melese Official Community Portal</h2>
+                <p>Verified Digital Membership Pass &bull; ${member.tierName} Tier &bull; Code: ${member.membershipCode}</p>
+              </div>
+              <div class="card-wrapper">
+                ${
+                  member.generatedBadgeUrl
+                    ? `<img src="${member.generatedBadgeUrl}" alt="${member.fullName} Pass" />`
+                    : cardHtml
+                }
+              </div>
+              <div class="footer">
+                Verified Cryptographic Badge &bull; comedianeshetu.com &bull; Scan QR Code to Verify
+              </div>
+            </div>
+            <script>
+              window.onload = function() {
+                window.focus();
+                window.print();
+                setTimeout(function() { window.close(); }, 500);
+              };
+            </script>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+    } catch (e) {
+      console.error('Print failed:', e);
+      window.print();
+    } finally {
+      setTimeout(() => setPrintingCode(null), 1000);
+    }
+  };
 
   // Fetch initial members or execute search
   const fetchMembers = async (searchTerm: string = '') => {
@@ -229,30 +371,66 @@ function GalleryContent() {
                 </div>
 
                 {/* Published Digital Card Canvas from Studio */}
-                <div className="w-full my-1">
+                <div id={`gallery-card-${member.membershipCode}`} className="w-full my-1">
                   <DigitalCardCanvas
+                    id={`canvas-el-${member.membershipCode}`}
                     member={member}
                     template={member.template}
                     fallbackImageUrl={member.generatedBadgeUrl}
                   />
                 </div>
 
-                {/* Card Footer Details & Actions */}
-                <div className="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between gap-3">
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-100 line-clamp-1">{member.fullName}</h3>
-                    <p className="font-mono text-[11px] text-amber-400 font-semibold mt-0.5">
-                      {member.membershipCode}
-                    </p>
+                {/* Card Quick Action Toolbar: Download, Print & Details */}
+                <div className="mt-5 pt-4 border-t border-slate-800/80 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-100 line-clamp-1">{member.fullName}</h3>
+                      <p className="font-mono text-[11px] text-amber-400 font-semibold mt-0.5">
+                        {member.membershipCode}
+                      </p>
+                    </div>
+
+                    <Link
+                      href={`/card/${member.membershipCode}`}
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-slate-100 font-bold text-xs transition-all shrink-0"
+                    >
+                      <span>{lang === 'am' ? 'ዝርዝር' : 'Details'}</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </Link>
                   </div>
 
-                  <Link
-                    href={`/card/${member.membershipCode}`}
-                    className="flex items-center gap-1 px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-slate-950 font-bold text-xs transition-all shrink-0"
-                  >
-                    <span>{lang === 'am' ? 'ካርድ ይመልከቱ' : 'View Pass'}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </Link>
+                  {/* Dedicated Download & Print Buttons for Each Card */}
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => handleDownloadCard(member)}
+                      disabled={downloadingCode === member.membershipCode}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md shadow-amber-500/10 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
+                      title={lang === 'am' ? 'ካርዱን አውርድ (PNG)' : 'Download Card (PNG)'}
+                    >
+                      {downloadingCode === member.membershipCode ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Download className="w-3.5 h-3.5" />
+                      )}
+                      <span>{lang === 'am' ? 'አውርድ' : 'Download'}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handlePrintCard(member)}
+                      disabled={printingCode === member.membershipCode}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-xs shadow-sm transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
+                      title={lang === 'am' ? 'ካርዱን አትም' : 'Print Card'}
+                    >
+                      {printingCode === member.membershipCode ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Printer className="w-3.5 h-3.5 text-amber-400" />
+                      )}
+                      <span>{lang === 'am' ? 'አትም' : 'Print'}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

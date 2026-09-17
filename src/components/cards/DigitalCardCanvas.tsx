@@ -29,6 +29,7 @@ interface DigitalCardCanvasProps {
   fallbackImageUrl?: string | null;
   className?: string;
   scale?: number; // scale multiplier for font and sizes if needed
+  id?: string;
 }
 
 export function DigitalCardCanvas({
@@ -36,6 +37,7 @@ export function DigitalCardCanvas({
   template,
   fallbackImageUrl,
   className = '',
+  id,
 }: DigitalCardCanvasProps) {
   const [realQrUrl, setRealQrUrl] = useState<string | null>(null);
 
@@ -91,7 +93,7 @@ export function DigitalCardCanvas({
   // If no template base design and a fallback pre-rendered image is available, we can render it or the canvas
   if (!baseDesignUrl && fallbackImageUrl && (!template?.layoutConfig || template.layoutConfig.length === 0)) {
     return (
-      <div className={`relative rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/50 ${className}`}>
+      <div id={id} className={`relative rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/50 ${className}`}>
         <img
           src={fallbackImageUrl}
           alt={`${member.fullName} Pass`}
@@ -103,6 +105,7 @@ export function DigitalCardCanvas({
 
   return (
     <div
+      id={id}
       style={{
         aspectRatio,
         width: '100%',
