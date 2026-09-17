@@ -18,22 +18,21 @@ import { SocialsSection } from '@/components/cms/SocialsSection';
 export default function HomePage() {
   const [sections, setSections] = useState<any[]>([]);
   const [tiers, setTiers] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if we have freshly cached sections in sessionStorage to render instantly without old version flash
+    // Check if we have freshly cached sections in sessionStorage or localStorage to render instantly
     try {
-      const cached = sessionStorage.getItem('eshetu_home_sections');
-      const cachedTiers = sessionStorage.getItem('eshetu_home_tiers');
+      const cached = localStorage.getItem('eshetu_home_sections') || sessionStorage.getItem('eshetu_home_sections');
+      const cachedTiers = localStorage.getItem('eshetu_home_tiers') || sessionStorage.getItem('eshetu_home_tiers');
       if (cached) {
         setSections(JSON.parse(cached));
-        setLoading(false);
       }
       if (cachedTiers) {
         setTiers(JSON.parse(cachedTiers));
       }
     } catch {}
 
+    // Background fetch to ensure fresh content without ever delaying initial paint
     async function loadData() {
       try {
         const [secRes, tierRes] = await Promise.all([
@@ -49,23 +48,25 @@ export default function HomePage() {
             }
             return s;
           });
-          setSections(cleanSections);
-          try {
-            sessionStorage.setItem('eshetu_home_sections', JSON.stringify(cleanSections));
-          } catch {}
+          if (cleanSections.length > 0) {
+            setSections(cleanSections);
+            try {
+              localStorage.setItem('eshetu_home_sections', JSON.stringify(cleanSections));
+            } catch {}
+          }
         }
 
         if (tierRes.ok) {
           const tierData = await tierRes.json();
-          setTiers(tierData.tiers || []);
-          try {
-            sessionStorage.setItem('eshetu_home_tiers', JSON.stringify(tierData.tiers || []));
-          } catch {}
+          if (tierData.tiers && tierData.tiers.length > 0) {
+            setTiers(tierData.tiers);
+            try {
+              localStorage.setItem('eshetu_home_tiers', JSON.stringify(tierData.tiers));
+            } catch {}
+          }
         }
       } catch (err) {
         console.error('Failed to load portal data:', err);
-      } finally {
-        setLoading(false);
       }
     }
 
@@ -111,17 +112,8 @@ export default function HomePage() {
       <main>
         {sections.length > 0 ? (
           sections.map(renderSection)
-        ) : loading ? (
-          // Elegant animated placeholder shell while loading real sections
-          <div className="min-h-[85vh] flex flex-col items-center justify-center p-6 text-center animate-pulse">
-            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mb-6">
-              <span className="w-8 h-8 rounded-full border-2 border-amber-500 border-t-transparent animate-spin block" />
-            </div>
-            <div className="h-8 w-64 bg-slate-800/60 rounded-xl mb-3 max-w-[80vw]" />
-            <div className="h-4 w-96 bg-slate-800/40 rounded-lg max-w-[90vw]" />
-          </div>
         ) : (
-          // Standard modern default layout (Never shows old stats)
+          // Instant-load modern layout (Zero-second first paint, background-synced)
           <>
             <HeroSection config={{}} />
             <SocialsSection config={{}} />
