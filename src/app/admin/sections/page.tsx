@@ -298,19 +298,34 @@ export default function SectionBuilderPage() {
                       placeholder="/uploads/... or https://..."
                       className="flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 text-xs focus:outline-none focus:border-amber-400 font-mono"
                     />
-                    <label className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold cursor-pointer border border-slate-700">
+                    <label className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold cursor-pointer border border-slate-700 shrink-0">
                       Upload File
                       <input
                         type="file"
-                        accept="image/*,video/*"
+                        accept="image/*"
                         onChange={async (e) => {
                           const file = e.target.files?.[0];
                           if (!file) return;
                           const formData = new FormData();
-                          formData.append('photo', file);
+                          formData.append('file', file);
                           try {
-                            const res = await fetch('/api/members/register', { method: 'POST', body: formData });
-                          } catch {}
+                            const res = await fetch('/api/cms/settings/upload', {
+                              method: 'POST',
+                              body: formData,
+                            });
+                            const data = await res.json();
+                            if (res.ok && data.url) {
+                              setEditingSection({
+                                ...editingSection,
+                                configuration: { ...editingSection.configuration, mediaUrl: data.url },
+                              });
+                              return;
+                            }
+                          } catch (err) {
+                            console.error('Upload error:', err);
+                          }
+
+                          // Fallback to local data url
                           const reader = new FileReader();
                           reader.onload = () => {
                             setEditingSection({
@@ -324,7 +339,20 @@ export default function SectionBuilderPage() {
                       />
                     </label>
                   </div>
+                  {editingSection.configuration?.mediaUrl && (
+                    <div className="mt-2 flex items-center gap-3 p-2 rounded-lg bg-slate-900 border border-slate-800">
+                      <img
+                        src={editingSection.configuration.mediaUrl}
+                        alt="Preview"
+                        className="w-12 h-12 rounded object-cover border border-slate-700"
+                      />
+                      <span className="text-[10px] text-emerald-400 font-medium truncate">
+                        Media attached and ready to display
+                      </span>
+                    </div>
+                  )}
                 </div>
+
 
                 {/* Stats Section Custom Editor */}
                 {editingSection.sectionType === 'stats' && (

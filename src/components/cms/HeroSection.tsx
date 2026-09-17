@@ -19,6 +19,7 @@ interface HeroProps {
     ctaSecondaryText?: string;
     ctaSecondaryTextAm?: string;
     ctaSecondaryUrl?: string;
+    mediaUrl?: string;
   };
 }
 
@@ -55,9 +56,10 @@ export function HeroSection({ config }: HeroProps) {
       : config?.ctaSecondaryText || 'Verify / Search Card';
 
   const ctaSecondaryUrl = config?.ctaSecondaryUrl || '/search';
+  const mediaUrl = config?.mediaUrl;
 
   return (
-    <section className="relative overflow-hidden pt-12 pb-24 lg:pt-20 lg:pb-32">
+    <section className="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-28">
       {/* Dynamic Background Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-amber-500/15 via-amber-600/10 to-transparent blur-[120px] pointer-events-none rounded-full" />
       <div className="absolute top-1/3 -left-32 w-96 h-96 bg-amber-500/10 blur-[100px] pointer-events-none rounded-full" />
@@ -93,6 +95,17 @@ export function HeroSection({ config }: HeroProps) {
         <p className="mt-6 sm:mt-8 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
           {subheadline}
         </p>
+
+        {/* Optional Hero Media Artwork uploaded by Admin */}
+        {mediaUrl && (
+          <div className="mt-8 mb-4 max-w-3xl mx-auto rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-2xl shadow-amber-500/20 bg-slate-900 group">
+            <img
+              src={mediaUrl}
+              alt={headline}
+              className="w-full h-auto max-h-[440px] object-cover mx-auto group-hover:scale-[1.01] transition-transform duration-500"
+            />
+          </div>
+        )}
 
         {/* CTA Buttons */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
@@ -132,3 +145,4 @@ export function HeroSection({ config }: HeroProps) {
     </section>
   );
 }
+
