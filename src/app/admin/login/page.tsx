@@ -65,13 +65,6 @@ export default function AdminLoginPage() {
           </div>
         )}
 
-        {/* Demo Credentials Box */}
-        <div className="mb-6 p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-xs text-slate-400 space-y-1">
-          <p className="font-semibold text-slate-300">Default Test Accounts:</p>
-          <p>&bull; <b>Admin</b>: admin@eshetumelese.com / AdminPassword2026!</p>
-          <p>&bull; <b>Editor</b>: editor@eshetumelese.com / EditorPassword2026!</p>
-          <p>&bull; <b>Viewer</b>: viewer@eshetumelese.com / ViewerPassword2026!</p>
-        </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
