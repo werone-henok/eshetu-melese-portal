@@ -14,6 +14,7 @@ import {
   Edit,
   Loader2,
   CheckCircle2,
+  Trash2,
 } from 'lucide-react';
 
 export default function SectionBuilderPage() {
@@ -136,6 +137,25 @@ export default function SectionBuilderPage() {
     }
   };
 
+  const handleDeleteSection = async (section: any) => {
+    if (!confirm(`Are you sure you want to delete the "${section.title}" section from the website?`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/cms/sections/${section.id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        throw new Error(d.error || 'Failed to delete section');
+      }
+      await fetchSections();
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+
   const canEdit = currentUser?.role === 'ADMIN' || currentUser?.role === 'EDITOR';
 
   return (
@@ -248,11 +268,21 @@ export default function SectionBuilderPage() {
                   >
                     <Edit className="w-4 h-4" />
                   </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteSection(section)}
+                    className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 hover:text-rose-300 transition-colors"
+                    title={`Delete Section: ${section.title}`}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
               )}
             </div>
           ))}
         </div>
+
 
         {/* Section Content Editing Modal */}
         {editingSection && (
@@ -355,6 +385,184 @@ export default function SectionBuilderPage() {
                   )}
                 </div>
 
+
+                {/* Socials / Social Channels Section Custom Editor */}
+                {editingSection.sectionType === 'socials' && (
+                  <div className="space-y-4 pt-2 border-t border-slate-800">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400 block">
+                        Social Media Channels & Follower Counts
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const currentSocials = editingSection.configuration?.socials || [];
+                          setEditingSection({
+                            ...editingSection,
+                            configuration: {
+                              ...editingSection.configuration,
+                              socials: [
+                                ...currentSocials,
+                                {
+                                  platform: 'youtube',
+                                  name: 'New Platform',
+                                  nameAm: '',
+                                  handle: '@handle',
+                                  count: '100K+',
+                                  countLabel: 'Subscribers / Followers',
+                                  countLabelAm: '',
+                                  url: 'https://',
+                                },
+                              ],
+                            },
+                          });
+                        }}
+                        className="text-[11px] font-bold text-amber-400 hover:text-amber-300"
+                      >
+                        + Add Social Platform
+                      </button>
+                    </div>
+
+                    <div className="space-y-3">
+                      {(editingSection.configuration?.socials || [
+                        { platform: 'youtube', name: 'YouTube', handle: '@eshetumelese', count: '3.2M+', countLabel: 'Subscribers', url: 'https://youtube.com/@eshetumelese' },
+                        { platform: 'telegram', name: 'Telegram', handle: 't.me/eshetumelese', count: '480K+', countLabel: 'Channel Members', url: 'https://t.me/eshetumelese' },
+                        { platform: 'tiktok', name: 'TikTok', handle: '@eshetumelese', count: '1.8M+', countLabel: 'Followers', url: 'https://tiktok.com/@eshetumelese' },
+                        { platform: 'facebook', name: 'Facebook', handle: 'facebook.com/eshetumelese', count: '1.2M+', countLabel: 'Followers', url: 'https://facebook.com/eshetumelese' },
+                      ]).map((soc: any, sIdx: number) => (
+                        <div key={sIdx} className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <select
+                              value={soc.platform || 'youtube'}
+                              onChange={(e) => {
+                                const newSocials = [...(editingSection.configuration?.socials || [])];
+                                newSocials[sIdx] = { ...newSocials[sIdx], platform: e.target.value };
+                                setEditingSection({
+                                  ...editingSection,
+                                  configuration: { ...editingSection.configuration, socials: newSocials },
+                                });
+                              }}
+                              className="px-2 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-xs font-bold"
+                            >
+                              <option value="youtube">YouTube</option>
+                              <option value="telegram">Telegram</option>
+                              <option value="tiktok">TikTok</option>
+                              <option value="facebook">Facebook</option>
+                              <option value="instagram">Instagram</option>
+                              <option value="x">X / Twitter</option>
+                              <option value="other">Other Network</option>
+                            </select>
+
+                            <input
+                              type="text"
+                              placeholder="Display Name (e.g. YouTube)"
+                              value={soc.name}
+                              onChange={(e) => {
+                                const newSocials = [...(editingSection.configuration?.socials || [])];
+                                newSocials[sIdx] = { ...newSocials[sIdx], name: e.target.value };
+                                setEditingSection({
+                                  ...editingSection,
+                                  configuration: { ...editingSection.configuration, socials: newSocials },
+                                });
+                              }}
+                              className="flex-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-xs font-semibold"
+                            />
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newSocials = [...(editingSection.configuration?.socials || [])];
+                                newSocials.splice(sIdx, 1);
+                                setEditingSection({
+                                  ...editingSection,
+                                  configuration: { ...editingSection.configuration, socials: newSocials },
+                                });
+                              }}
+                              className="p-1 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                              title="Delete Social Channel"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            <div>
+                              <label className="block text-[10px] uppercase text-slate-500 font-bold mb-0.5">Followers / Count</label>
+                              <input
+                                type="text"
+                                placeholder="e.g. 3.2M+"
+                                value={soc.count}
+                                onChange={(e) => {
+                                  const newSocials = [...(editingSection.configuration?.socials || [])];
+                                  newSocials[sIdx] = { ...newSocials[sIdx], count: e.target.value };
+                                  setEditingSection({
+                                    ...editingSection,
+                                    configuration: { ...editingSection.configuration, socials: newSocials },
+                                  });
+                                }}
+                                className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-amber-400 font-mono text-xs font-bold"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[10px] uppercase text-slate-500 font-bold mb-0.5">Metric Label</label>
+                              <input
+                                type="text"
+                                placeholder="e.g. Subscribers"
+                                value={soc.countLabel}
+                                onChange={(e) => {
+                                  const newSocials = [...(editingSection.configuration?.socials || [])];
+                                  newSocials[sIdx] = { ...newSocials[sIdx], countLabel: e.target.value };
+                                  setEditingSection({
+                                    ...editingSection,
+                                    configuration: { ...editingSection.configuration, socials: newSocials },
+                                  });
+                                }}
+                                className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 text-xs"
+                              />
+                            </div>
+
+                            <div className="col-span-2 sm:col-span-1">
+                              <label className="block text-[10px] uppercase text-slate-500 font-bold mb-0.5">Handle / Username</label>
+                              <input
+                                type="text"
+                                placeholder="@handle"
+                                value={soc.handle}
+                                onChange={(e) => {
+                                  const newSocials = [...(editingSection.configuration?.socials || [])];
+                                  newSocials[sIdx] = { ...newSocials[sIdx], handle: e.target.value };
+                                  setEditingSection({
+                                    ...editingSection,
+                                    configuration: { ...editingSection.configuration, socials: newSocials },
+                                  });
+                                }}
+                                className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 font-mono text-xs"
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] uppercase text-slate-500 font-bold mb-0.5">Profile URL</label>
+                            <input
+                              type="text"
+                              placeholder="https://youtube.com/@..."
+                              value={soc.url}
+                              onChange={(e) => {
+                                const newSocials = [...(editingSection.configuration?.socials || [])];
+                                newSocials[sIdx] = { ...newSocials[sIdx], url: e.target.value };
+                                setEditingSection({
+                                  ...editingSection,
+                                  configuration: { ...editingSection.configuration, socials: newSocials },
+                                });
+                              }}
+                              className="w-full px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 font-mono text-xs"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Stats Section Custom Editor */}
                 {editingSection.sectionType === 'stats' && (

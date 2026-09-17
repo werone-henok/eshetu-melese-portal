@@ -13,6 +13,7 @@ import { HowItWorksSection } from '@/components/cms/HowItWorksSection';
 import { CardShowcaseSection } from '@/components/cms/CardShowcaseSection';
 import { FaqSection } from '@/components/cms/FaqSection';
 import { SocialFooterSection } from '@/components/cms/SocialFooterSection';
+import { SocialsSection } from '@/components/cms/SocialsSection';
 
 export default function HomePage() {
   const [sections, setSections] = useState<any[]>([]);
@@ -60,6 +61,8 @@ export default function HomePage() {
         return <EventsSection key={section.id} config={section.configuration} />;
       case 'stats':
         return <StatsSection key={section.id} config={section.configuration} />;
+      case 'socials':
+        return <SocialsSection key={section.id} config={section.configuration} />;
       case 'benefits':
         return <BenefitsSection key={section.id} config={section.configuration} />;
       case 'tiers':

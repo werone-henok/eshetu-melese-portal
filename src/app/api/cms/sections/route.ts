@@ -40,19 +40,64 @@ export async function GET(req: NextRequest) {
         },
         {
           page: 'home',
-          sectionType: 'stats',
-          title: 'Community Impact & Statistics',
+          sectionType: 'socials',
+          title: 'Official Social Communities & Reach',
           displayOrder: 2,
           isVisible: true,
           configuration: {
-            stats: [
-              { label: 'Subscribers & Followers', value: '3.2M+' },
-              { label: 'Active Verified Members', value: '145K+' },
-              { label: 'Countries Represented', value: '68+' },
-              { label: 'Community Initiatives', value: '500+' }
+            heading: 'Official Social Communities & Follower Reach',
+            headingAm: 'ይፋዊ የማህበራዊ ሚዲያ ገጾች እና ተከታዮች',
+            subheading: 'Join over 3.2M+ supporters across official YouTube, Telegram, TikTok, and Facebook communities.',
+            subheadingAm: 'በመላው ዓለም ከ 3.2M+ በላይ ተከታዮች ጋር በቀጥታ ይገናኙ፤ በሁሉም ማህበራዊ አውታሮች ቤተሰብ ይሁኑ።',
+            socials: [
+              {
+                platform: 'youtube',
+                name: 'YouTube',
+                nameAm: 'ዩቲዩብ',
+                handle: '@eshetumelese',
+                count: '3.2M+',
+                countLabel: 'Subscribers',
+                countLabelAm: 'ተመዝጋቢዎች',
+                url: 'https://youtube.com/@eshetumelese',
+                color: '#FF0000',
+              },
+              {
+                platform: 'telegram',
+                name: 'Telegram',
+                nameAm: 'ቴሌግራም',
+                handle: 't.me/eshetumelese',
+                count: '480K+',
+                countLabel: 'Channel Members',
+                countLabelAm: 'የቻናል አባላት',
+                url: 'https://t.me/eshetumelese',
+                color: '#229ED9',
+              },
+              {
+                platform: 'tiktok',
+                name: 'TikTok',
+                nameAm: 'ቲክቶክ',
+                handle: '@eshetumelese',
+                count: '1.8M+',
+                countLabel: 'Followers',
+                countLabelAm: 'ተከታዮች',
+                url: 'https://tiktok.com/@eshetumelese',
+                color: '#FE2C55',
+              },
+              {
+                platform: 'facebook',
+                name: 'Facebook',
+                nameAm: 'ፌስቡክ',
+                handle: 'facebook.com/eshetumelese',
+                count: '1.2M+',
+                countLabel: 'Followers',
+                countLabelAm: 'ተከታዮች',
+                url: 'https://facebook.com/eshetumelese',
+                color: '#1877F2',
+              },
             ]
           }
         },
+
         {
           page: 'home',
           sectionType: 'benefits',
