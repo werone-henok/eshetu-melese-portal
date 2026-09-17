@@ -133,6 +133,34 @@ export function SocialsSection({ config }: SocialsSectionProps) {
     }
   };
 
+  const getPlatformAmharicName = (platform: string, fallback?: string) => {
+    switch (platform?.toLowerCase()) {
+      case 'youtube':
+        return 'ዩቲዩብ';
+      case 'telegram':
+        return 'ቴሌግራም';
+      case 'tiktok':
+        return 'ቲክቶክ';
+      case 'facebook':
+        return 'ፌስቡክ';
+      case 'instagram':
+        return 'ኢንስታግራም';
+      case 'x':
+      case 'twitter':
+        return 'ኤክስ (ትዊተር)';
+      default:
+        return fallback || 'ማህበራዊ ገጽ';
+    }
+  };
+
+  const getPlatformAmharicLabel = (label?: string, fallback?: string) => {
+    const l = (label || '').toLowerCase();
+    if (l.includes('sub')) return 'ተመዝጋቢዎች';
+    if (l.includes('member')) return 'የቻናል አባላት';
+    if (l.includes('follow')) return 'ተከታዮች';
+    return fallback || label || 'ተከታዮች';
+  };
+
   return (
     <section id="socials" className="py-16 lg:py-24 relative border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -153,8 +181,14 @@ export function SocialsSection({ config }: SocialsSectionProps) {
         {/* Social Cards Grid */}
         <div className={`grid grid-cols-1 sm:grid-cols-2 ${socials.length >= 4 ? 'lg:grid-cols-4' : socials.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'} gap-5 sm:gap-6`}>
           {socials.map((social, idx) => {
-            const displayName = lang === 'am' && social.nameAm ? social.nameAm : social.name;
-            const displayLabel = lang === 'am' && social.countLabelAm ? social.countLabelAm : social.countLabel;
+            const displayName =
+              lang === 'am'
+                ? (social.nameAm && social.nameAm !== 'ቴሌግራም' ? social.nameAm : getPlatformAmharicName(social.platform, social.nameAm || social.name))
+                : social.name;
+            const displayLabel =
+              lang === 'am'
+                ? (social.countLabelAm || getPlatformAmharicLabel(social.countLabel))
+                : social.countLabel;
 
             return (
               <a

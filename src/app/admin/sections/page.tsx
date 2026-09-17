@@ -528,8 +528,24 @@ export default function SectionBuilderPage() {
                             <select
                               value={soc.platform || 'youtube'}
                               onChange={(e) => {
+                                const newPlatform = e.target.value;
+                                const platformNames: Record<string, { en: string; am: string }> = {
+                                  youtube: { en: 'YouTube', am: 'ዩቲዩብ' },
+                                  telegram: { en: 'Telegram', am: 'ቴሌግራም' },
+                                  tiktok: { en: 'TikTok', am: 'ቲክቶክ' },
+                                  facebook: { en: 'Facebook', am: 'ፌስቡክ' },
+                                  instagram: { en: 'Instagram', am: 'ኢንስታግራም' },
+                                  x: { en: 'X (Twitter)', am: 'ኤክስ (ትዊተር)' },
+                                  other: { en: 'Other', am: 'ማህበራዊ ገጽ' },
+                                };
+                                const meta = platformNames[newPlatform] || { en: newPlatform, am: newPlatform };
                                 const newSocials = [...(editingSection.configuration?.socials || [])];
-                                newSocials[sIdx] = { ...newSocials[sIdx], platform: e.target.value };
+                                newSocials[sIdx] = {
+                                  ...newSocials[sIdx],
+                                  platform: newPlatform,
+                                  name: meta.en,
+                                  nameAm: meta.am,
+                                };
                                 setEditingSection({
                                   ...editingSection,
                                   configuration: { ...editingSection.configuration, socials: newSocials },
@@ -548,7 +564,7 @@ export default function SectionBuilderPage() {
 
                             <input
                               type="text"
-                              placeholder="Display Name (e.g. YouTube)"
+                              placeholder="Display Name (e.g. Instagram)"
                               value={soc.name}
                               onChange={(e) => {
                                 const newSocials = [...(editingSection.configuration?.socials || [])];
