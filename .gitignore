@@ -50,3 +50,4 @@ prisma/dev.db
 # debug images
 *-bg-debug.jpg
 
+deploy-package.zip

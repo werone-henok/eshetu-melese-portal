@@ -85,7 +85,15 @@ export function AppSettingsProvider({ children }: { children: React.ReactNode })
       document.documentElement.classList.toggle('dark', savedMode === 'dark');
     }
 
-    // Load site branding from API
+    // Load cached branding immediately from localStorage for zero-latency load
+    try {
+      const cachedBrand = localStorage.getItem('eshetu_branding');
+      if (cachedBrand) {
+        setBrandingState(JSON.parse(cachedBrand));
+      }
+    } catch {}
+
+    // Load site branding from API in background and sync
     async function loadBranding() {
       try {
         const res = await fetch('/api/cms/settings');
@@ -93,6 +101,9 @@ export function AppSettingsProvider({ children }: { children: React.ReactNode })
           const data = await res.json();
           if (data.branding) {
             setBrandingState(data.branding);
+            try {
+              localStorage.setItem('eshetu_branding', JSON.stringify(data.branding));
+            } catch {}
           }
         }
       } catch (err) {

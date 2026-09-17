@@ -26,12 +26,26 @@ export async function GET() {
 
     try {
       const parsed = JSON.parse(record.value);
-      return NextResponse.json({
-        success: true,
-        branding: { ...DEFAULT_BRANDING, ...parsed },
-      });
+      return NextResponse.json(
+        {
+          success: true,
+          branding: { ...DEFAULT_BRANDING, ...parsed },
+        },
+        {
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     } catch {
-      return NextResponse.json({ success: true, branding: DEFAULT_BRANDING });
+      return NextResponse.json(
+        { success: true, branding: DEFAULT_BRANDING },
+        {
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
   } catch (error: any) {
     return NextResponse.json(

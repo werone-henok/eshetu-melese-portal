@@ -316,7 +316,14 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    return NextResponse.json({ success: true, sections });
+    return NextResponse.json(
+      { success: true, sections },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Failed to fetch sections' }, { status: 500 });
   }
