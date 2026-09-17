@@ -47,12 +47,19 @@ export async function GET(req: NextRequest) {
       orderBy: { updatedAt: 'desc' },
     });
 
-    return NextResponse.json({
-      success: true,
-      members,
-      templates,
-      defaultTemplate: DEFAULT_CARD_TEMPLATE,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        members,
+        templates,
+        defaultTemplate: DEFAULT_CARD_TEMPLATE,
+      },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message || 'Failed to fetch public showcase cards' },

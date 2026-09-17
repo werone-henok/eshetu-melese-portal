@@ -109,7 +109,14 @@ export async function GET(req: NextRequest) {
       };
     });
 
-    return NextResponse.json({ success: true, results: safeResults });
+    return NextResponse.json(
+      { success: true, results: safeResults },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=120',
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Search failed.' }, { status: 500 });
   }

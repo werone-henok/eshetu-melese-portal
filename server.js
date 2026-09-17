@@ -3,12 +3,13 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 
-const dev = process.env.NODE_ENV !== 'production';
-const hostname = 'localhost';
-// cPanel Passenger passes the port or socket path via PORT environment variable
+// CRITICAL FOR CPANEL PERFORMANCE: Ensure Next.js NEVER runs in dev/compiler mode on cPanel
+process.env.NODE_ENV = 'production';
+const dev = false;
+const hostname = '0.0.0.0';
 const port = parseInt(process.env.PORT, 10) || 3000;
 
-const app = next({ dev, hostname, port });
+const app = next({ dev, hostname, port, quiet: true });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
