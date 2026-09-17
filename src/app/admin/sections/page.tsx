@@ -109,10 +109,15 @@ export default function SectionBuilderPage() {
     }
   };
 
-  const handleSaveContent = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const [savingContent, setSavingContent] = useState(false);
+
+  const handleSaveContent = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
     if (!editingSection) return;
 
+    setSavingContent(true);
     try {
       const res = await fetch(`/api/cms/sections/${editingSection.id}`, {
         method: 'PUT',
@@ -123,8 +128,8 @@ export default function SectionBuilderPage() {
         }),
       });
 
+      const d = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const d = await res.json();
         throw new Error(d.error || 'Failed to update section content');
       }
 
@@ -133,7 +138,9 @@ export default function SectionBuilderPage() {
       setSavedSuccess(true);
       setTimeout(() => setSavedSuccess(false), 3000);
     } catch (err: any) {
-      alert(err.message);
+      alert(err.message || 'Error saving content');
+    } finally {
+      setSavingContent(false);
     }
   };
 
@@ -913,15 +920,28 @@ export default function SectionBuilderPage() {
                   <button
                     type="button"
                     onClick={() => setEditingSection(null)}
-                    className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs"
+                    disabled={savingContent}
+                    className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
                   >
                     Cancel
                   </button>
                   <button
-                    type="submit"
-                    className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md"
+                    type="button"
+                    onClick={(e) => handleSaveContent(e)}
+                    disabled={savingContent}
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50 cursor-pointer"
                   >
-                    Save Bilingual Content & Media
+                    {savingContent ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4" />
+                        <span>Save Bilingual Content & Media</span>
+                      </>
+                    )}
                   </button>
                 </div>
               </form>
