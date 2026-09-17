@@ -7,8 +7,8 @@ import Link from 'next/link';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@eshetumelese.com');
-  const [password, setPassword] = useState('AdminPassword2026!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,8 +65,7 @@ export default function AdminLoginPage() {
           </div>
         )}
 
-
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
           <div>
             <label className="block text-xs font-medium text-slate-300 mb-1.5 uppercase tracking-wider">
               Email Address
@@ -78,6 +77,8 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@domain.com"
+                autoComplete="off"
                 className="flex-1 bg-transparent px-3.5 py-3 text-slate-100 text-sm focus:outline-none"
               />
             </div>
@@ -94,6 +95,8 @@ export default function AdminLoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••••••"
+                autoComplete="new-password"
                 className="flex-1 bg-transparent px-3.5 py-3 text-slate-100 text-sm focus:outline-none"
               />
             </div>
