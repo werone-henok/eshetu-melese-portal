@@ -38,9 +38,10 @@ export async function POST(req: NextRequest) {
       filename: saved.filename,
     });
   } catch (error: any) {
+    console.error('Settings Upload Error:', error);
     return NextResponse.json(
-      { error: error.message || 'File upload failed' },
-      { status: 500 }
+      { error: error.message && !error.message.includes('ENOENT') ? error.message : 'File upload failed' },
+      { status: 400 }
     );
   }
 }

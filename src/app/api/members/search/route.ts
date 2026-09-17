@@ -1,12 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { normalizePhoneNumber } from '@/lib/countries';
+import { checkRateLimit } from '@/lib/rate-limit';
+import { MemberSearchSchema } from '@/lib/validations';
 
 export async function GET(req: NextRequest) {
+  // 1. IP Rate Limiting: 60 search requests per minute per IP
+  const rateLimitResponse = checkRateLimit(req, 'members:search', 60, 60000);
+  if (rateLimitResponse) return rateLimitResponse;
+
   try {
     const { searchParams } = new URL(req.url);
-    const query = searchParams.get('q')?.trim();
+    const rawQuery = searchParams.get('q') || '';
 
+    const validation = MemberSearchSchema.safeParse({ q: rawQuery });
+    if (!validation.success) {
+      return NextResponse.json({ error: 'Search query is too long.' }, { status: 400 });
+    }
+
+    const query = validation.data.q.trim();
     let members;
 
     if (!query) {

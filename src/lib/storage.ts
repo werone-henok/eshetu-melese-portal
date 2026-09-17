@@ -15,15 +15,39 @@ if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
-export async function saveUploadedFile(file: File, subfolder: 'receipts' | 'avatars' | 'cards' | 'templates' | 'branding' = 'receipts'): Promise<StorageResult> {
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 Megabytes maximum
+
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/svg+xml',
+  'application/pdf',
+]);
+
+export async function saveUploadedFile(
+  file: File,
+  subfolder: 'receipts' | 'avatars' | 'cards' | 'templates' | 'branding' = 'receipts'
+): Promise<StorageResult> {
+  // 1. File Size Verification (Max 5MB)
+  if (file.size > MAX_FILE_SIZE_BYTES) {
+    throw new Error(`File exceeds maximum permitted size of 5MB.`);
+  }
+
+  // 2. MIME Type Whitelist
+  if (!ALLOWED_MIME_TYPES.has(file.type.toLowerCase())) {
+    throw new Error(`File type '${file.type}' is not permitted. Allowed: JPG, PNG, WEBP, SVG, PDF.`);
+  }
+
   const targetDir = path.join(UPLOADS_DIR, subfolder);
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir, { recursive: true });
   }
 
-  const timestamp = Date.now();
-  const safeOriginalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-  const uniqueFilename = `${timestamp}-${safeOriginalName}`;
+  // 3. Prevent Path Traversal in filenames
+  const baseName = path.basename(file.name);
+  const safeOriginalName = baseName.replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, 100);
+  const uniqueFilename = `${Date.now()}-${safeOriginalName}`;
   const filePath = path.join(targetDir, uniqueFilename);
 
   const bytes = await file.arrayBuffer();

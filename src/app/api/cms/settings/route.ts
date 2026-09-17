@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { enforceAuth, createAuditLog } from '@/lib/auth';
+import { BrandingSettingsSchema } from '@/lib/validations';
 
 const DEFAULT_BRANDING = {
   siteName: 'ESHETU MELESE',
@@ -48,8 +49,9 @@ export async function GET() {
       );
     }
   } catch (error: any) {
+    console.error('Error in GET /api/cms/settings:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch site branding' },
+      { error: 'Failed to fetch site branding' },
       { status: 500 }
     );
   }
@@ -61,7 +63,16 @@ export async function PUT(req: NextRequest) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-    const body = await req.json();
+    const rawBody = await req.json();
+    const parsed = BrandingSettingsSchema.safeParse(rawBody);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: 'Invalid branding settings', details: parsed.error.issues.map(i => i.message) },
+        { status: 400 }
+      );
+    }
+
     const {
       siteName,
       siteNameAm,
@@ -71,7 +82,7 @@ export async function PUT(req: NextRequest) {
       faviconUrl,
       paymentInstructions,
       paymentInstructionsAm,
-    } = body;
+    } = parsed.data;
 
     const newBranding = {
       siteName: siteName?.trim() || DEFAULT_BRANDING.siteName,
@@ -115,8 +126,9 @@ export async function PUT(req: NextRequest) {
       branding: newBranding,
     });
   } catch (error: any) {
+    console.error('Error in PUT /api/cms/settings:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to update branding settings' },
+      { error: 'Failed to update branding settings' },
       { status: 500 }
     );
   }

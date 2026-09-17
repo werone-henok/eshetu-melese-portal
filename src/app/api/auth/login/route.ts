@@ -1,14 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { verifyPassword, signToken, createAuditLog } from '@/lib/auth';
+import { checkRateLimit } from '@/lib/rate-limit';
+import { LoginSchema } from '@/lib/validations';
 
 export async function POST(req: NextRequest) {
-  try {
-    const { email, password } = await req.json();
+  // 1. Rate Limiting: 5 attempts per minute per IP to prevent brute-force attacks
+  const rateLimitResponse = checkRateLimit(req, 'auth:login', 5, 60000);
+  if (rateLimitResponse) return rateLimitResponse;
 
-    if (!email || !password) {
-      return NextResponse.json({ error: 'Email and password are required.' }, { status: 400 });
+  try {
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Malformed JSON payload.' }, { status: 400 });
     }
+
+    // 2. Strict Input Validation via Zod
+    const validation = LoginSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: 'Invalid login details', details: validation.error.issues.map(e => e.message) },
+        { status: 400 }
+      );
+    }
+
+    const { email, password } = validation.data;
 
     let user = await prisma.user.findUnique({
       where: { email: email.toLowerCase().trim() },
@@ -37,7 +55,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!user || !user.isActive) {
-      return NextResponse.json({ error: 'Invalid credentials or inactive account.' }, { status: 401 });
+      return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
 
     let valid = false;
@@ -55,7 +73,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!valid) {
-      return NextResponse.json({ error: 'Invalid credentials.' }, { status: 401 });
+      return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
 
     // Update last login
@@ -101,7 +119,8 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error: any) {
-    console.error('Login error:', error);
-    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+    // Sanitize internal error details - never expose raw stack traces
+    console.error('Secure Login Error:', error);
+    return NextResponse.json({ error: 'Authentication service temporarily unavailable.' }, { status: 500 });
   }
 }

@@ -325,7 +325,8 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to fetch sections' }, { status: 500 });
+    console.error('Error in GET /api/cms/sections:', error);
+    return NextResponse.json({ error: 'Failed to fetch sections' }, { status: 500 });
   }
 }
 
@@ -361,7 +362,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, section });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to create section' }, { status: 500 });
+    console.error('Error in POST /api/cms/sections:', error);
+    return NextResponse.json({ error: 'Failed to create section' }, { status: 500 });
   }
 }
 
@@ -399,6 +401,7 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({ success: true, message: 'Section order updated successfully' });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to reorder sections' }, { status: 500 });
+    console.error('Error in PUT /api/cms/sections:', error);
+    return NextResponse.json({ error: 'Failed to reorder sections' }, { status: 500 });
   }
 }

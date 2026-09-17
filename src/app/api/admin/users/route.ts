@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { enforceAuth, hashPassword, createAuditLog } from '@/lib/auth';
+import { UserCreateSchema, UserUpdateSchema } from '@/lib/validations';
 
 // GET all users and roles (Admin only)
 export async function GET(req: NextRequest) {
@@ -38,10 +39,24 @@ export async function POST(req: NextRequest) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-    const { email, name, password, role, isActive } = await req.json();
+    const body = await req.json();
+    const validation = UserCreateSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: 'Invalid user parameters', details: validation.error.issues.map(i => i.message) },
+        { status: 400 }
+      );
+    }
 
-    if (!email || !password || !name) {
-      return NextResponse.json({ error: 'Email, name, and password are required' }, { status: 400 });
+    const { email, name, password, role, isActive } = validation.data;
+
+    // Check duplicate email
+    const existing = await prisma.user.findUnique({
+      where: { email: email.toLowerCase().trim() },
+    });
+
+    if (existing) {
+      return NextResponse.json({ error: 'A user with this email address already exists.' }, { status: 409 });
     }
 
     const passwordHash = await hashPassword(password);
@@ -85,16 +100,26 @@ export async function PUT(req: NextRequest) {
   if (auth instanceof NextResponse) return auth;
 
   try {
-    const { id, name, role, isActive, password } = await req.json();
+    const body = await req.json();
+    const { id, ...updateFields } = body;
 
-    if (!id) {
-      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    if (!id || typeof id !== 'string') {
+      return NextResponse.json({ error: 'Valid User ID is required' }, { status: 400 });
     }
 
+    const validation = UserUpdateSchema.safeParse(updateFields);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: 'Invalid user update fields', details: validation.error.issues.map(i => i.message) },
+        { status: 400 }
+      );
+    }
+
+    const { name, role, isActive, password } = validation.data;
     const data: any = {};
     if (name) data.name = name;
     if (role) data.role = role;
-    if (isActive !== undefined) data.isActive = Boolean(isActive);
+    if (isActive !== undefined) data.isActive = isActive;
     if (password) data.passwordHash = await hashPassword(password);
 
     const updated = await prisma.user.update({
@@ -114,13 +139,14 @@ export async function PUT(req: NextRequest) {
       action: 'USER_UPDATED',
       entityType: 'User',
       entityId: id,
-      newValue: data,
+      newValue: { name, role, isActive },
       req,
     });
 
     return NextResponse.json({ success: true, user: updated });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to update user' }, { status: 500 });
+    console.error('User Update Error:', error);
+    return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
   }
 }
 
@@ -177,6 +203,7 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json({ success: true, message: 'User deleted successfully' });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to delete user' }, { status: 500 });
+    console.error('User Deletion Error:', error);
+    return NextResponse.json({ error: 'Failed to delete user safely.' }, { status: 500 });
   }
 }
