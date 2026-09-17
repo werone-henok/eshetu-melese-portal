@@ -128,7 +128,9 @@ export default function SectionBuilderPage() {
       }
 
       setEditingSection(null);
-      fetchSections();
+      await fetchSections();
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 3000);
     } catch (err: any) {
       alert(err.message);
     }
@@ -597,16 +599,18 @@ export default function SectionBuilderPage() {
                       <label className="block font-medium text-slate-400 mb-1">Headline / Heading (English)</label>
                       <input
                         type="text"
-                        value={editingSection.configuration?.headline || editingSection.configuration?.heading || ''}
-                        onChange={(e) =>
+                        value={editingSection.configuration?.headline ?? editingSection.configuration?.heading ?? ''}
+                        onChange={(e) => {
+                          const val = e.target.value;
                           setEditingSection({
                             ...editingSection,
                             configuration: {
                               ...editingSection.configuration,
-                              ...(editingSection.configuration?.headline !== undefined ? { headline: e.target.value } : { heading: e.target.value }),
+                              headline: val,
+                              heading: val,
                             },
-                          })
-                        }
+                          });
+                        }}
                         className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-amber-400"
                       />
                     </div>
@@ -614,20 +618,27 @@ export default function SectionBuilderPage() {
                     <div>
                       <label className="block font-medium text-slate-400 mb-1">Subheadline / Paragraph (English)</label>
                       <textarea
-                        rows={2}
-                        value={editingSection.configuration?.subheadline || editingSection.configuration?.subheading || editingSection.configuration?.bio || editingSection.configuration?.description || ''}
-                        onChange={(e) =>
+                        rows={3}
+                        value={
+                          editingSection.configuration?.subheadline ??
+                          editingSection.configuration?.subheading ??
+                          editingSection.configuration?.bio ??
+                          editingSection.configuration?.description ??
+                          ''
+                        }
+                        onChange={(e) => {
+                          const val = e.target.value;
                           setEditingSection({
                             ...editingSection,
                             configuration: {
                               ...editingSection.configuration,
-                              ...(editingSection.configuration?.subheadline !== undefined ? { subheadline: e.target.value } : {}),
-                              ...(editingSection.configuration?.subheading !== undefined ? { subheading: e.target.value } : {}),
-                              ...(editingSection.configuration?.bio !== undefined ? { bio: e.target.value } : {}),
-                              ...(editingSection.configuration?.description !== undefined ? { description: e.target.value } : {}),
+                              subheadline: val,
+                              subheading: val,
+                              bio: val,
+                              description: val,
                             },
-                          })
-                        }
+                          });
+                        }}
                         className="w-full p-3 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-amber-400"
                       />
                     </div>
@@ -643,17 +654,18 @@ export default function SectionBuilderPage() {
                     <label className="block font-medium text-slate-400 mb-1">ርዕስ (Amharic Heading)</label>
                     <input
                       type="text"
-                      value={editingSection.configuration?.headingAm || editingSection.configuration?.headlineAm || ''}
-                      onChange={(e) =>
+                      value={editingSection.configuration?.headingAm ?? editingSection.configuration?.headlineAm ?? ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
                         setEditingSection({
                           ...editingSection,
                           configuration: {
                             ...editingSection.configuration,
-                            headingAm: e.target.value,
-                            headlineAm: e.target.value,
+                            headingAm: val,
+                            headlineAm: val,
                           },
-                        })
-                      }
+                        });
+                      }}
                       placeholder="የክፍሉ አማርኛ ርዕስ..."
                       className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-amber-400 font-sans"
                     />
@@ -662,20 +674,27 @@ export default function SectionBuilderPage() {
                   <div>
                     <label className="block font-medium text-slate-400 mb-1">ዝርዝር መግለጫ (Amharic Paragraph / Bio)</label>
                     <textarea
-                      rows={2}
-                      value={editingSection.configuration?.subheadingAm || editingSection.configuration?.subheadlineAm || editingSection.configuration?.bioAm || editingSection.configuration?.descriptionAm || ''}
-                      onChange={(e) =>
+                      rows={3}
+                      value={
+                        editingSection.configuration?.subheadingAm ??
+                        editingSection.configuration?.subheadlineAm ??
+                        editingSection.configuration?.bioAm ??
+                        editingSection.configuration?.descriptionAm ??
+                        ''
+                      }
+                      onChange={(e) => {
+                        const val = e.target.value;
                         setEditingSection({
                           ...editingSection,
                           configuration: {
                             ...editingSection.configuration,
-                            subheadingAm: e.target.value,
-                            subheadlineAm: e.target.value,
-                            bioAm: e.target.value,
-                            descriptionAm: e.target.value,
+                            subheadingAm: val,
+                            subheadlineAm: val,
+                            bioAm: val,
+                            descriptionAm: val,
                           },
-                        })
-                      }
+                        });
+                      }}
                       placeholder="የክፍሉ አማርኛ ዝርዝር ማብራሪያ..."
                       className="w-full p-3 rounded-xl bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-amber-400 font-sans"
                     />
