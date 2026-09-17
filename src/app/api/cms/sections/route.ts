@@ -13,9 +13,16 @@ export async function GET(req: NextRequest) {
       where.isVisible = true;
     }
 
-    let sections = await prisma.siteSection.findMany({
+    let rawSections = await prisma.siteSection.findMany({
       where,
       orderBy: { displayOrder: 'asc' },
+    });
+
+    let sections = rawSections.map((s) => {
+      if (s.sectionType === 'stats') {
+        return { ...s, sectionType: 'socials' };
+      }
+      return s;
     });
 
     // If database has 0 sections, initialize with standard default sections automatically
