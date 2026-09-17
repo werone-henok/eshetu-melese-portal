@@ -115,6 +115,27 @@ export default function UserManagerPage() {
     }
   };
 
+  const handleDeleteUser = async (user: any) => {
+    if (user.id === currentUser?.userId || user.id === currentUser?.id) {
+      alert('You cannot delete your own account while logged in.');
+      return;
+    }
+
+    const confirmMsg = `Are you sure you want to permanently delete staff member "${user.name}" (${user.email}) with role [${user.role}]?`;
+    if (!confirm(confirmMsg)) return;
+
+    try {
+      const res = await fetch(`/api/admin/users?id=${user.id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to delete user');
+      fetchUsers();
+    } catch (err: any) {
+      alert(err.message || 'Error deleting user');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0F19] text-slate-100 flex">
       <AdminSidebar userRole={currentUser?.role} userName={currentUser?.name} />
@@ -126,7 +147,7 @@ export default function UserManagerPage() {
               Staff User & Role Management
             </h1>
             <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Create and assign Viewer, Editor, or Admin roles to staff members with strict API enforcement.
+              Create, update, and delete staff users (Viewer, Editor, Admin) with role enforcement.
             </p>
           </div>
 
@@ -180,14 +201,24 @@ export default function UserManagerPage() {
                     </span>
                   </td>
                   <td className="py-3.5 px-4 text-right">
-                    <button
-                      type="button"
-                      onClick={() => handleOpenEdit(u)}
-                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-amber-400 transition-colors"
-                      title="Edit User Role"
-                    >
-                      <Edit2 className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center justify-end gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEdit(u)}
+                        className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-amber-400 transition-colors"
+                        title="Edit User Role"
+                      >
+                        <Edit2 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteUser(u)}
+                        className="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 hover:text-rose-300 transition-colors"
+                        title={`Delete ${u.name}`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

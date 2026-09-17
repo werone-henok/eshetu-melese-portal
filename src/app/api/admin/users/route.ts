@@ -123,3 +123,60 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: error.message || 'Failed to update user' }, { status: 500 });
   }
 }
+
+// DELETE user (Admin only)
+export async function DELETE(req: NextRequest) {
+  const auth = await enforceAuth(req, 'canManageUsers');
+  if (auth instanceof NextResponse) return auth;
+
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+
+    // Prevent deleting oneself
+    if (auth.user.userId === id) {
+      return NextResponse.json({ error: 'You cannot delete your own account while logged in.' }, { status: 400 });
+    }
+
+    const userToDelete = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!userToDelete) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    // Safely uncouple references (AuditLog userId to null, SiteContent updatedBy to null)
+    await prisma.auditLog.updateMany({
+      where: { userId: id },
+      data: { userId: null },
+    });
+
+    await prisma.siteContent.updateMany({
+      where: { updatedBy: id },
+      data: { updatedBy: null },
+    });
+
+    // Delete user
+    await prisma.user.delete({
+      where: { id },
+    });
+
+    await createAuditLog({
+      userId: auth.user.userId,
+      action: 'USER_DELETED',
+      entityType: 'User',
+      entityId: id,
+      oldValue: { email: userToDelete.email, name: userToDelete.name, role: userToDelete.role },
+      req,
+    });
+
+    return NextResponse.json({ success: true, message: 'User deleted successfully' });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || 'Failed to delete user' }, { status: 500 });
+  }
+}
