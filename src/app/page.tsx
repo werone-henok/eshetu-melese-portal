@@ -85,15 +85,10 @@ export default function HomePage() {
       <NavigationHeader />
 
       <main>
-        {loading ? (
-          <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3 text-slate-400">
-            <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-xs font-mono tracking-wider text-slate-500 uppercase">Loading Official Portal...</span>
-          </div>
-        ) : sections.length > 0 ? (
+        {sections.length > 0 ? (
           sections.map(renderSection)
         ) : (
-          // Default fallback if database is empty
+          // Instant-load layout (Zero waiting, zero spinner block)
           <>
             <HeroSection config={{}} />
             <SocialsSection config={{}} />
