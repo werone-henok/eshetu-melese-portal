@@ -84,3 +84,48 @@ export async function saveBase64Image(base64Data: string, subfolder: 'cards' | '
   await fs.promises.writeFile(filePath, dataBuffer);
   return `/uploads/${subfolder}/${filename}`;
 }
+
+export async function downloadAndSaveRemoteImage(
+  url: string,
+  subfolder: 'avatars' | 'cards' = 'avatars',
+  filenamePrefix: string = 'avatar'
+): Promise<string> {
+  const targetDir = path.join(UPLOADS_DIR, subfolder);
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
+
+  // If it's already a local uploaded file, return as is
+  if (url.startsWith('/uploads/')) {
+    return url;
+  }
+
+  // If it's a data URL, use saveBase64Image
+  if (url.startsWith('data:image/')) {
+    return await saveBase64Image(url, subfolder, filenamePrefix);
+  }
+
+  const res = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch image from URL: ${res.status} ${res.statusText}`);
+  }
+
+  const contentType = res.headers.get('content-type') || 'image/png';
+  let ext = 'png';
+  if (contentType.includes('jpeg') || contentType.includes('jpg')) ext = 'jpg';
+  else if (contentType.includes('webp')) ext = 'webp';
+  else if (contentType.includes('svg')) ext = 'svg';
+
+  const buffer = Buffer.from(await res.arrayBuffer());
+  const filename = `${filenamePrefix}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${ext}`;
+  const filePath = path.join(targetDir, filename);
+
+  await fs.promises.writeFile(filePath, buffer);
+  return `/uploads/${subfolder}/${filename}`;
+}
+

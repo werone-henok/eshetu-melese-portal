@@ -39,23 +39,19 @@ function GalleryContent() {
   const handleDownloadCard = async (member: any) => {
     setDownloadingCode(member.membershipCode);
     try {
-      if (member.generatedBadgeUrl) {
-        // Direct download
-        const a = document.createElement('a');
-        a.href = member.generatedBadgeUrl;
-        a.download = `Eshetu-Melese-Card-${member.membershipCode}.png`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      } else {
-        // Navigate or open card detail where high-res render is available
-        window.open(`/card/${member.membershipCode}`, '_blank');
-      }
+      // Use direct streaming download endpoint which automatically generates high-res badge if needed
+      const downloadUrl = `/api/cards/download/${encodeURIComponent(member.membershipCode)}`;
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = `Eshetu-Melese-Card-${member.membershipCode}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     } catch (e) {
       console.error('Download failed:', e);
-      window.open(`/card/${member.membershipCode}`, '_blank');
+      window.open(`/api/cards/download/${encodeURIComponent(member.membershipCode)}`, '_blank');
     } finally {
-      setTimeout(() => setDownloadingCode(null), 1000);
+      setTimeout(() => setDownloadingCode(null), 1200);
     }
   };
 
@@ -79,12 +75,15 @@ function GalleryContent() {
             <style>
               @page {
                 size: auto;
-                margin: 20mm;
+                margin: 15mm;
+              }
+              *, *::before, *::after {
+                box-sizing: border-box;
               }
               body {
                 margin: 0;
-                padding: 20px;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                padding: 24px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
                 background: #ffffff;
                 color: #000000;
                 display: flex;
@@ -104,6 +103,7 @@ function GalleryContent() {
               .header h2 {
                 margin: 0 0 6px 0;
                 font-size: 24px;
+                font-weight: 800;
                 color: #0f172a;
               }
               .header p {
@@ -117,12 +117,34 @@ function GalleryContent() {
                 margin: 0 auto 24px auto;
                 border-radius: 24px;
                 overflow: hidden;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+                background: #0f172a;
               }
               .card-wrapper img {
                 width: 100%;
                 height: auto;
                 display: block;
+              }
+              /* Digital Card Canvas Standalone Styling for Print */
+              .digital-card-canvas {
+                position: relative !important;
+                width: 100% !important;
+                overflow: hidden !important;
+                border-radius: 24px !important;
+                background-size: cover !important;
+                background-position: center !important;
+                border: 2px solid #f59e0b !important;
+                box-sizing: border-box !important;
+              }
+              .card-dynamic-layer {
+                position: absolute !important;
+                box-sizing: border-box !important;
+              }
+              .card-dynamic-layer img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                display: block !important;
               }
               .footer {
                 margin-top: 16px;
@@ -131,11 +153,12 @@ function GalleryContent() {
               }
               @media print {
                 body {
-                  -webkit-print-color-adjust: exact;
-                  print-color-adjust: exact;
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
                 }
               }
             </style>
+
           </head>
           <body>
             <div class="print-container">

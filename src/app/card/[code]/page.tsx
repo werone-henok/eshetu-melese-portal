@@ -131,18 +131,15 @@ export default function MemberCardDetailsPage({ params }: { params: Promise<{ co
 
               {/* Download Buttons */}
               <div className="mt-8 pt-6 border-t border-slate-800 flex flex-wrap items-center justify-center gap-4">
-                {member.generatedBadgeUrl && (
-                  <>
-                    <a
-                      href={member.generatedBadgeUrl}
-                      download={`Eshetu-Melese-Card-${member.membershipCode}.png`}
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/20 transition-all hover:scale-105"
-                    >
-                      <Download className="w-4 h-4" />
-                      <span>{lang === 'am' ? 'ባጁን በከፍተኛ ጥራት (PNG) አውርድ' : 'Download High-Res PNG'}</span>
-                    </a>
-                  </>
-                )}
+                <a
+                  href={`/api/cards/download/${encodeURIComponent(member.membershipCode)}`}
+                  download={`Eshetu-Melese-Card-${member.membershipCode}.png`}
+                  className="flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/20 transition-all hover:scale-105"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{lang === 'am' ? 'ባጁን በከፍተኛ ጥራት (PNG) አውርድ' : 'Download High-Res PNG'}</span>
+                </a>
+
 
                 <button
                   type="button"

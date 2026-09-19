@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { enforceAuth, createAuditLog } from '@/lib/auth';
+import { downloadAndSaveRemoteImage } from '@/lib/storage';
 
 // POST Trigger Notion Sync or CSV Sync
 export async function POST(req: NextRequest) {
@@ -318,6 +319,17 @@ export async function POST(req: NextRequest) {
             photoUrl = page.cover.external?.url || null;
           } else if (page.cover.type === 'file') {
             photoUrl = page.cover.file?.url || null;
+          }
+        }
+
+        // 6. Notion file URLs expire within 1 hour (AWS S3 signed links).
+        // Download and store the image permanently on our server so it never becomes blank or broken.
+        if (photoUrl && (photoUrl.startsWith('http://') || photoUrl.startsWith('https://'))) {
+          try {
+            photoUrl = await downloadAndSaveRemoteImage(photoUrl, 'avatars', `notion-member-${page.id.substring(0, 8)}`);
+          } catch (imgErr) {
+            console.warn(`[Notion Sync] Failed to download avatar for ${name}:`, imgErr);
+            // Keep remote url as fallback if download fails
           }
         }
 

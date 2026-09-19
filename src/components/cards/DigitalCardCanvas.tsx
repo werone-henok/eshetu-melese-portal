@@ -114,7 +114,7 @@ export function DigitalCardCanvas({
         backgroundPosition: 'center',
         containerType: 'inline-size',
       }}
-      className={`relative rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/50 select-none transition-all ${
+      className={`digital-card-canvas relative rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-500/50 select-none transition-all ${
         !baseDesignUrl ? 'bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950' : ''
       } ${className}`}
     >
@@ -150,6 +150,7 @@ export function DigitalCardCanvas({
         return (
           <div
             key={el.id}
+            data-element-type={el.type}
             style={{
               position: 'absolute',
               left: `${el.x}%`,
@@ -168,7 +169,7 @@ export function DigitalCardCanvas({
               maxWidth: el.type === 'name' || el.type === 'memberId' ? (isCentered ? '80%' : '52%') : undefined,
               whiteSpace: el.type === 'name' || el.type === 'memberId' || el.type === 'tier' ? 'nowrap' : undefined,
             }}
-            className="select-none leading-tight"
+            className="card-dynamic-layer select-none leading-tight"
           >
             {el.type === 'logo' && (
               <span className="font-extrabold tracking-wider">
@@ -231,14 +232,27 @@ export function DigitalCardCanvas({
                   aspectRatio: '1 / 1',
                   borderRadius: el.borderRadius ? `${el.borderRadius}%` : '50%',
                 }}
-                className="border-2 border-slate-900/60 bg-slate-900 shadow-xl overflow-hidden flex items-center justify-center"
+                className="border-2 border-amber-500/30 bg-slate-900 shadow-xl overflow-hidden flex items-center justify-center relative"
               >
                 {member.photoUrl ? (
                   <img
                     src={member.photoUrl}
                     alt={member.fullName}
                     referrerPolicy="no-referrer"
+                    crossOrigin="anonymous"
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback gracefully on broken images or expired remote links
+                      const target = e.currentTarget;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent && !parent.querySelector('.avatar-fallback')) {
+                        const fb = document.createElement('div');
+                        fb.className = 'avatar-fallback w-full h-full flex flex-col items-center justify-center text-amber-400 bg-slate-900 font-bold';
+                        fb.innerHTML = `<span style="font-size: 1.5em">${(member.fullName || 'M')[0].toUpperCase()}</span>`;
+                        parent.appendChild(fb);
+                      }
+                    }}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-amber-400 text-2xl font-bold bg-slate-900">
