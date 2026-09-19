@@ -1,8 +1,24 @@
 import QRCode from 'qrcode';
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas, loadImage, registerFont } from 'canvas';
 import path from 'path';
 import fs from 'fs';
 import { saveBase64Image } from './storage';
+
+// Register bundled Unicode and Ethiopic fonts for server-side canvas badge rendering
+try {
+  const fontsDir = path.join(process.cwd(), 'public', 'fonts');
+  const nyalaPath = path.join(fontsDir, 'Nyala.ttf');
+  const arialPath = path.join(fontsDir, 'Arial.ttf');
+
+  if (fs.existsSync(nyalaPath)) {
+    registerFont(nyalaPath, { family: 'Nyala' });
+  }
+  if (fs.existsSync(arialPath)) {
+    registerFont(arialPath, { family: 'Arial' });
+  }
+} catch (fontErr) {
+  console.warn('Font registration warning:', fontErr);
+}
 
 export interface CardElementConfig {
   id: string;
@@ -194,28 +210,28 @@ export async function generateMembershipBadgeImage(params: {
     switch (el.type) {
       case 'logo': {
         const text = el.customText || 'ESHETU MELESE COMMUNITY';
-        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 24}px sans-serif`;
+        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 24}px "Nyala", "Arial", sans-serif`;
         ctx.fillStyle = el.color || '#D4AF37';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(text, posX, posY);
         break;
       }
       case 'name': {
-        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 32}px sans-serif`;
+        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 32}px "Nyala", "Arial", sans-serif`;
         ctx.fillStyle = el.color || '#FFFFFF';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(params.member.fullName.toUpperCase(), posX, posY);
         break;
       }
       case 'tier': {
-        ctx.font = `${el.fontWeight || '600'} ${el.fontSize || 22}px sans-serif`;
+        ctx.font = `${el.fontWeight || '600'} ${el.fontSize || 22}px "Nyala", "Arial", sans-serif`;
         ctx.fillStyle = el.color || '#E5A93C';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(`${params.member.tierName.toUpperCase()} MEMBER`, posX, posY);
         break;
       }
       case 'memberId': {
-        ctx.font = `${el.fontWeight || '500'} ${el.fontSize || 18}px monospace`;
+        ctx.font = `${el.fontWeight || '500'} ${el.fontSize || 18}px monospace, "Arial"`;
         ctx.fillStyle = el.color || '#94A3B8';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(`ID: ${params.member.membershipCode}`, posX, posY);
@@ -225,14 +241,14 @@ export async function generateMembershipBadgeImage(params: {
         const dateStr = params.member.approvedAt
           ? new Date(params.member.approvedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
           : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        ctx.font = `${el.fontWeight || '400'} ${el.fontSize || 16}px sans-serif`;
+        ctx.font = `${el.fontWeight || '400'} ${el.fontSize || 16}px "Nyala", "Arial", sans-serif`;
         ctx.fillStyle = el.color || '#64748B';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(`ISSUED: ${dateStr}`, posX, posY);
         break;
       }
       case 'customText': {
-        ctx.font = `${el.fontWeight || 'normal'} ${el.fontSize || 20}px sans-serif`;
+        ctx.font = `${el.fontWeight || 'normal'} ${el.fontSize || 20}px "Nyala", "Arial", sans-serif`;
         ctx.fillStyle = el.color || '#FFFFFF';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(el.customText || '', posX, posY);
@@ -284,10 +300,12 @@ export async function generateMembershipBadgeImage(params: {
             }
 
             if (photoImg) {
+              ctx.save();
               ctx.beginPath();
               roundRect(ctx, actualX, posY, pWidth, pHeight, radius);
               ctx.clip();
               ctx.drawImage(photoImg, actualX, posY, pWidth, pHeight);
+              ctx.restore();
             } else {
               drawDefaultAvatar(ctx, actualX, posY, pWidth, pHeight, radius, params.member.fullName);
             }
@@ -338,7 +356,7 @@ function drawDefaultLuxuryBackground(ctx: any, width: number, height: number) {
 }
 
 function drawDefaultAvatar(ctx: any, x: number, y: number, w: number, h: number, radius: number, name: string) {
-  ctx.fillStyle = '#334155';
+  ctx.fillStyle = '#1e293b';
   ctx.beginPath();
   roundRect(ctx, x, y, w, h, radius);
   ctx.fill();
@@ -347,10 +365,10 @@ function drawDefaultAvatar(ctx: any, x: number, y: number, w: number, h: number,
   ctx.lineWidth = 3;
   ctx.stroke();
 
-  // Initial letter
-  const initial = name ? name.charAt(0).toUpperCase() : 'M';
-  ctx.font = `bold ${Math.floor(w * 0.45)}px sans-serif`;
-  ctx.fillStyle = '#F8FAFC';
+  // Initial letter with full Amharic and Unicode font support
+  const initial = name ? name.trim().charAt(0).toUpperCase() : 'E';
+  ctx.font = `bold ${Math.floor(w * 0.45)}px "Nyala", "Arial", sans-serif`;
+  ctx.fillStyle = '#FBBF24';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(initial, x + w / 2, y + h / 2);

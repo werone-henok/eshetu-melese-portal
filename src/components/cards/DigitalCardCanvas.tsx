@@ -40,6 +40,7 @@ export function DigitalCardCanvas({
   id,
 }: DigitalCardCanvasProps) {
   const [realQrUrl, setRealQrUrl] = useState<string | null>(null);
+  const [imgFailed, setImgFailed] = useState(false);
 
   const elements =
     template?.layoutConfig && Array.isArray(template.layoutConfig)
@@ -232,31 +233,26 @@ export function DigitalCardCanvas({
                   aspectRatio: '1 / 1',
                   borderRadius: el.borderRadius ? `${el.borderRadius}%` : '50%',
                 }}
-                className="border-2 border-amber-500/30 bg-slate-900 shadow-xl overflow-hidden flex items-center justify-center relative"
+                className="border-2 border-amber-500/40 bg-slate-900 shadow-xl overflow-hidden flex items-center justify-center relative"
               >
-                {member.photoUrl ? (
+                {member.photoUrl && !imgFailed ? (
                   <img
                     src={member.photoUrl}
                     alt={member.fullName}
                     referrerPolicy="no-referrer"
                     crossOrigin="anonymous"
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      // Fallback gracefully on broken images or expired remote links
-                      const target = e.currentTarget;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent && !parent.querySelector('.avatar-fallback')) {
-                        const fb = document.createElement('div');
-                        fb.className = 'avatar-fallback w-full h-full flex flex-col items-center justify-center text-amber-400 bg-slate-900 font-bold';
-                        fb.innerHTML = `<span style="font-size: 1.5em">${(member.fullName || 'M')[0].toUpperCase()}</span>`;
-                        parent.appendChild(fb);
-                      }
-                    }}
+                    onError={() => setImgFailed(true)}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-amber-400 text-2xl font-bold bg-slate-900">
-                    <User className="w-1/2 h-1/2 text-amber-400" />
+                  <div className="w-full h-full flex flex-col items-center justify-center text-amber-400 bg-slate-900 font-bold select-none">
+                    {member.fullName ? (
+                      <span className="text-xl sm:text-2xl tracking-wider text-amber-400 drop-shadow">
+                        {member.fullName.trim().charAt(0).toUpperCase()}
+                      </span>
+                    ) : (
+                      <User className="w-1/2 h-1/2 text-amber-400" />
+                    )}
                   </div>
                 )}
               </div>
