@@ -1,4 +1,4 @@
-name: Deploy to cPanel
+name: Deploy to cPanel via FTP
 
 on:
   push:
@@ -34,47 +34,37 @@ jobs:
       - name: Build Next.js Production Bundle
         run: npm run build
 
-      - name: Create Deployment Archive
+      - name: Prepare Deployment Staging Directory
         run: |
-          tar -czf deploy.tar.gz \
-            .next \
-            public \
-            prisma \
-            src \
-            package.json \
-            package-lock.json \
-            server.js \
-            next.config.ts \
-            tsconfig.json \
-            postcss.config.js \
-            tailwind.config.js \
-            reset-admin.js
+          mkdir -p deploy-staging
+          
+          # Copy .next excluding cache (reduces upload by 90%)
+          mkdir -p deploy-staging/.next
+          rsync -av --exclude 'cache' .next/ deploy-staging/.next/
+          
+          # Copy source code and Prisma
+          cp -r src deploy-staging/
+          cp -r prisma deploy-staging/
+          
+          # Copy public assets excluding runtime uploads
+          mkdir -p deploy-staging/public
+          rsync -av --exclude 'uploads' public/ deploy-staging/public/
+          
+          # Copy root server and config files
+          cp package.json package-lock.json server.js next.config.ts tsconfig.json postcss.config.js tailwind.config.js reset-admin.js deploy-staging/
+          
+          # Create restart.txt to trigger automatic Phusion Passenger restart on cPanel
+          mkdir -p deploy-staging/tmp
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > deploy-staging/tmp/restart.txt
 
-      - name: Upload Deployment Archive via SCP
-        uses: appleboy/scp-action@v0.1.7
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          source: 'deploy.tar.gz'
-          target: ${{ secrets.REMOTE_TARGET || '/home/comedizx/eshetu-portal' }}
-          overwrite: true
-
-      - name: Extract Archive & Reload App via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          script: |
-            TARGET_DIR="${{ secrets.REMOTE_TARGET || '/home/comedizx/eshetu-portal' }}"
-            cd "$TARGET_DIR"
-            tar -xzf deploy.tar.gz
-            rm -f deploy.tar.gz
-            mkdir -p tmp
-            touch tmp/restart.txt
-            echo "Deployment completed successfully! Node.js app reloaded."
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || 'eshetu-portal/' }}
+          local-dir: ./deploy-staging/
+          protocol: ftp
+          port: ${{ secrets.FTP_PORT || 21 }}
+          timeout: 600000
