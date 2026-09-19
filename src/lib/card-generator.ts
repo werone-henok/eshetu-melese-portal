@@ -210,28 +210,28 @@ export async function generateMembershipBadgeImage(params: {
     switch (el.type) {
       case 'logo': {
         const text = el.customText || 'ESHETU MELESE COMMUNITY';
-        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 24}px "Nyala", "Arial", sans-serif`;
+        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 24}px Nyala, Arial, sans-serif`;
         ctx.fillStyle = el.color || '#D4AF37';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(text, posX, posY);
         break;
       }
       case 'name': {
-        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 32}px "Nyala", "Arial", sans-serif`;
+        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 32}px Nyala, Arial, sans-serif`;
         ctx.fillStyle = el.color || '#FFFFFF';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(params.member.fullName.toUpperCase(), posX, posY);
         break;
       }
       case 'tier': {
-        ctx.font = `${el.fontWeight || '600'} ${el.fontSize || 22}px "Nyala", "Arial", sans-serif`;
+        ctx.font = `${el.fontWeight || '600'} ${el.fontSize || 22}px Nyala, Arial, sans-serif`;
         ctx.fillStyle = el.color || '#E5A93C';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(`${params.member.tierName.toUpperCase()} MEMBER`, posX, posY);
         break;
       }
       case 'memberId': {
-        ctx.font = `${el.fontWeight || '500'} ${el.fontSize || 18}px monospace, "Arial"`;
+        ctx.font = `${el.fontWeight || '500'} ${el.fontSize || 18}px monospace, Arial`;
         ctx.fillStyle = el.color || '#94A3B8';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(`ID: ${params.member.membershipCode}`, posX, posY);
@@ -241,14 +241,14 @@ export async function generateMembershipBadgeImage(params: {
         const dateStr = params.member.approvedAt
           ? new Date(params.member.approvedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
           : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        ctx.font = `${el.fontWeight || '400'} ${el.fontSize || 16}px "Nyala", "Arial", sans-serif`;
+        ctx.font = `${el.fontWeight || '400'} ${el.fontSize || 16}px Nyala, Arial, sans-serif`;
         ctx.fillStyle = el.color || '#64748B';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(`ISSUED: ${dateStr}`, posX, posY);
         break;
       }
       case 'customText': {
-        ctx.font = `${el.fontWeight || 'normal'} ${el.fontSize || 20}px "Nyala", "Arial", sans-serif`;
+        ctx.font = `${el.fontWeight || 'normal'} ${el.fontSize || 20}px Nyala, Arial, sans-serif`;
         ctx.fillStyle = el.color || '#FFFFFF';
         ctx.textAlign = el.align || 'left';
         ctx.fillText(el.customText || '', posX, posY);
@@ -283,7 +283,13 @@ export async function generateMembershipBadgeImage(params: {
         const actualX = isCentered ? posX - (pWidth / 2) : posX;
         const radius = el.borderRadius !== undefined ? (el.borderRadius <= 50 ? (el.borderRadius / 100) * pWidth : el.borderRadius) : pWidth / 2;
 
-        if (params.member.photoUrl) {
+        // Skip expired Notion S3 signed URLs — they're only valid for 1 hour and are always broken after sync
+        const isExpiredNotionUrl = params.member.photoUrl &&
+          (params.member.photoUrl.includes('prod-files-secure.s3') ||
+           params.member.photoUrl.includes('secure.notion-static') ||
+           params.member.photoUrl.includes('s3.us-west-2.amazonaws.com'));
+
+        if (params.member.photoUrl && !isExpiredNotionUrl) {
           try {
             let photoImg: any = null;
             if (params.member.photoUrl.startsWith('data:')) {
@@ -367,7 +373,7 @@ function drawDefaultAvatar(ctx: any, x: number, y: number, w: number, h: number,
 
   // Initial letter with full Amharic and Unicode font support
   const initial = name ? name.trim().charAt(0).toUpperCase() : 'E';
-  ctx.font = `bold ${Math.floor(w * 0.45)}px "Nyala", "Arial", sans-serif`;
+  ctx.font = `bold ${Math.floor(w * 0.45)}px Nyala, Arial, sans-serif`;
   ctx.fillStyle = '#FBBF24';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';

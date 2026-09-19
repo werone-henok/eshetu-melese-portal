@@ -329,7 +329,8 @@ export async function POST(req: NextRequest) {
             photoUrl = await downloadAndSaveRemoteImage(photoUrl, 'avatars', `notion-member-${page.id.substring(0, 8)}`);
           } catch (imgErr) {
             console.warn(`[Notion Sync] Failed to download avatar for ${name}:`, imgErr);
-            // Keep remote url as fallback if download fails
+            // Clear the expired/broken remote URL - do not store Notion S3 URLs that will expire
+            photoUrl = null;
           }
         }
 
@@ -353,18 +354,24 @@ export async function POST(req: NextRequest) {
         }
 
         if (existingMember) {
+          // Detect if photo changed: if so, clear the cached badge so it gets regenerated
+          const newPhotoUrl = photoUrl || existingMember.photoUrl;
+          const photoChanged = newPhotoUrl !== existingMember.photoUrl;
+
           await prisma.member.update({
             where: { id: existingMember.id },
             data: {
               fullName: name,
               phoneNumber: phone,
               email: email || existingMember.email,
-              photoUrl: photoUrl || existingMember.photoUrl,
+              photoUrl: newPhotoUrl,
               status: memberStatus,
               tierId: matchedTier?.id || existingMember.tierId,
               notionPageId: page.id,
               isDeleted: false,
               updatedAt: new Date(),
+              // Clear cached badge so it gets regenerated with the new photo
+              ...(photoChanged ? { generatedBadgeUrl: null, badgeGeneratedAt: null } : {}),
             }
           });
           updatedCount++;

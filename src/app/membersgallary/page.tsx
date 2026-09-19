@@ -39,16 +39,24 @@ function GalleryContent() {
   const handleDownloadCard = async (member: any) => {
     setDownloadingCode(member.membershipCode);
     try {
-      // Use direct streaming download endpoint which automatically generates high-res badge if needed
       const downloadUrl = `/api/cards/download/${encodeURIComponent(member.membershipCode)}`;
+      // Fetch the PNG as a blob for reliable cross-browser download triggering
+      const res = await fetch(downloadUrl);
+      if (!res.ok) {
+        throw new Error(`Server returned ${res.status}`);
+      }
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = downloadUrl;
+      a.href = objectUrl;
       a.download = `Eshetu-Melese-Card-${member.membershipCode}.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 5000);
     } catch (e) {
       console.error('Download failed:', e);
+      // Fallback: open in new tab
       window.open(`/api/cards/download/${encodeURIComponent(member.membershipCode)}`, '_blank');
     } finally {
       setTimeout(() => setDownloadingCode(null), 1200);
@@ -56,17 +64,35 @@ function GalleryContent() {
   };
 
   // Print Card Directly
-  const handlePrintCard = (member: any) => {
+  const handlePrintCard = async (member: any) => {
     setPrintingCode(member.membershipCode);
     try {
-      const cardEl = document.getElementById(`gallery-card-${member.membershipCode}`);
-      const printWindow = window.open('', '_blank', 'width=800,height=600');
+      // Ensure badge is generated — call the download endpoint which generates if missing
+      let badgeImgUrl = member.generatedBadgeUrl;
+      if (!badgeImgUrl || !badgeImgUrl.startsWith('/uploads/')) {
+        // Trigger badge generation by calling the download API
+        const genRes = await fetch(`/api/cards/download/${encodeURIComponent(member.membershipCode)}`);
+        if (genRes.ok) {
+          // Reload member data to get fresh generatedBadgeUrl
+          const searchRes = await fetch(`/api/members/search?q=${encodeURIComponent(member.membershipCode)}`);
+          if (searchRes.ok) {
+            const searchData = await searchRes.json();
+            const fresh = (searchData.results || []).find((m: any) => m.membershipCode === member.membershipCode);
+            if (fresh?.generatedBadgeUrl) badgeImgUrl = fresh.generatedBadgeUrl;
+          }
+        }
+      }
+
+      const absoluteImgUrl = badgeImgUrl
+        ? (badgeImgUrl.startsWith('http') ? badgeImgUrl : `${window.location.origin}${badgeImgUrl}`)
+        : null;
+
+      const printWindow = window.open('', '_blank', 'width=860,height=680');
       if (!printWindow) {
         window.print();
         return;
       }
 
-      const cardHtml = cardEl ? cardEl.outerHTML : '';
       printWindow.document.write(`
         <!DOCTYPE html>
         <html>
@@ -74,7 +100,7 @@ function GalleryContent() {
             <title>Official Digital Card - ${member.fullName} (${member.membershipCode})</title>
             <style>
               @page {
-                size: auto;
+                size: A4 landscape;
                 margin: 15mm;
               }
               *, *::before, *::after {
@@ -93,62 +119,48 @@ function GalleryContent() {
                 min-height: 90vh;
               }
               .print-container {
-                max-width: 650px;
+                max-width: 620px;
                 width: 100%;
                 text-align: center;
               }
               .header {
-                margin-bottom: 24px;
+                margin-bottom: 20px;
               }
               .header h2 {
                 margin: 0 0 6px 0;
-                font-size: 24px;
+                font-size: 22px;
                 font-weight: 800;
                 color: #0f172a;
               }
               .header p {
                 margin: 0;
-                font-size: 13px;
+                font-size: 12px;
                 color: #64748b;
               }
               .card-wrapper {
                 width: 100%;
                 max-width: 580px;
-                margin: 0 auto 24px auto;
-                border-radius: 24px;
+                margin: 0 auto 20px auto;
+                border-radius: 20px;
                 overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-                background: #0f172a;
+                box-shadow: 0 12px 40px rgba(0,0,0,0.22);
               }
               .card-wrapper img {
                 width: 100%;
                 height: auto;
                 display: block;
+                border-radius: 20px;
               }
-              /* Digital Card Canvas Standalone Styling for Print */
-              .digital-card-canvas {
-                position: relative !important;
-                width: 100% !important;
-                overflow: hidden !important;
-                border-radius: 24px !important;
-                background-size: cover !important;
-                background-position: center !important;
-                border: 2px solid #f59e0b !important;
-                box-sizing: border-box !important;
-              }
-              .card-dynamic-layer {
-                position: absolute !important;
-                box-sizing: border-box !important;
-              }
-              .card-dynamic-layer img {
-                width: 100% !important;
-                height: 100% !important;
-                object-fit: cover !important;
-                display: block !important;
+              .no-badge {
+                padding: 40px;
+                background: #0f172a;
+                border-radius: 20px;
+                color: #f59e0b;
+                font-size: 14px;
               }
               .footer {
-                margin-top: 16px;
-                font-size: 12px;
+                margin-top: 14px;
+                font-size: 11px;
                 color: #94a3b8;
               }
               @media print {
@@ -158,7 +170,6 @@ function GalleryContent() {
                 }
               }
             </style>
-
           </head>
           <body>
             <div class="print-container">
@@ -168,9 +179,9 @@ function GalleryContent() {
               </div>
               <div class="card-wrapper">
                 ${
-                  member.generatedBadgeUrl
-                    ? `<img src="${member.generatedBadgeUrl}" alt="${member.fullName} Pass" />`
-                    : cardHtml
+                  absoluteImgUrl
+                    ? `<img src="${absoluteImgUrl}" alt="${member.fullName} Pass" />`
+                    : `<div class="no-badge">Badge image not available. Please download the card first.</div>`
                 }
               </div>
               <div class="footer">
@@ -181,9 +192,9 @@ function GalleryContent() {
               window.onload = function() {
                 window.focus();
                 window.print();
-                setTimeout(function() { window.close(); }, 500);
+                setTimeout(function() { window.close(); }, 800);
               };
-            </script>
+            <\/script>
           </body>
         </html>
       `);
@@ -192,7 +203,7 @@ function GalleryContent() {
       console.error('Print failed:', e);
       window.print();
     } finally {
-      setTimeout(() => setPrintingCode(null), 1000);
+      setTimeout(() => setPrintingCode(null), 1200);
     }
   };
 

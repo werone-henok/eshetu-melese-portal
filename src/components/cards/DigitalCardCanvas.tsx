@@ -225,38 +225,48 @@ export function DigitalCardCanvas({
               </div>
             )}
 
-            {el.type === 'photo' && (
-              <div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  aspectRatio: '1 / 1',
-                  borderRadius: el.borderRadius ? `${el.borderRadius}%` : '50%',
-                }}
-                className="border-2 border-amber-500/40 bg-slate-900 shadow-xl overflow-hidden flex items-center justify-center relative"
-              >
-                {member.photoUrl && !imgFailed ? (
-                  <img
-                    src={member.photoUrl}
-                    alt={member.fullName}
-                    referrerPolicy="no-referrer"
-                    crossOrigin="anonymous"
-                    className="w-full h-full object-cover"
-                    onError={() => setImgFailed(true)}
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-amber-400 bg-slate-900 font-bold select-none">
-                    {member.fullName ? (
-                      <span className="text-xl sm:text-2xl tracking-wider text-amber-400 drop-shadow">
-                        {member.fullName.trim().charAt(0).toUpperCase()}
-                      </span>
-                    ) : (
-                      <User className="w-1/2 h-1/2 text-amber-400" />
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
+            {el.type === 'photo' && (() => {
+              // Pre-filter expired Notion S3 signed URLs which always become broken
+              const isExpiredNotionUrl = member.photoUrl &&
+                (member.photoUrl.includes('prod-files-secure.s3') ||
+                 member.photoUrl.includes('secure.notion-static') ||
+                 member.photoUrl.includes('s3.us-west-2.amazonaws.com'));
+              const isLocalUrl = member.photoUrl && member.photoUrl.startsWith('/uploads/');
+              const validPhotoUrl = (member.photoUrl && !isExpiredNotionUrl) ? member.photoUrl : null;
+
+              return (
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    aspectRatio: '1 / 1',
+                    borderRadius: el.borderRadius ? `${el.borderRadius}%` : '50%',
+                  }}
+                  className="border-2 border-amber-500/40 bg-slate-900 shadow-xl overflow-hidden flex items-center justify-center relative"
+                >
+                  {validPhotoUrl && !imgFailed ? (
+                    <img
+                      src={validPhotoUrl}
+                      alt={member.fullName}
+                      {...(!isLocalUrl ? { referrerPolicy: 'no-referrer' as const, crossOrigin: 'anonymous' as const } : {})}
+                      className="w-full h-full object-cover"
+                      onError={() => setImgFailed(true)}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center text-amber-400 bg-slate-900 font-bold select-none">
+                      {member.fullName ? (
+                        <span className="text-xl sm:text-2xl tracking-wider text-amber-400 drop-shadow">
+                          {member.fullName.trim().charAt(0).toUpperCase()}
+                        </span>
+                      ) : (
+                        <User className="w-1/2 h-1/2 text-amber-400" />
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
           </div>
         );
       })}
