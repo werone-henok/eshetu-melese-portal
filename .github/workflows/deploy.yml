@@ -1,0 +1,80 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install System Dependencies for Canvas
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Build Next.js Production Bundle
+        run: npm run build
+
+      - name: Create Deployment Archive
+        run: |
+          tar -czf deploy.tar.gz \
+            .next \
+            public \
+            prisma \
+            src \
+            package.json \
+            package-lock.json \
+            server.js \
+            next.config.ts \
+            tsconfig.json \
+            postcss.config.js \
+            tailwind.config.js \
+            reset-admin.js
+
+      - name: Upload Deployment Archive via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          source: 'deploy.tar.gz'
+          target: ${{ secrets.REMOTE_TARGET || '/home/comedizx/eshetu-portal' }}
+          overwrite: true
+
+      - name: Extract Archive & Reload App via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            TARGET_DIR="${{ secrets.REMOTE_TARGET || '/home/comedizx/eshetu-portal' }}"
+            cd "$TARGET_DIR"
+            tar -xzf deploy.tar.gz
+            rm -f deploy.tar.gz
+            mkdir -p tmp
+            touch tmp/restart.txt
+            echo "Deployment completed successfully! Node.js app reloaded."
