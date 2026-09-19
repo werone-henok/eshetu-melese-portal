@@ -39,8 +39,8 @@ function GalleryContent() {
   const handleDownloadCard = async (member: any) => {
     setDownloadingCode(member.membershipCode);
     try {
-      const downloadUrl = `/api/cards/download/${encodeURIComponent(member.membershipCode)}`;
-      // Fetch the PNG as a blob for reliable cross-browser download triggering
+      // Force fresh generation to guarantee proper font rendering and avatars
+      const downloadUrl = `/api/cards/download/${encodeURIComponent(member.membershipCode)}?regenerate=true`;
       const res = await fetch(downloadUrl);
       if (!res.ok) {
         throw new Error(`Server returned ${res.status}`);
@@ -53,41 +53,29 @@ function GalleryContent() {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(objectUrl), 5000);
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 10000);
     } catch (e) {
       console.error('Download failed:', e);
-      // Fallback: open in new tab
-      window.open(`/api/cards/download/${encodeURIComponent(member.membershipCode)}`, '_blank');
+      window.open(`/api/cards/download/${encodeURIComponent(member.membershipCode)}?regenerate=true`, '_blank');
     } finally {
       setTimeout(() => setDownloadingCode(null), 1200);
     }
   };
 
-  // Print Card Directly
+  // Print Card Directly — Perfectly formatted on a single page
   const handlePrintCard = async (member: any) => {
     setPrintingCode(member.membershipCode);
     try {
-      // Ensure badge is generated — call the download endpoint which generates if missing
-      let badgeImgUrl = member.generatedBadgeUrl;
-      if (!badgeImgUrl || !badgeImgUrl.startsWith('/uploads/')) {
-        // Trigger badge generation by calling the download API
-        const genRes = await fetch(`/api/cards/download/${encodeURIComponent(member.membershipCode)}`);
-        if (genRes.ok) {
-          // Reload member data to get fresh generatedBadgeUrl
-          const searchRes = await fetch(`/api/members/search?q=${encodeURIComponent(member.membershipCode)}`);
-          if (searchRes.ok) {
-            const searchData = await searchRes.json();
-            const fresh = (searchData.results || []).find((m: any) => m.membershipCode === member.membershipCode);
-            if (fresh?.generatedBadgeUrl) badgeImgUrl = fresh.generatedBadgeUrl;
-          }
-        }
+      // Generate / retrieve fresh badge image as a direct blob
+      const genRes = await fetch(`/api/cards/download/${encodeURIComponent(member.membershipCode)}?regenerate=true`);
+      if (!genRes.ok) {
+        throw new Error('Failed to generate pass for printing');
       }
 
-      const absoluteImgUrl = badgeImgUrl
-        ? (badgeImgUrl.startsWith('http') ? badgeImgUrl : `${window.location.origin}${badgeImgUrl}`)
-        : null;
+      const blob = await genRes.blob();
+      const blobUrl = URL.createObjectURL(blob);
 
-      const printWindow = window.open('', '_blank', 'width=860,height=680');
+      const printWindow = window.open('', '_blank', 'width=840,height=720');
       if (!printWindow) {
         window.print();
         return;
@@ -97,77 +85,105 @@ function GalleryContent() {
         <!DOCTYPE html>
         <html>
           <head>
+            <meta charset="utf-8" />
             <title>Official Digital Card - ${member.fullName} (${member.membershipCode})</title>
             <style>
               @page {
-                size: A4 landscape;
-                margin: 15mm;
+                size: portrait;
+                margin: 8mm 12mm;
               }
               *, *::before, *::after {
                 box-sizing: border-box;
               }
-              body {
-                margin: 0;
-                padding: 24px;
+              html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100%;
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
                 background: #ffffff;
                 color: #000000;
+              }
+              body {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                min-height: 90vh;
+                min-height: 96vh;
+                padding: 12px;
               }
               .print-container {
-                max-width: 620px;
+                max-width: 480px;
                 width: 100%;
+                margin: 0 auto;
                 text-align: center;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
               }
               .header {
-                margin-bottom: 20px;
+                margin-bottom: 12px;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
               }
               .header h2 {
-                margin: 0 0 6px 0;
-                font-size: 22px;
+                margin: 0 0 4px 0;
+                font-size: 18px;
                 font-weight: 800;
                 color: #0f172a;
               }
               .header p {
                 margin: 0;
-                font-size: 12px;
+                font-size: 11px;
                 color: #64748b;
               }
               .card-wrapper {
                 width: 100%;
-                max-width: 580px;
-                margin: 0 auto 20px auto;
-                border-radius: 20px;
+                max-width: 440px;
+                margin: 0 auto 10px auto;
+                border-radius: 16px;
                 overflow: hidden;
-                box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
               }
               .card-wrapper img {
                 width: 100%;
-                height: auto;
+                max-height: 52vh;
+                object-fit: contain;
                 display: block;
-                border-radius: 20px;
-              }
-              .no-badge {
-                padding: 40px;
-                background: #0f172a;
-                border-radius: 20px;
-                color: #f59e0b;
-                font-size: 14px;
+                border-radius: 16px;
+                margin: 0 auto;
               }
               .footer {
-                margin-top: 14px;
-                font-size: 11px;
+                margin-top: 8px;
+                font-size: 10px;
                 color: #94a3b8;
+                page-break-before: avoid !important;
+                break-before: avoid !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
               }
               @media print {
-                body {
-                  -webkit-print-color-adjust: exact !important;
-                  print-color-adjust: exact !important;
+                html, body {
+                  min-height: 100% !important;
+                  height: 100% !important;
+                  overflow: hidden !important;
                 }
+                body {
+                  padding: 0 !important;
+                  justify-content: flex-start !important;
+                  padding-top: 10mm !important;
+                }
+                .print-container {
+                  page-break-inside: avoid !important;
+                  break-inside: avoid !important;
+                  page-break-after: avoid !important;
+                  break-after: avoid !important;
+                }
+                .card-wrapper {
+                  box-shadow: none !important;
+                }
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
               }
             </style>
           </head>
@@ -178,11 +194,7 @@ function GalleryContent() {
                 <p>Verified Digital Membership Pass &bull; ${member.tierName} Tier &bull; Code: ${member.membershipCode}</p>
               </div>
               <div class="card-wrapper">
-                ${
-                  absoluteImgUrl
-                    ? `<img src="${absoluteImgUrl}" alt="${member.fullName} Pass" />`
-                    : `<div class="no-badge">Badge image not available. Please download the card first.</div>`
-                }
+                <img src="${blobUrl}" alt="${member.fullName} Pass" />
               </div>
               <div class="footer">
                 Verified Cryptographic Badge &bull; comedianeshetu.com &bull; Scan QR Code to Verify
@@ -192,13 +204,16 @@ function GalleryContent() {
               window.onload = function() {
                 window.focus();
                 window.print();
-                setTimeout(function() { window.close(); }, 800);
+                setTimeout(function() { 
+                  window.close(); 
+                }, 1000);
               };
             <\/script>
           </body>
         </html>
       `);
       printWindow.document.close();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
     } catch (e) {
       console.error('Print failed:', e);
       window.print();

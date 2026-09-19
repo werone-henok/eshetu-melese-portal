@@ -5,20 +5,41 @@ import fs from 'fs';
 import { saveBase64Image } from './storage';
 
 // Register bundled Unicode and Ethiopic fonts for server-side canvas badge rendering
-try {
-  const fontsDir = path.join(process.cwd(), 'public', 'fonts');
-  const nyalaPath = path.join(fontsDir, 'Nyala.ttf');
-  const arialPath = path.join(fontsDir, 'Arial.ttf');
+let fontsLoaded = false;
+export function ensureFontsRegistered() {
+  if (fontsLoaded) return;
+  try {
+    const candidateDirs = [
+      path.join(process.cwd(), 'public', 'fonts'),
+      path.resolve('./public/fonts'),
+      path.resolve(__dirname, '../../public/fonts'),
+      path.resolve(__dirname, '../../../public/fonts'),
+      path.resolve(__dirname, '../../../../public/fonts'),
+    ];
 
-  if (fs.existsSync(nyalaPath)) {
-    registerFont(nyalaPath, { family: 'Nyala' });
+    for (const dir of candidateDirs) {
+      const nyalaPath = path.join(dir, 'Nyala.ttf');
+      const arialPath = path.join(dir, 'Arial.ttf');
+
+      if (fs.existsSync(nyalaPath)) {
+        registerFont(nyalaPath, { family: 'Nyala' });
+        registerFont(nyalaPath, { family: 'Nyala', weight: 'bold' });
+        registerFont(nyalaPath, { family: 'Nyala', weight: '600' });
+        fontsLoaded = true;
+      }
+      if (fs.existsSync(arialPath)) {
+        registerFont(arialPath, { family: 'Arial' });
+        registerFont(arialPath, { family: 'Arial', weight: 'bold' });
+      }
+      if (fontsLoaded) break;
+    }
+  } catch (fontErr) {
+    console.warn('Font registration warning:', fontErr);
   }
-  if (fs.existsSync(arialPath)) {
-    registerFont(arialPath, { family: 'Arial' });
-  }
-} catch (fontErr) {
-  console.warn('Font registration warning:', fontErr);
 }
+
+// Initial registration attempt
+ensureFontsRegistered();
 
 export interface CardElementConfig {
   id: string;
@@ -151,6 +172,7 @@ export async function generateMembershipBadgeImage(params: {
   templateConfig?: CardTemplateConfig;
   siteUrl?: string;
 }): Promise<string> {
+  ensureFontsRegistered();
   const config = params.templateConfig || DEFAULT_CARD_TEMPLATE;
   const width = config.width || 1050;
   const height = config.height || 600;
