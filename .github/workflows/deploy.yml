@@ -60,8 +60,8 @@ jobs:
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          server: ${{ secrets.FTP_SERVER || 'ftp.comedianeshetu.com' }}
+          username: ${{ secrets.FTP_USERNAME || 'comedizx' }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR || 'eshetu-portal/' }}
           local-dir: ./deploy-staging/
