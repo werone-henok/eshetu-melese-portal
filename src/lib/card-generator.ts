@@ -239,10 +239,29 @@ export async function generateMembershipBadgeImage(params: {
         break;
       }
       case 'name': {
-        ctx.font = `${el.fontWeight || 'bold'} ${el.fontSize || 32}px Nyala, Arial, sans-serif`;
+        const fullName = params.member.fullName.toUpperCase();
+        const isEthiopic = /[\u1200-\u137F]/.test(fullName);
+        const fontFamily = isEthiopic ? 'Nyala, Arial, sans-serif' : 'Arial, sans-serif';
+        
+        const isShield =
+          (params.member.tierName && params.member.tierName.toLowerCase().includes('shield')) ||
+          (config.baseDesignUrl && config.baseDesignUrl.toLowerCase().includes('shield'));
+
+        const fontSize = isShield ? Math.round(width * 0.034) : (el.fontSize || 32);
+        const finalX = isShield ? width * 0.5 : posX;
+        const finalY = isShield ? height * 0.4655 : posY;
+
+        ctx.font = `900 ${fontSize}px ${fontFamily}`;
         ctx.fillStyle = el.color || '#FFFFFF';
-        ctx.textAlign = el.align || 'left';
-        ctx.fillText(params.member.fullName.toUpperCase(), posX, posY);
+        ctx.textAlign = isShield ? 'center' : (el.align || 'left');
+        ctx.textBaseline = isShield ? 'middle' : (el.align === 'center' ? 'middle' : 'top');
+
+        // Clean drop-shadow matching the gallery showcase
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetY = 2;
+
+        ctx.fillText(fullName, finalX, finalY);
         break;
       }
       case 'tier': {

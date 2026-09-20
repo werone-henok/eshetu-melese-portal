@@ -38,7 +38,7 @@ export async function GET(
       req.nextUrl.searchParams.get('regenerate') === 'true' ||
       req.nextUrl.searchParams.get('fresh') === 'true' ||
       !member.badgeGeneratedAt ||
-      new Date(member.badgeGeneratedAt).getTime() < new Date('2026-09-20T00:00:00Z').getTime();
+      new Date(member.badgeGeneratedAt).getTime() < new Date('2026-09-20T03:00:00Z').getTime();
 
     // If already generated, file exists, and not forcing regeneration, serve directly
     if (!forceRegenerate && badgeUrl && badgeUrl.startsWith('/uploads/')) {
