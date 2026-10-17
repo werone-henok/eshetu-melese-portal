@@ -69,17 +69,21 @@ export function EventsSection({ config }: EventsSectionProps) {
   const events = config?.events || defaultEvents;
 
   return (
-    <section id="events" className="py-20 lg:py-28 relative bg-slate-950/60 border-t border-slate-800/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
-            <Calendar className="w-3.5 h-3.5" />
+    <section id="events" className="py-24 lg:py-32 relative overflow-hidden border-t border-white/5">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[400px] bg-amber-500/10 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-10 right-1/4 w-[450px] h-[450px] bg-purple-600/10 blur-[150px] pointer-events-none rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm backdrop-blur-md">
+            <Calendar className="w-3.5 h-3.5 text-amber-400" />
             <span>{lang === 'am' ? 'የቀጥታ መድረክ ዝግጅቶች' : 'Live Performances'}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
@@ -88,31 +92,33 @@ export function EventsSection({ config }: EventsSectionProps) {
           {events.map((ev, idx) => (
             <div
               key={idx}
-              className="rounded-3xl p-6 sm:p-8 bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 shadow-xl transition-all flex flex-col justify-between"
+              className="rounded-3xl p-7 sm:p-8 glass-panel hover:glass-panel-gold shadow-2xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-2"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 font-mono text-xs font-bold">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-xs font-bold tracking-wider">
                     {ev.badge || 'Upcoming'}
                   </span>
-                  <Ticket className="w-5 h-5 text-amber-500" />
+                  <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                    <Ticket className="w-4 h-4" />
+                  </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-slate-100 mb-3">
+                <h3 className="text-xl font-black text-white mb-3 font-display tracking-tight group-hover:text-amber-200 transition-colors">
                   {lang === 'am' && ev.titleAm ? ev.titleAm : ev.title}
                 </h3>
 
-                <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+                <p className="text-xs text-slate-300/80 mb-6 leading-relaxed font-sans min-h-[48px]">
                   {ev.description}
                 </p>
 
-                <div className="space-y-2 mb-6 text-xs text-slate-300 font-medium">
-                  <div className="flex items-center gap-2 text-amber-300">
-                    <Calendar className="w-4 h-4 shrink-0" />
+                <div className="space-y-2.5 mb-7 text-xs text-slate-300 font-medium p-4 rounded-2xl bg-slate-950/40 border border-white/5">
+                  <div className="flex items-center gap-2.5 text-amber-300">
+                    <Calendar className="w-4 h-4 shrink-0 text-amber-400" />
                     <span dangerouslySetInnerHTML={{ __html: ev.date }} />
                   </div>
-                  <div className="flex items-center gap-2 text-slate-400">
-                    <MapPin className="w-4 h-4 shrink-0 text-slate-500" />
+                  <div className="flex items-center gap-2.5 text-slate-400">
+                    <MapPin className="w-4 h-4 shrink-0 text-slate-400" />
                     <span>{ev.location}</span>
                   </div>
                 </div>
@@ -120,7 +126,7 @@ export function EventsSection({ config }: EventsSectionProps) {
 
               <Link
                 href="/register"
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 text-xs font-bold border border-slate-700 transition-all shadow-md"
+                className="w-full btn-luxury-ghost flex items-center justify-center gap-2 py-3.5 px-4 text-xs font-bold"
               >
                 <span>{lang === 'am' ? 'የአባልነት ቅድሚያ ማለፊያ' : 'Member Priority Access'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />

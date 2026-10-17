@@ -2,8 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Shield, Sparkles, ArrowRight, CheckCircle2, QrCode } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, QrCode, Shield, Star, Users } from 'lucide-react';
 import { useAppSettings } from '@/context/AppSettingsContext';
+import { motion } from 'framer-motion';
 
 interface HeroProps {
   config: {
@@ -24,7 +25,7 @@ interface HeroProps {
 }
 
 export function HeroSection({ config }: HeroProps) {
-  const { lang, t } = useAppSettings();
+  const { lang } = useAppSettings();
 
   const headline =
     lang === 'am'
@@ -59,29 +60,44 @@ export function HeroSection({ config }: HeroProps) {
   const mediaUrl = config?.mediaUrl;
 
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-28">
-      {/* Dynamic Background Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-amber-500/15 via-amber-600/10 to-transparent blur-[120px] pointer-events-none rounded-full" />
-      <div className="absolute top-1/3 -left-32 w-96 h-96 bg-amber-500/10 blur-[100px] pointer-events-none rounded-full" />
+    <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-36">
+      {/* Multi-layered Ambient Light Leaks (Champagne Gold + Electric Violet) */}
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-tr from-violet-600/20 via-amber-400/15 to-transparent blur-[140px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/4 -right-48 w-[450px] h-[450px] bg-violet-600/15 blur-[120px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 -left-48 w-[450px] h-[450px] bg-amber-500/12 blur-[120px] pointer-events-none rounded-full" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Portal Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/30 bg-amber-500/10 backdrop-blur-md mb-8 shadow-inner">
-          <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-          <span className="text-xs sm:text-sm font-semibold text-amber-300 tracking-wide uppercase">
+      {/* Decorative Grid Mesh Subtle Overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none opacity-60" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+        {/* Floating Portal Pill */}
+        <motion.div
+          initial={{ opacity: 0, y: -15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 backdrop-blur-xl mb-8 shadow-glow-gold hover:border-amber-400/50 transition-all cursor-default"
+        >
+          <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+          <span className="text-xs sm:text-sm font-bold text-amber-200 tracking-wider uppercase font-heading">
             {badgeText}
           </span>
-        </div>
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+        </motion.div>
 
         {/* Dynamic CMS Headline */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-100 max-w-5xl mx-auto leading-[1.1] sm:leading-[1.15]">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+          className="font-heading text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-white max-w-5xl mx-auto leading-[1.08] sm:leading-[1.12]"
+        >
           {headline.split(' ').map((word, i) =>
-            ['Official', 'Eshetu', 'Melese', 'Community', 'Verified'].some((highlight) =>
+            ['Official', 'Eshetu', 'Melese', 'Community', 'Verified', 'እሸቱ', 'መለሰ'].some((highlight) =>
               word.toLowerCase().includes(highlight.toLowerCase())
             ) ? (
               <span
                 key={i}
-                className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent"
+                className="text-gradient-gold inline-block"
               >
                 {word}{' '}
               </span>
@@ -89,60 +105,81 @@ export function HeroSection({ config }: HeroProps) {
               word + ' '
             )
           )}
-        </h1>
+        </motion.h1>
 
         {/* Dynamic CMS Subheadline */}
-        <p className="mt-6 sm:mt-8 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl text-slate-300/90 max-w-3xl mx-auto font-normal leading-relaxed"
+        >
           {subheadline}
-        </p>
+        </motion.p>
 
-        {/* Optional Hero Media Artwork uploaded by Admin */}
+        {/* Optional Hero Media Artwork */}
         {mediaUrl && (
-          <div className="mt-8 mb-4 max-w-3xl mx-auto rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-2xl shadow-amber-500/20 bg-slate-900 group">
-            <img
-              src={mediaUrl}
-              alt={headline}
-              className="w-full h-auto max-h-[440px] object-cover mx-auto group-hover:scale-[1.01] transition-transform duration-500"
-            />
-          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-10 mb-6 max-w-4xl mx-auto rounded-3xl overflow-hidden p-1.5 bg-gradient-to-b from-amber-400/30 via-violet-500/20 to-transparent shadow-2xl shadow-violet-950/40"
+          >
+            <div className="rounded-[22px] overflow-hidden bg-charcoal-950 border border-white/10">
+              <img
+                src={mediaUrl}
+                alt={headline}
+                className="w-full h-auto max-h-[460px] object-cover mx-auto hover:scale-[1.01] transition-transform duration-700"
+              />
+            </div>
+          </motion.div>
         )}
 
-        {/* CTA Buttons */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
+        {/* CTA Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+          className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none"
+        >
           <Link
             href={ctaPrimaryUrl}
-            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold text-base shadow-xl shadow-amber-500/25 transition-all hover:scale-[1.03] active:scale-[0.98]"
+            className="btn-luxury-gold w-full sm:w-auto text-base sm:text-lg group"
           >
             <span>{ctaPrimaryText}</span>
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
 
           <Link
             href={ctaSecondaryUrl}
-            className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-2xl border border-slate-700 bg-slate-900/90 hover:bg-slate-800 hover:border-slate-600 text-slate-200 font-semibold text-base backdrop-blur-md shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="btn-luxury-ghost w-full sm:w-auto text-base sm:text-lg group"
           >
-            <QrCode className="w-5 h-5 text-amber-400" />
+            <QrCode className="w-5 h-5 text-violet-400 group-hover:scale-110 transition-transform" />
             <span>{ctaSecondaryText}</span>
           </Link>
-        </div>
+        </motion.div>
 
-        {/* Value Micro-props */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm text-slate-400 font-medium">
-          <div className="flex items-center gap-2">
+        {/* Value Micro-props / Social Trust Indicators */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.45 }}
+          className="mt-14 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-slate-300 font-medium"
+        >
+          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-white/10">
             <CheckCircle2 className="w-4 h-4 text-amber-400" />
-            <span>{lang === 'am' ? 'ፈጣን የQR ማረጋገጫ' : 'Instant QR Verification'}</span>
+            <span>{lang === 'am' ? 'ፈጣን የQR ማረጋገጫ' : 'Instant Cryptographic Verification'}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-amber-400" />
-            <span>{lang === 'am' ? 'በቴሌብርና ሲቢኢ ብር የሚከፈል' : 'Telebirr & CBE Birr Accepted'}</span>
+          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-white/10">
+            <CheckCircle2 className="w-4 h-4 text-violet-400" />
+            <span>{lang === 'am' ? 'በቴሌብርና ሲቢኢ ብር የሚከፈል' : 'Telebirr, CBE & International Wire'}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-amber-400" />
-            <span>{lang === 'am' ? 'ለመላው የዲያስፖራ አባላት ክፍት' : 'Global Diaspora Supported'}</span>
+          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-white/10">
+            <Users className="w-4 h-4 text-amber-400" />
+            <span>{lang === 'am' ? 'ለመላው የዲያስፖራ አባላት ክፍት' : 'Global Community in 50+ Countries'}</span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
-

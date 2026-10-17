@@ -42,31 +42,39 @@ export function CharitySection({ config }: CharitySectionProps) {
   const mediaUrl = config?.mediaUrl || '/images/lmetsdek-charity.jpg';
 
   return (
-    <section id="charity" className="py-20 lg:py-28 relative overflow-hidden bg-slate-900/40 border-t border-slate-800/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl p-8 sm:p-12 lg:p-16 bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-950 border border-amber-500/30 shadow-2xl relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <section id="charity" className="py-24 lg:py-32 relative overflow-hidden border-t border-white/5">
+      {/* Background radial glow */}
+      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[400px] bg-rose-500/10 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-500/10 blur-[130px] pointer-events-none rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="rounded-3xl p-8 sm:p-12 lg:p-16 glass-panel-gold relative overflow-hidden shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                <HeartHandshake className="w-4 h-4" />
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-300 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+                <HeartHandshake className="w-4 h-4 text-rose-400" />
                 <span>{lang === 'am' ? 'በጎ አድራጎትና ማህበራዊ አሻራ' : 'Humanitarian Impact'}</span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] font-display">
                 {heading}
               </h2>
 
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed font-sans">
                 {description}
               </p>
 
-              <div className="space-y-3 pt-2 text-sm text-slate-300">
+              <div className="space-y-3.5 pt-2 text-sm text-slate-200">
                 <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0" />
+                  <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
                   <span>{lang === 'am' ? 'ለአቅመ ደካሞች የመኖሪያ ቤቶችን መገንባት' : 'Building safe shelters for vulnerable families'}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-amber-400 shrink-0" />
+                  <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
                   <span>{lang === 'am' ? 'የህክምና እና የትምህርት ወጪዎችን መሸፈን' : 'Emergency medical funding & child scholarships'}</span>
                 </div>
               </div>
@@ -74,7 +82,7 @@ export function CharitySection({ config }: CharitySectionProps) {
               <div className="pt-4">
                 <Link
                   href="/register"
-                  className="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/25 transition-all hover:scale-105"
+                  className="btn-luxury-gold inline-flex items-center gap-3 px-8 py-4 text-sm"
                 >
                   <span>{lang === 'am' ? 'በአባልነት ይደግፉ' : 'Support Through Membership'}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -83,25 +91,27 @@ export function CharitySection({ config }: CharitySectionProps) {
             </div>
 
             {/* Media Showcase */}
-            <div className="relative rounded-2xl overflow-hidden border border-slate-700 bg-slate-950 aspect-video flex items-center justify-center shadow-xl">
-              {mediaUrl && !imgError ? (
-                <img
-                  src={mediaUrl}
-                  alt="Lmetsdek Charity"
-                  onError={() => setImgError(true)}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="text-center p-8 space-y-3">
-                  <div className="w-16 h-16 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto">
-                    <HeartHandshake className="w-8 h-8" />
+            <div className="relative rounded-2xl overflow-hidden glass-panel aspect-video flex items-center justify-center shadow-2xl p-1">
+              <div className="w-full h-full rounded-xl overflow-hidden bg-slate-950 flex items-center justify-center">
+                {mediaUrl && !imgError ? (
+                  <img
+                    src={mediaUrl}
+                    alt="Lmetsdek Charity"
+                    onError={() => setImgError(true)}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="text-center p-8 space-y-3">
+                    <div className="w-16 h-16 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto border border-rose-500/30">
+                      <HeartHandshake className="w-8 h-8" />
+                    </div>
+                    <h4 className="text-2xl font-black text-white font-display">"ለመጽደቅ"</h4>
+                    <p className="text-xs text-slate-400 max-w-sm">
+                      {lang === 'am' ? 'የኮሜዲያን እሸቱ መለሰ የበጎ አድራጎት ተነሳሽነት' : 'Comedian Eshetu Melese Charity Initiative'}
+                    </p>
                   </div>
-                  <h4 className="text-xl font-black text-slate-100">"ለመጽደቅ"</h4>
-                  <p className="text-xs text-slate-400 max-w-sm">
-                    {lang === 'am' ? 'የኮሜዲያን እሸቱ መለሰ የበጎ አድራጎት ተነሳሽነት' : 'Comedian Eshetu Melese Charity Initiative'}
-                  </p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

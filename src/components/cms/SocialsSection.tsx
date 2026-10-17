@@ -162,24 +162,27 @@ export function SocialsSection({ config }: SocialsSectionProps) {
   };
 
   return (
-    <section id="socials" className="py-16 lg:py-24 relative border-t border-slate-800/80 bg-slate-950/60 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="socials" className="py-20 lg:py-28 relative border-t border-white/5 overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-amber-500/10 blur-[150px] pointer-events-none rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-            <Users2 className="w-4 h-4" />
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
+            <Users2 className="w-4 h-4 text-amber-400" />
             <span>{lang === 'am' ? 'የማህበራዊ ትስስር ገጾች' : 'Social Channels & Community'}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
 
         {/* Social Cards Grid */}
-        <div className={`grid grid-cols-1 sm:grid-cols-2 ${socials.length >= 4 ? 'lg:grid-cols-4' : socials.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'} gap-5 sm:gap-6`}>
+        <div className={`grid grid-cols-1 sm:grid-cols-2 ${socials.length >= 4 ? 'lg:grid-cols-4' : socials.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'} gap-6`}>
           {socials.map((social, idx) => {
             const displayName =
               lang === 'am'
@@ -196,29 +199,29 @@ export function SocialsSection({ config }: SocialsSectionProps) {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative p-6 rounded-3xl bg-slate-900/70 hover:bg-slate-900 border border-slate-800 hover:border-amber-500/40 shadow-xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 flex flex-col justify-between"
+                className="group relative p-7 rounded-3xl glass-panel hover:glass-panel-gold shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-13 h-13 rounded-2xl bg-slate-950/80 border border-white/10 flex items-center justify-center shadow-inner group-hover:scale-110 group-hover:border-amber-500/30 transition-all p-3">
                       {getPlatformIcon(social.platform)}
                     </div>
-                    <span className="p-2 rounded-xl bg-slate-950/60 text-slate-500 group-hover:text-amber-400 transition-colors">
+                    <span className="p-2.5 rounded-xl bg-white/5 text-slate-400 group-hover:text-amber-400 transition-colors">
                       <ExternalLink className="w-4 h-4" />
                     </span>
                   </div>
 
-                  <span className="text-3xl sm:text-4xl font-extrabold text-slate-100 font-mono tracking-tight block">
+                  <span className="text-3xl sm:text-4xl font-black text-white font-mono tracking-tight block">
                     {social.count}
                   </span>
-                  <span className="text-xs sm:text-sm font-semibold text-amber-400 block mt-1 uppercase tracking-wider">
+                  <span className="text-xs sm:text-sm font-bold text-amber-400 block mt-1.5 uppercase tracking-wider">
                     {displayLabel}
                   </span>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-                  <span className="font-bold text-slate-200">{displayName}</span>
-                  <span className="font-mono text-slate-500 truncate max-w-[120px]">{social.handle}</span>
+                <div className="mt-7 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+                  <span className="font-bold text-white group-hover:text-amber-300 transition-colors">{displayName}</span>
+                  <span className="font-mono text-slate-400 truncate max-w-[120px]">{social.handle}</span>
                 </div>
               </a>
             );

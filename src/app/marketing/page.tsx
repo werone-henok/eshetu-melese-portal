@@ -211,18 +211,18 @@ export default function MarketingPage() {
               </div>
 
               {/* Grand Main Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15]">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15] font-display">
                 {lang === 'am' ? (
                   <>
                     “ድምጽ ለሌላቸው ድምጽ እንሁን” <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">
+                    <span className="text-gradient-gold">
                       የኢትዮጵያ ግዙፉ የዲጂታል ሚዲያ እና የተፅዕኖ ማዕከል
                     </span>
                   </>
                 ) : (
                   <>
                     “Voice for the Voiceless” <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500">
+                    <span className="text-gradient-gold">
                       Ethiopia’s Premier Digital Media & Influential Production House
                     </span>
                   </>
@@ -230,7 +230,7 @@ export default function MarketingPage() {
               </h1>
 
               {/* Sub-Headline */}
-              <p className="text-slate-300 text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-3xl mx-auto">
+              <p className="text-slate-300/90 text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-3xl mx-auto font-sans">
                 {lang === 'am'
                   ? 'በኮሜዲያን እሸቱ መለሰ የተመሰረተ፣ ባለፉት 9 ዓመታት በማህበራዊ፣ ባህላዊ እና ኢኮኖሚያዊ ጉዳዮች ላይ ግንዛቤን በመፍጠር፣ ከ7 ሚሊዮን በላይ ንቁ ተከታዮችንና ከ500 ሚሊዮን በላይ እይታዎችን ያስመዘገበ ታዋቂ ተቋም።'
                   : 'Founded by Comedian Eshetu Melese, championing community upliftment, transformative humor, and social change across 9+ years with over 7M+ active followers and 500M+ lifetime views.'}
@@ -240,7 +240,7 @@ export default function MarketingPage() {
               <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                 <a
                   href="#inquiry"
-                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-sm sm:text-base shadow-xl shadow-amber-500/20 hover:scale-[1.02] transition-all flex items-center gap-2"
+                  className="btn-luxury-gold px-8 py-4 text-sm sm:text-base flex items-center gap-2 cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   <span>{lang === 'am' ? 'የማስታወቂያ አጋርነት ይጀምሩ' : 'Launch Brand Campaign'}</span>
@@ -248,7 +248,7 @@ export default function MarketingPage() {
 
                 <a
                   href="#reach"
-                  className="px-6 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-200 font-semibold text-sm sm:text-base transition-all flex items-center gap-2"
+                  className="btn-luxury-ghost px-7 py-4 text-sm sm:text-base flex items-center gap-2"
                 >
                   <TrendingUp className="w-4 h-4 text-amber-400" />
                   <span>{lang === 'am' ? 'የተደራሽነት አሃዞችን ይመልከቱ' : 'View Audience Metrics'}</span>
@@ -259,21 +259,21 @@ export default function MarketingPage() {
             {/* High-Impact Stat Grid Bar */}
             <div className="mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
               {[
-                { number: '7M+', labelEn: 'Active Followers', labelAm: 'ንቁ ተከታዮች', highlight: 'from-amber-500 to-amber-600' },
+                { number: '7M+', labelEn: 'Active Followers', labelAm: 'ንቁ ተከታዮች', highlight: 'from-amber-400 via-amber-300 to-amber-500' },
                 { number: '500M+', labelEn: 'Lifetime Video Views', labelAm: 'አጠቃላይ እይታዎች', highlight: 'from-amber-400 to-yellow-500' },
-                { number: '3.27M+', labelEn: 'YouTube Subscribers', labelAm: 'የዩቲዩብ ቤተሰቦች', highlight: 'from-red-500 to-rose-600' },
-                { number: '9.8M', labelEn: 'Single Video Record', labelAm: 'የአንድ ቪዲዮ ከፍተኛ እይታ', highlight: 'from-purple-400 to-indigo-500' },
-                { number: '50+', labelEn: 'Full-Time Team', labelAm: 'ቋሚ ባለሙያዎች', highlight: 'from-blue-400 to-cyan-500' },
-                { number: '1.406B+', labelEn: 'ETB Mobilized for CSR', labelAm: 'ለበጎ አድራጎት የተሰበሰበ', highlight: 'from-emerald-400 to-teal-500' },
+                { number: '3.27M+', labelEn: 'YouTube Subscribers', labelAm: 'የዩቲዩብ ቤተሰቦች', highlight: 'from-rose-400 to-red-500' },
+                { number: '9.8M', labelEn: 'Single Video Record', labelAm: 'የአንድ ቪዲዮ ከፍተኛ እይታ', highlight: 'from-purple-400 to-indigo-400' },
+                { number: '50+', labelEn: 'Full-Time Team', labelAm: 'ቋሚ ባለሙያዎች', highlight: 'from-blue-400 to-cyan-400' },
+                { number: '1.406B+', labelEn: 'ETB Mobilized for CSR', labelAm: 'ለበጎ አድራጎት የተሰበሰበ', highlight: 'from-emerald-400 to-teal-400' },
               ].map((stat, idx) => (
                 <div
                   key={idx}
-                  className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800/90 backdrop-blur-md hover:border-slate-700 transition-all text-center group"
+                  className="p-5 rounded-2xl glass-panel hover:glass-panel-gold transition-all text-center group hover:-translate-y-1"
                 >
-                  <div className={`text-2xl sm:text-3xl font-black bg-gradient-to-r ${stat.highlight} bg-clip-text text-transparent group-hover:scale-105 transition-transform`}>
+                  <div className={`text-2xl sm:text-3xl font-black bg-gradient-to-r ${stat.highlight} bg-clip-text text-transparent group-hover:scale-105 transition-transform font-mono`}>
                     {stat.number}
                   </div>
-                  <div className="text-xs text-slate-400 mt-1 font-medium">
+                  <div className="text-xs text-slate-300 mt-1.5 font-medium">
                     {lang === 'am' ? stat.labelAm : stat.labelEn}
                   </div>
                 </div>
@@ -967,18 +967,18 @@ export default function MarketingPage() {
         {/* INTERACTIVE INQUIRY FORM: BOOK A CAMPAIGN                    */}
         {/* ============================================================ */}
         <section id="inquiry" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-32">
-          <div className="p-8 sm:p-12 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl relative overflow-hidden">
+          <div className="p-8 sm:p-12 rounded-3xl glass-panel-gold shadow-2xl relative overflow-hidden">
             {/* Subtle Accent Glow */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 blur-[90px] rounded-full pointer-events-none" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/15 blur-[100px] rounded-full pointer-events-none" />
 
-            <div className="text-center max-w-2xl mx-auto mb-8 space-y-2">
-              <span className="px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/25 text-xs font-bold uppercase tracking-wider">
+            <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+              <span className="px-4 py-1.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
                 {lang === 'am' ? 'የማስታወቂያ አጋርነት ማመልከቻ' : 'Corporate Booking Desk'}
               </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+              <h2 className="text-2xl sm:text-4xl font-black text-white font-display tracking-tight">
                 {lang === 'am' ? 'ብራንድዎን በሚሊዮኖች ልብ ውስጥ ይትከሉ' : 'Accelerate Your Brand with Donkey Tube'}
               </h2>
-              <p className="text-slate-400 text-xs sm:text-sm">
+              <p className="text-slate-300/80 text-xs sm:text-sm font-sans leading-relaxed">
                 {lang === 'am'
                   ? 'ከዚህ በታች ያለውን ቅጽ በመሙላት የማስታወቂያ ፍላጎትዎን ያስመዝግቡ። የኮርፖሬት ክፍላችን በ24 ሰዓት ውስጥ ሙሉ የዋጋ ዝርዝርና እቅድ ያቀርብልዎታል ።'
                   : 'Submit your brand inquiry below. Our corporate media desk will review and provide a customized cross-platform proposal within 24 hours.'}
@@ -986,14 +986,14 @@ export default function MarketingPage() {
             </div>
 
             {formSuccess && (
-              <div className="mb-6 p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-sm flex items-center gap-3">
+              <div className="mb-6 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-sm flex items-center gap-3">
                 <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
                 <span>{formSuccess}</span>
               </div>
             )}
 
             {formError && (
-              <div className="mb-6 p-4 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-sm">
+              <div className="mb-6 p-4 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-sm">
                 {formError}
               </div>
             )}
@@ -1010,7 +1010,7 @@ export default function MarketingPage() {
                     value={formState.companyName}
                     onChange={(e) => setFormState({ ...formState, companyName: e.target.value })}
                     placeholder="e.g. Ethiopian Airlines, Kuriftu Resort..."
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 text-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950/70 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 text-sm"
                   />
                 </div>
 
@@ -1021,7 +1021,7 @@ export default function MarketingPage() {
                   <select
                     value={formState.industry}
                     onChange={(e) => setFormState({ ...formState, industry: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-100 focus:outline-none focus:border-amber-500 text-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-950/70 border border-white/10 text-slate-100 focus:outline-none focus:border-amber-400 text-sm"
                   >
                     <option value="Aviation & Finance">Aviation & Finance (አቪዬሽን እና ፋይናንስ)</option>
                     <option value="Tech & Mobility">Technology & Transportation (ቴክኖሎጂ እና ትራንስፖርት)</option>
@@ -1129,7 +1129,7 @@ export default function MarketingPage() {
                 <button
                   type="submit"
                   disabled={formLoading}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold text-sm sm:text-base shadow-xl shadow-amber-500/20 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                  className="w-full btn-luxury-gold py-4 text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
                 >
                   {formLoading ? (
                     <>

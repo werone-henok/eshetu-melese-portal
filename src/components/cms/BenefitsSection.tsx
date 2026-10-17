@@ -75,13 +75,20 @@ export function BenefitsSection({ config }: BenefitsSectionProps) {
   };
 
   return (
-    <section id="benefits" className="py-20 lg:py-28 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight">
+    <section id="benefits" className="py-24 lg:py-32 relative overflow-hidden">
+      {/* Subtle ambient lighting */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-purple-600/10 blur-[160px] pointer-events-none rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            <span>{lang === 'am' ? 'የአባልነት ጠቀሜታዎች' : 'Member Exclusives'}</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400 font-normal">
+          <p className="mt-4 text-base sm:text-lg text-slate-300/90 font-normal max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
@@ -92,17 +99,19 @@ export function BenefitsSection({ config }: BenefitsSectionProps) {
             return (
               <div
                 key={idx}
-                className="group relative p-8 rounded-3xl bg-slate-900/50 hover:bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1.5"
+                className="group relative p-8 rounded-3xl glass-panel hover:glass-panel-gold transition-all duration-300 shadow-xl hover:-translate-y-2 flex flex-col justify-between"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-700/10 border border-amber-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Icon className="w-7 h-7 text-amber-400" />
+                <div>
+                  <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-glow-gold transition-all">
+                    <Icon className="w-7 h-7 text-amber-400 group-hover:text-amber-300 transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-black text-white mb-3 font-display tracking-tight group-hover:text-gradient-gold transition-all">
+                    {lang === 'am' && item.titleAm ? item.titleAm : item.title}
+                  </h3>
+                  <p className="text-sm text-slate-300/80 leading-relaxed font-sans">
+                    {lang === 'am' && item.descAm ? item.descAm : item.desc}
+                  </p>
                 </div>
-                <h3 className="text-xl font-bold text-slate-100 mb-3 group-hover:text-amber-300 transition-colors">
-                  {lang === 'am' && item.titleAm ? item.titleAm : item.title}
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  {lang === 'am' && item.descAm ? item.descAm : item.desc}
-                </p>
               </div>
             );
           })}

@@ -67,17 +67,20 @@ export function FaqSection({ config }: FaqSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-20 lg:py-28 relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>{lang === 'am' ? 'እገዛና ድጋፍ' : 'Support & Help'}</span>
+    <section id="faq" className="py-24 lg:py-32 relative overflow-hidden border-t border-white/5">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/10 blur-[160px] pointer-events-none rounded-full" />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
+            <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+            <span>{lang === 'am' ? 'እገዛና ድጋፍ' : 'Support & Clarity'}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
@@ -88,22 +91,26 @@ export function FaqSection({ config }: FaqSectionProps) {
             return (
               <div
                 key={idx}
-                className="rounded-2xl border border-slate-800/80 bg-slate-900/60 overflow-hidden transition-all duration-200"
+                className={`rounded-2xl transition-all duration-300 overflow-hidden ${
+                  isOpen ? 'glass-panel-gold shadow-glow-gold' : 'glass-panel hover:border-white/20'
+                }`}
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full flex items-center justify-between p-6 text-left text-slate-100 font-bold text-lg hover:text-amber-400 transition-colors"
+                  className="w-full flex items-center justify-between p-6 sm:p-7 text-left text-white font-bold text-base sm:text-lg hover:text-amber-300 transition-colors font-display"
                 >
-                  <span>{(lang === 'am' && faq.qAm) ? faq.qAm : faq.q}</span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-amber-400' : ''
+                  <span className="pr-4">{(lang === 'am' && faq.qAm) ? faq.qAm : faq.q}</span>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                      isOpen ? 'bg-amber-500/20 text-amber-400 rotate-180' : 'bg-white/5 text-slate-400'
                     }`}
-                  />
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
                 </button>
                 {isOpen && (
-                  <div className="px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-800/40 pt-4">
+                  <div className="px-6 sm:px-7 pb-6 sm:pb-7 text-slate-300/90 text-sm sm:text-base leading-relaxed border-t border-white/5 pt-4 font-sans">
                     {(lang === 'am' && faq.aAm) ? faq.aAm : faq.a}
                   </div>
                 )}

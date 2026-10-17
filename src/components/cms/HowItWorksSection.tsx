@@ -56,13 +56,19 @@ export function HowItWorksSection({ config }: HowItWorksProps) {
   const steps = config?.steps || defaultSteps;
 
   return (
-    <section id="how-it-works" className="py-20 lg:py-28 relative bg-slate-950/60 border-t border-slate-800/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight">
+    <section id="how-it-works" className="py-24 lg:py-32 relative overflow-hidden border-t border-white/5">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-purple-600/10 blur-[160px] pointer-events-none rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
+            <span>{lang === 'am' ? 'የአሰራር ቅደም ተከተል' : 'Streamlined Workflow'}</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400">
+          <p className="mt-4 text-base sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
@@ -71,22 +77,28 @@ export function HowItWorksSection({ config }: HowItWorksProps) {
           {steps.map((item, idx) => (
             <div
               key={idx}
-              className="relative p-8 rounded-3xl bg-slate-900/60 border border-slate-800 shadow-xl flex flex-col justify-between"
+              className="relative p-8 sm:p-9 rounded-3xl glass-panel hover:glass-panel-gold shadow-2xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-2"
             >
               <div>
-                <span className="text-5xl font-black text-amber-500/25 font-mono mb-4 block">
-                  {item.step}
-                </span>
-                <h3 className="text-xl font-bold text-slate-100 mb-3">
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-4xl sm:text-5xl font-black text-amber-500/30 group-hover:text-amber-400/60 font-mono transition-colors">
+                    {item.step}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-black text-white mb-3 font-display tracking-tight group-hover:text-amber-200 transition-colors">
                   {lang === 'am' && item.titleAm ? item.titleAm : item.title}
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed">
+                <p className="text-sm text-slate-300/80 leading-relaxed font-sans">
                   {lang === 'am' && item.descAm ? item.descAm : item.desc}
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-slate-800/60 flex items-center gap-2 text-xs font-semibold text-amber-400">
-                <CheckCircle2 className="w-4 h-4" />
+              <div className="mt-8 pt-5 border-t border-white/5 flex items-center gap-2 text-xs font-semibold text-amber-400">
+                <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>{lang === 'am' ? 'ቀጥተኛ የዲጂታል ማረጋገጫ' : 'Zero-Code Verification'}</span>
               </div>
             </div>

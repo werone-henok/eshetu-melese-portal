@@ -88,21 +88,29 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
         'Choose the tier that reflects your passion and dedication to our global mission. Prices update dynamically from CMS.';
 
   return (
-    <section id="tiers" className="py-20 lg:py-28 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="tiers" className="py-24 lg:py-32 relative overflow-hidden">
+      {/* Dynamic Ambient Background Glows */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-purple-600/10 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-amber-500/10 blur-[150px] pointer-events-none rounded-full" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            <span>{lang === 'am' ? 'የአባልነት አማራጮች' : 'Membership Privileges'}</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-400 font-normal">
+          <p className="mt-4 text-base sm:text-lg text-slate-400 font-normal max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
 
         {/* Tiers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-          {tiers.map((tier) => {
+          {tiers.map((tier, idx) => {
             const isFeatured = tier.isFeatured;
             const isShieldOfHonor =
               tier.name.toLowerCase().includes('shield') ||
@@ -121,58 +129,84 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
             return (
               <div
                 key={tier.id}
-                className={`relative flex flex-col justify-between rounded-3xl p-8 transition-all duration-300 ${
-                  isFeatured
-                    ? 'bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-amber-500 shadow-2xl shadow-amber-500/15 lg:-translate-y-2'
-                    : 'bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800 hover:border-slate-700 shadow-xl'
+                className={`relative flex flex-col justify-between rounded-3xl p-8 sm:p-9 transition-all duration-300 ${
+                  isShieldOfHonor
+                    ? 'glass-panel-gold lg:-translate-y-2'
+                    : isFeatured
+                    ? 'glass-panel-violet lg:-translate-y-3'
+                    : 'glass-panel hover:-translate-y-1'
                 }`}
               >
+                {/* Featured Badge */}
                 {isFeatured && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 text-xs font-black uppercase tracking-wider shadow-lg">
-                    <Sparkles className="w-3.5 h-3.5" />
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-violet-600 via-fuchsia-500 to-amber-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-violet-500/25">
+                    <Sparkles className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '4s' }} />
                     <span>{lang === 'am' ? 'ተመራጭ ደረጃ' : 'Most Popular'}</span>
+                  </div>
+                )}
+
+                {isShieldOfHonor && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-slate-950 text-xs font-black uppercase tracking-wider shadow-lg shadow-amber-500/30">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>{lang === 'am' ? 'የክብር ደረጃ' : 'Exclusive VIP'}</span>
                   </div>
                 )}
 
                 <div>
                   {/* Tier Title & Badge Indicator */}
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-slate-100">{localizedTierName}</h3>
-                    <span
-                      className="w-4 h-4 rounded-full shadow-md"
-                      style={{ backgroundColor: tier.badgeColor || '#E5A93C' }}
-                    />
+                    <h3 className="text-2xl font-black text-white font-display tracking-tight">
+                      {localizedTierName}
+                    </h3>
+                    <div className="relative">
+                      <span
+                        className="w-4 h-4 rounded-full block shadow-md"
+                        style={{ backgroundColor: tier.badgeColor || '#E5A93C' }}
+                      />
+                      <span
+                        className="absolute inset-0 rounded-full animate-ping opacity-40"
+                        style={{ backgroundColor: tier.badgeColor || '#E5A93C' }}
+                      />
+                    </div>
                   </div>
 
-                  <p className="text-sm text-slate-400 mb-6 min-h-[40px] leading-relaxed">
+                  <p className="text-sm text-slate-300/90 mb-7 min-h-[44px] leading-relaxed font-sans">
                     {localizedDescription}
                   </p>
 
                   {/* Pricing Display */}
-                  <div className="mb-8 p-4 rounded-2xl bg-slate-950/60 border border-slate-800/80">
+                  <div
+                    className={`mb-8 p-5 rounded-2xl border ${
+                      isShieldOfHonor
+                        ? 'bg-amber-950/20 border-amber-500/30'
+                        : isFeatured
+                        ? 'bg-violet-950/25 border-violet-500/30'
+                        : 'bg-slate-950/50 border-white/5'
+                    }`}
+                  >
                     {isShieldOfHonor ? (
                       <div className="py-1">
-                        <span className="text-2xl font-extrabold text-amber-400 block tracking-wide">
+                        <span className="text-2xl font-black text-gradient-gold block tracking-wide font-display">
                           {lang === 'am' ? 'ልዩ የክብር ደረጃ' : 'Distinction of Honor'}
                         </span>
-                        <span className="text-xs text-slate-400 block mt-1">
-                          {lang === 'am' ? 'በቀጥታ በመነጋገር የሚወሰን' : 'Custom VIP Patron Tier'}
+                        <span className="text-xs text-amber-200/80 block mt-1 font-medium">
+                          {lang === 'am' ? 'በቀጥታ በመነጋገር የሚወሰን' : 'Executive Patron Tier'}
                         </span>
                       </div>
                     ) : (
                       <>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-4xl font-extrabold text-slate-100 font-mono">
+                          <span className="text-4xl sm:text-5xl font-black text-white font-mono tracking-tight">
                             {tier.priceEtb.toLocaleString()}
                           </span>
-                          <span className="text-amber-400 font-bold text-sm uppercase">ETB</span>
+                          <span className="text-amber-400 font-extrabold text-sm uppercase tracking-wider">ETB</span>
                           {tier.priceUsd > 0 && (
-                            <span className="text-slate-400 text-xs ml-auto">
+                            <span className="text-slate-400 text-xs ml-auto font-mono">
                               (~${tier.priceUsd} USD)
                             </span>
                           )}
                         </div>
-                        <span className="text-xs text-slate-400 block mt-1">
+                        <span className="text-xs text-slate-400 block mt-1.5 font-medium">
                           {lang === 'am' ? 'ይፋዊ የአባልነት መዋጮ' : 'Official Member Contribution'}
                         </span>
                       </>
@@ -180,22 +214,30 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
                   </div>
 
                   {/* Perks List */}
-                  <div className="space-y-3 mb-8">
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  <div className="space-y-3.5 mb-8">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
                       {lang === 'am' ? 'የተካተቱ ጥቅሞች' : 'Included Privileges'}
                     </p>
                     {Array.isArray(tier.perks) &&
-                      tier.perks.map((perk, idx) => {
+                      tier.perks.map((perk, pIdx) => {
                         const localizedPerk =
                           lang === 'am' && PERK_TRANSLATIONS[perk]
                             ? PERK_TRANSLATIONS[perk]
                             : perk;
                         return (
-                          <div key={idx} className="flex items-start gap-3 text-sm text-slate-300">
-                            <div className="mt-0.5 w-4 h-4 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-                              <Check className="w-3 h-3" />
+                          <div key={pIdx} className="flex items-start gap-3 text-sm text-slate-200">
+                            <div
+                              className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
+                                isFeatured
+                                  ? 'bg-violet-500/20 text-violet-400'
+                                  : isShieldOfHonor
+                                  ? 'bg-amber-500/20 text-amber-400'
+                                  : 'bg-emerald-500/20 text-emerald-400'
+                              }`}
+                            >
+                              <Check className="w-3 h-3 stroke-[2.5]" />
                             </div>
-                            <span>{localizedPerk}</span>
+                            <span className="leading-snug">{localizedPerk}</span>
                           </div>
                         );
                       })}
@@ -207,19 +249,25 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
                   <button
                     type="button"
                     onClick={() => setIsContactModalOpen(true)}
-                    className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-extrabold text-sm shadow-xl shadow-amber-500/20 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
+                    className="w-full btn-luxury-gold flex items-center justify-center gap-2 py-4 px-6 text-sm cursor-pointer"
                   >
                     <MessageSquareQuote className="w-4 h-4" />
                     <span>{lang === 'am' ? 'እንነጋገር / ያግኙን' : "Let's Talk / Contact Us"}</span>
                   </button>
+                ) : isFeatured ? (
+                  <Link
+                    href={`/register?tier=${tier.id}`}
+                    className="w-full btn-luxury-violet flex items-center justify-center gap-2 py-4 px-6 text-sm"
+                  >
+                    <span>
+                      {tier.ctaText || (lang === 'am' ? `${tier.name} አባል ይሁኑ` : `Join as ${tier.name}`)}
+                    </span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
                 ) : (
                   <Link
                     href={`/register?tier=${tier.id}`}
-                    className={`w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-bold text-sm transition-all ${
-                      isFeatured
-                        ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-lg shadow-amber-500/25 hover:scale-[1.02]'
-                        : 'bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700'
-                    }`}
+                    className="w-full btn-luxury-ghost flex items-center justify-center gap-2 py-4 px-6 text-sm"
                   >
                     <span>
                       {tier.ctaText || (lang === 'am' ? `${tier.name} አባል ይሁኑ` : `Join as ${tier.name}`)}
@@ -235,24 +283,24 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
 
       {/* Shield of Honor / Contact Us VIP Inquiry Modal */}
       {isContactModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg rounded-3xl bg-slate-900 border border-amber-500/40 p-6 sm:p-8 shadow-2xl shadow-amber-500/10">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B0F19]/80 backdrop-blur-xl animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg rounded-3xl glass-panel-gold p-6 sm:p-8 shadow-2xl">
             {/* Close Button */}
             <button
               type="button"
               onClick={() => setIsContactModalOpen(false)}
-              className="absolute top-5 right-5 p-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+              className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Modal Header */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-glow-gold">
                 <Sparkles className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-extrabold text-slate-100">
+                <h3 className="text-xl font-black text-white font-display">
                   {lang === 'am' ? 'የክብር ጋሻ (Shield of Honor) ልዩ ግንኙነት' : 'Shield of Honor VIP Inquiry'}
                 </h3>
                 <p className="text-xs text-amber-400 font-semibold">
@@ -263,10 +311,10 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
 
             {submitted ? (
               <div className="py-8 text-center space-y-3">
-                <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2">
+                <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2 border border-emerald-500/30">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h4 className="text-lg font-bold text-slate-100">
+                <h4 className="text-lg font-bold text-white font-display">
                   {lang === 'am' ? 'መልእክትዎ በተሳካ ሁኔታ ተልኳል!' : 'Inquiry Received Successfully!'}
                 </h4>
                 <p className="text-xs text-slate-300 max-w-xs mx-auto">
@@ -315,7 +363,7 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
                       value={contactName}
                       onChange={(e) => setContactName(e.target.value)}
                       placeholder={lang === 'am' ? 'ስምዎን ያስገቡ' : 'Your name'}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                      className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
                     />
                   </div>
 
@@ -330,7 +378,7 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
                         value={contactPhone}
                         onChange={(e) => setContactPhone(e.target.value)}
                         placeholder="+251 9..."
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
                       />
                     </div>
                     <div>
@@ -342,7 +390,7 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
                         value={contactEmail}
                         onChange={(e) => setContactEmail(e.target.value)}
                         placeholder="email@domain.com"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
                       />
                     </div>
                   </div>
@@ -356,13 +404,13 @@ export function TiersSection({ config, tiers }: TiersSectionProps) {
                       value={contactMessage}
                       onChange={(e) => setContactMessage(e.target.value)}
                       placeholder={lang === 'am' ? 'ስለ ክብር ጋሻ አባልነት ማወቅ የፈለጉትን እዚህ ያካፍሉን...' : 'Inquire about Shield of Honor membership...'}
-                      className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 resize-none"
+                      className="w-full px-4 py-2 rounded-xl bg-slate-950/80 border border-white/10 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/20 transition-all hover:scale-[1.01] active:scale-95"
+                    className="w-full btn-luxury-gold py-3.5 px-4 text-sm cursor-pointer"
                   >
                     {lang === 'am' ? 'ጥያቄዬን ላክ' : 'Submit VIP Inquiry'}
                   </button>
