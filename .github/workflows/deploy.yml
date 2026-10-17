@@ -56,17 +56,7 @@ jobs:
           rsync -av --exclude 'uploads' public/ deploy-staging/public/
           
           # Stamp deployment info for verification
-          cat <<EOF > deploy-staging/public/deploy-status.json
-          {
-            "commit": "${{ github.sha }}",
-            "deployedAt": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
-            "routes": {
-              "marketing": "/marketing",
-              "marketingInquiry": "/api/marketing/inquiry",
-              "systemRestart": "/api/admin/system/restart"
-            }
-          }
-          EOF
+          node -e "const fs = require('fs'); fs.writeFileSync('deploy-staging/public/deploy-status.json', JSON.stringify({commit: '${{ github.sha }}', deployedAt: new Date().toISOString(), routes: {marketing: '/marketing', marketingInquiry: '/api/marketing/inquiry', systemRestart: '/api/admin/system/restart'}}, null, 2));"
 
           # Copy root server and config files
           cp package.json package-lock.json server.js next.config.ts tsconfig.json postcss.config.js tailwind.config.js reset-admin.js deploy-staging/
