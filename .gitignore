@@ -51,3 +51,5 @@ prisma/dev.db
 *-bg-debug.jpg
 
 deploy-package.zip
+deploy.zip
+scratch/

@@ -56,19 +56,19 @@ export function HowItWorksSection({ config }: HowItWorksProps) {
   const steps = config?.steps || defaultSteps;
 
   return (
-    <section id="how-it-works" className="py-24 lg:py-32 relative overflow-hidden border-t border-white/5">
+    <section id="how-it-works" className="py-24 lg:py-32 relative overflow-hidden border-t border-slate-200 dark:border-white/5">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-purple-600/10 blur-[160px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
             <span>{lang === 'am' ? 'የአሰራር ቅደም ተከተል' : 'Streamlined Workflow'}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
@@ -81,23 +81,23 @@ export function HowItWorksSection({ config }: HowItWorksProps) {
             >
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <span className="text-4xl sm:text-5xl font-black text-amber-500/30 group-hover:text-amber-400/60 font-mono transition-colors">
+                  <span className="text-4xl sm:text-5xl font-black text-amber-500/30 group-hover:text-amber-500/60 font-mono transition-colors">
                     {item.step}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                  <div className="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform">
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                 </div>
 
-                <h3 className="text-xl font-black text-white mb-3 font-display tracking-tight group-hover:text-amber-200 transition-colors">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 font-display tracking-tight group-hover:text-amber-600 dark:group-hover:text-amber-200 transition-colors">
                   {lang === 'am' && item.titleAm ? item.titleAm : item.title}
                 </h3>
-                <p className="text-sm text-slate-300/80 leading-relaxed font-sans">
+                <p className="text-sm text-slate-600 dark:text-slate-300/80 leading-relaxed font-sans">
                   {lang === 'am' && item.descAm ? item.descAm : item.desc}
                 </p>
               </div>
 
-              <div className="mt-8 pt-5 border-t border-white/5 flex items-center gap-2 text-xs font-semibold text-amber-400">
+              <div className="mt-8 pt-5 border-t border-slate-100 dark:border-white/5 flex items-center gap-2 text-xs font-semibold text-amber-600 dark:text-amber-400">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>{lang === 'am' ? 'ቀጥተኛ የዲጂታል ማረጋገጫ' : 'Zero-Code Verification'}</span>
               </div>

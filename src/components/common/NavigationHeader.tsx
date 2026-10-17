@@ -18,12 +18,12 @@ export function NavigationHeader() {
   const displayTagline = lang === 'am' ? (branding?.taglineAm || 'ይፋዊ የአባላት ፖርታል') : (branding?.tagline || 'Official Member Portal');
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-2xl bg-[#0B0F19]/85 border-b border-white/[0.08] transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-2xl bg-white/85 dark:bg-[#0B0F19]/85 border-b border-slate-200 dark:border-white/[0.08] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo & Name */}
         <Link href="/" className="flex items-center gap-3.5 group">
           {branding?.logoUrl ? (
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl overflow-hidden border border-amber-400/30 bg-[#0E1526] flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 group-hover:border-amber-400/60 transition-all duration-300 shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl overflow-hidden border border-amber-500/30 bg-amber-50 dark:bg-[#0E1526] flex items-center justify-center shadow-lg shadow-amber-500/10 group-hover:scale-105 group-hover:border-amber-400/60 transition-all duration-300 shrink-0">
               <img
                 src={branding.logoUrl}
                 alt={displayName}
@@ -37,37 +37,37 @@ export function NavigationHeader() {
             </div>
           )}
           <div>
-            <span className="font-heading font-extrabold text-base sm:text-lg lg:text-xl tracking-tight text-white block group-hover:text-amber-300 transition-colors">
+            <span className="font-heading font-extrabold text-base sm:text-lg lg:text-xl tracking-tight text-slate-900 dark:text-white block group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors">
               {displayName}
             </span>
-            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-amber-400/90 font-medium block">
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-amber-600 dark:text-amber-400/90 font-medium block">
               {displayTagline}
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links (Large Screens) */}
-        <nav className="hidden lg:flex items-center gap-1.5 text-sm font-medium text-slate-300 bg-white/[0.03] border border-white/[0.06] rounded-full px-4 py-1.5 shadow-inner backdrop-blur-md">
-          <Link href="/#about" className="px-3 py-1.5 rounded-full hover:text-amber-300 hover:bg-white/[0.06] transition-all">
+        <nav className="hidden lg:flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300 bg-slate-100/80 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.06] rounded-full px-3 py-1.5 shadow-inner backdrop-blur-md">
+          <Link href="/#about" className="px-3 py-1.5 rounded-full hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-200/50 dark:hover:bg-white/[0.06] transition-all">
             {t('nav.about', 'About', 'ስለ እሸቱ')}
           </Link>
-          <Link href="/#charity" className="px-3 py-1.5 rounded-full hover:text-amber-300 hover:bg-white/[0.06] transition-all">
+          <Link href="/#charity" className="px-3 py-1.5 rounded-full hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-200/50 dark:hover:bg-white/[0.06] transition-all">
             {t('nav.charity', 'Lmetsdek Charity', 'ለመጽደቅ በጎ አድራጎት')}
           </Link>
-          <Link href="/#events" className="px-3 py-1.5 rounded-full hover:text-amber-300 hover:bg-white/[0.06] transition-all">
+          <Link href="/#events" className="px-3 py-1.5 rounded-full hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-200/50 dark:hover:bg-white/[0.06] transition-all">
             {t('nav.events', 'Events', 'ዝግጅቶች')}
           </Link>
-          <Link href="/#tiers" className="px-3 py-1.5 rounded-full hover:text-amber-300 hover:bg-white/[0.06] transition-all">
+          <Link href="/#tiers" className="px-3 py-1.5 rounded-full hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-200/50 dark:hover:bg-white/[0.06] transition-all">
             {t('nav.tiers', 'Tiers & Pricing', 'ደረጃዎችና ዋጋ')}
           </Link>
-          <Link href="/membersgallary" className="px-3 py-1.5 rounded-full hover:text-amber-300 hover:bg-white/[0.06] transition-all">
+          <Link href="/membersgallary" className="px-3 py-1.5 rounded-full hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-200/50 dark:hover:bg-white/[0.06] transition-all">
             {t('nav.gallery', 'Members Gallery', 'የአባላት ጋለሪ')}
           </Link>
-          <Link href="/marketing" className="px-3 py-1.5 rounded-full text-violet-300 hover:text-violet-200 hover:bg-violet-500/10 transition-all flex items-center gap-1.5">
-            <Building2 className="w-3.5 h-3.5 text-violet-400" />
+          <Link href="/marketing" className="px-3 py-1.5 rounded-full text-violet-600 dark:text-violet-300 hover:text-violet-700 dark:hover:text-violet-200 hover:bg-violet-500/10 transition-all flex items-center gap-1.5">
+            <Building2 className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
             <span>{lang === 'am' ? 'የድርጅት መገለጫ' : 'Company Profile'}</span>
           </Link>
-          <Link href="/#faq" className="px-3 py-1.5 rounded-full hover:text-amber-300 hover:bg-white/[0.06] transition-all">
+          <Link href="/#faq" className="px-3 py-1.5 rounded-full hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-200/50 dark:hover:bg-white/[0.06] transition-all">
             {t('nav.faq', 'FAQ', 'ተደጋጋሚ ጥያቄዎች')}
           </Link>
         </nav>
@@ -78,11 +78,11 @@ export function NavigationHeader() {
           <button
             type="button"
             onClick={() => setLang(lang === 'en' ? 'am' : 'en')}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-white/[0.1] bg-white/[0.04] hover:bg-white/[0.08] hover:border-amber-400/40 text-xs font-bold text-amber-300 transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 dark:border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] hover:border-amber-500/40 text-xs font-bold text-amber-600 dark:text-amber-300 transition-all shadow-sm"
             title="Switch Language (English / አማርኛ)"
             suppressHydrationWarning
           >
-            <Languages className="w-3.5 h-3.5 text-amber-400" />
+            <Languages className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
             <span>{mounted ? (lang === 'en' ? 'አማርኛ' : 'EN') : 'አማርኛ'}</span>
           </button>
 
@@ -90,7 +90,7 @@ export function NavigationHeader() {
           <button
             type="button"
             onClick={toggleColorMode}
-            className="p-2 rounded-xl border border-white/[0.1] bg-white/[0.04] hover:bg-white/[0.08] hover:border-amber-400/40 text-slate-300 hover:text-amber-300 transition-all shadow-sm"
+            className="p-2 rounded-xl border border-slate-200 dark:border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] hover:border-amber-500/40 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-300 transition-all shadow-sm"
             title="Toggle Theme"
             suppressHydrationWarning
           >
@@ -100,9 +100,9 @@ export function NavigationHeader() {
           {/* Verify Card Link */}
           <Link
             href="/search"
-            className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/[0.1] bg-white/[0.04] hover:bg-white/[0.08] hover:border-violet-400/40 text-slate-200 text-xs font-semibold transition-all shadow-sm"
+            className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-white/[0.1] bg-slate-100 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] hover:border-violet-500/40 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all shadow-sm"
           >
-            <Search className="w-3.5 h-3.5 text-violet-400" />
+            <Search className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
             <span>{t('nav.verify', 'Verify Card', 'ካርድ አረጋግጥ')}</span>
           </Link>
 
@@ -119,7 +119,7 @@ export function NavigationHeader() {
           <Link
             href="/admin/login"
             title="Staff CMS Login"
-            className="hidden sm:flex p-2 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.08] text-slate-400 hover:text-amber-400 transition-all shadow-sm"
+            className="hidden sm:flex p-2 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-100 dark:bg-white/[0.03] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-600 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition-all shadow-sm"
           >
             <LayoutDashboard className="w-4 h-4" />
           </Link>
@@ -128,7 +128,7 @@ export function NavigationHeader() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl border border-white/[0.1] bg-white/[0.05] text-slate-200 hover:text-amber-300 hover:border-amber-400/50 transition-colors focus:outline-none"
+            className="lg:hidden p-2 rounded-xl border border-slate-200 dark:border-white/[0.1] bg-slate-100 dark:bg-white/[0.05] text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 hover:border-amber-400/50 transition-colors focus:outline-none"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -138,69 +138,69 @@ export function NavigationHeader() {
 
       {/* Mobile & Tablet Navigation Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-white/[0.1] bg-[#0B0F19]/98 backdrop-blur-3xl px-4 pt-3 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="lg:hidden border-b border-slate-200 dark:border-white/[0.1] bg-white/95 dark:bg-[#0B0F19]/98 backdrop-blur-3xl px-4 pt-3 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-200 shadow-xl">
           <nav className="flex flex-col space-y-1">
             <Link
               href="/#about"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-amber-300 hover:bg-white/[0.05] transition-colors"
+              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
             >
               {t('nav.about', 'About', 'ስለ እሸቱ')}
             </Link>
             <Link
               href="/#charity"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-amber-300 hover:bg-white/[0.05] transition-colors"
+              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
             >
               {t('nav.charity', 'Lmetsdek Charity', 'ለመጽደቅ በጎ አድራጎት')}
             </Link>
             <Link
               href="/#events"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-amber-300 hover:bg-white/[0.05] transition-colors"
+              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
             >
               {t('nav.events', 'Events', 'ዝግጅቶች')}
             </Link>
             <Link
               href="/#tiers"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-amber-300 hover:bg-white/[0.05] transition-colors"
+              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
             >
               {t('nav.tiers', 'Tiers & Pricing', 'ደረጃዎችና ዋጋ')}
             </Link>
             <Link
               href="/membersgallary"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-amber-300 hover:bg-white/[0.05] transition-colors"
+              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
             >
               {t('nav.gallery', 'Members Gallery', 'የአባላት ጋለሪ')}
             </Link>
             <Link
               href="/marketing"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-violet-300 hover:text-violet-200 hover:bg-violet-500/10 transition-colors flex items-center gap-2"
+              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-violet-600 dark:text-violet-300 hover:text-violet-700 dark:hover:text-violet-200 hover:bg-violet-500/10 transition-colors flex items-center gap-2"
             >
-              <Building2 className="w-4 h-4 text-violet-400" />
+              <Building2 className="w-4 h-4 text-violet-500 dark:text-violet-400" />
               <span>{lang === 'am' ? 'የድርጅት መገለጫ (Marketing)' : 'Company Profile (Marketing)'}</span>
             </Link>
             <Link
               href="/#faq"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-amber-300 hover:bg-white/[0.05] transition-colors"
+              className="px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
             >
               {t('nav.faq', 'FAQ', 'ተደጋጋሚ ጥያቄዎች')}
             </Link>
             <Link
               href="/search"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:text-violet-300 hover:bg-white/[0.05] transition-colors"
+              className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-300 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
             >
-              <Search className="w-4 h-4 text-violet-400" />
+              <Search className="w-4 h-4 text-violet-500 dark:text-violet-400" />
               <span>{t('nav.verify', 'Verify Card', 'ካርድ አረጋግጥ')}</span>
             </Link>
           </nav>
 
-          <div className="pt-3 border-t border-white/[0.08] flex flex-col gap-2">
+          <div className="pt-3 border-t border-slate-200 dark:border-white/[0.08] flex flex-col gap-2">
             <Link
               href="/register"
               onClick={() => setMobileMenuOpen(false)}
@@ -213,7 +213,7 @@ export function NavigationHeader() {
             <Link
               href="/admin/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-slate-300 hover:text-amber-300 text-xs font-medium"
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-slate-100 dark:bg-white/[0.03] text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-300 text-xs font-medium"
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
               <span>{t('nav.staffLogin', 'Staff / Admin Portal', 'የሰራተኞች / የአድሚን መግቢያ')}</span>

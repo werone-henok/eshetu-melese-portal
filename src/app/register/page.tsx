@@ -160,12 +160,12 @@ function RegisterForm() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 sm:p-10 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-2xl backdrop-blur-xl">
+    <div className="max-w-3xl mx-auto p-6 sm:p-10 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-2xl backdrop-blur-xl">
       <div className="text-center mb-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight font-display">
           {lang === 'am' ? 'ለአባልነት ይመዝገቡ' : 'Register for Membership'}
         </h1>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
           {lang === 'am'
             ? 'መረጃዎን ያስገቡና የክፍያ ደረሰኝ በማያያዝ ይፋዊውን የዲጂታል ካርድዎን ያግኙ።'
             : 'Enter your details and submit your payment proof to receive your official digital pass.'}
@@ -173,7 +173,7 @@ function RegisterForm() {
       </div>
 
       {error && (
-        <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3 text-rose-300 text-sm">
+        <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3 text-rose-700 dark:text-rose-300 text-sm">
           <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
@@ -182,8 +182,8 @@ function RegisterForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Tier Selector */}
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-2">
-            {lang === 'am' ? 'የአባልነት ደረጃ ይምረጡ' : 'Select Membership Tier'} <span className="text-amber-400">*</span>
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+            {lang === 'am' ? 'የአባልነት ደረጃ ይምረጡ' : 'Select Membership Tier'} <span className="text-amber-500">*</span>
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {tiers.map((t) => {
@@ -195,8 +195,8 @@ function RegisterForm() {
                   onClick={() => setSelectedTierId(t.id)}
                   className={`p-3.5 rounded-xl text-left border transition-all flex flex-col justify-between ${
                     isSelected
-                      ? 'border-amber-500 bg-amber-500/15 text-slate-100 shadow-md'
-                      : 'border-slate-800 bg-slate-950/60 text-slate-300 hover:border-slate-700'
+                      ? 'border-amber-500 bg-amber-500/15 text-slate-900 dark:text-slate-100 shadow-md ring-1 ring-amber-500'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
@@ -206,7 +206,7 @@ function RegisterForm() {
                       style={{ backgroundColor: t.badgeColor || '#E5A93C' }}
                     />
                   </div>
-                  <span className="font-mono text-xs font-semibold text-amber-400">
+                  <span className="font-mono text-xs font-semibold text-amber-600 dark:text-amber-400">
                     {t.priceEtb.toLocaleString()} ETB
                   </span>
                 </button>
@@ -217,8 +217,8 @@ function RegisterForm() {
 
         {/* Full Name */}
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
-            {lang === 'am' ? 'ሙሉ ስም' : 'Full Name'} <span className="text-amber-400">*</span>
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
+            {lang === 'am' ? 'ሙሉ ስም' : 'Full Name'} <span className="text-amber-500">*</span>
           </label>
           <input
             type="text"
@@ -226,7 +226,7 @@ function RegisterForm() {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             placeholder={lang === 'am' ? 'ለምሳሌ፡ አበበ ከበደ' : 'e.g. Abebe Kebede'}
-            className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
+            className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
           />
         </div>
 
@@ -243,7 +243,7 @@ function RegisterForm() {
 
         {/* Email Address */}
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1.5">
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
             {lang === 'am' ? 'የኢሜይል አድራሻ (አስገዳጅ አይደለም)' : 'Email Address (Optional)'}
           </label>
           <input
@@ -251,19 +251,19 @@ function RegisterForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="name@example.com"
-            className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-400"
+            className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500"
           />
         </div>
 
         {/* Payment Account Instructions Card */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-slate-200">
-          <div className="flex items-center gap-2.5 mb-2.5 text-amber-400 font-bold text-sm">
+        <div className="p-5 sm:p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-slate-800 dark:text-slate-200">
+          <div className="flex items-center gap-2.5 mb-2.5 text-amber-700 dark:text-amber-400 font-bold text-sm">
             <ShieldCheck className="w-5 h-5 shrink-0" />
             <span>
               {lang === 'am' ? 'የክፍያ መመሪያ እና የባንክ ሂሳብ ቁጥሮች' : 'Payment Instructions & Bank / Telebirr Details'}
             </span>
           </div>
-          <div className="text-xs sm:text-sm text-slate-300 whitespace-pre-line leading-relaxed font-medium">
+          <div className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 whitespace-pre-line leading-relaxed font-medium">
             {lang === 'am'
               ? (branding.paymentInstructionsAm || branding.paymentInstructions || 'እባክዎ የአባልነት ክፍያዎን በኢትዮጵያ ንግድ ባንክ (CBE)፡ 1000234567890 ወይም በቴሌብር (Telebirr)፡ 0911234567 ገቢ ያድርጉ። በመቀጠል የደረሰኙን ስክሪንሾት ከዚህ በታች ያያይዙ።')
               : (branding.paymentInstructions || 'Please deposit the membership fee to Commercial Bank of Ethiopia (CBE): 1000234567890 or Telebirr: 0911234567. Then upload your transfer receipt or screenshot below.')}
@@ -274,10 +274,10 @@ function RegisterForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
           {/* Profile Photo */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
               {lang === 'am' ? 'የአባል ፎቶ (ለካርዱ የሚሆን)' : 'Member Photo (For Badge)'}
             </label>
-            <div className="relative border-2 border-dashed border-slate-700 hover:border-slate-500 rounded-2xl p-4 text-center cursor-pointer bg-slate-950/40 transition-colors">
+            <div className="relative border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 rounded-2xl p-4 text-center cursor-pointer bg-slate-50/70 dark:bg-slate-950/40 transition-colors">
               <input
                 type="file"
                 accept="image/*"
@@ -285,7 +285,7 @@ function RegisterForm() {
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
               <Upload className="w-6 h-6 text-slate-400 mx-auto mb-2" />
-              <p className="text-xs text-slate-300 font-medium truncate">
+              <p className="text-xs text-slate-600 dark:text-slate-300 font-medium truncate">
                 {photoFile
                   ? photoFile.name
                   : (lang === 'am' ? 'የቁም ፎቶ ይምረጡ (JPG, PNG)' : 'Upload portrait photo (JPG, PNG)')}
@@ -295,10 +295,10 @@ function RegisterForm() {
 
           {/* Payment Receipt */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1.5">
-              {lang === 'am' ? 'የክፍያ ደረሰኝ / ስክሪንሾት' : 'Payment Receipt / Screenshot'} <span className="text-amber-400">*</span>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
+              {lang === 'am' ? 'የክፍያ ደረሰኝ / ስክሪንሾት' : 'Payment Receipt / Screenshot'} <span className="text-amber-500">*</span>
             </label>
-            <div className="relative border-2 border-dashed border-amber-500/40 hover:border-amber-500 rounded-2xl p-4 text-center cursor-pointer bg-slate-950/40 transition-colors">
+            <div className="relative border-2 border-dashed border-amber-500/40 hover:border-amber-500 rounded-2xl p-4 text-center cursor-pointer bg-amber-500/5 dark:bg-slate-950/40 transition-colors">
               <input
                 type="file"
                 accept="image/*,.pdf"
@@ -306,8 +306,8 @@ function RegisterForm() {
                 onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
-              <Upload className="w-6 h-6 text-amber-400 mx-auto mb-2" />
-              <p className="text-xs text-amber-300 font-medium truncate">
+              <Upload className="w-6 h-6 text-amber-500 dark:text-amber-400 mx-auto mb-2" />
+              <p className="text-xs text-amber-700 dark:text-amber-300 font-medium truncate">
                 {receiptFile
                   ? receiptFile.name
                   : (lang === 'am' ? 'የደረሰኝ ማረጋገጫ ይምረጡ (JPG, PNG, PDF)' : 'Upload receipt proof (JPG, PNG, PDF)')}
@@ -320,7 +320,7 @@ function RegisterForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-base shadow-xl shadow-amber-500/25 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-base shadow-xl shadow-amber-500/25 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
         >
           {loading ? (
             <>
@@ -345,7 +345,7 @@ function RegisterForm() {
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 transition-colors duration-300">
       <NavigationHeader />
       <div className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8">
         <Suspense fallback={<div className="text-center text-slate-400">Loading form...</div>}>

@@ -81,14 +81,14 @@ export function BenefitsSection({ config }: BenefitsSectionProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-md">
+            <Zap className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
             <span>{lang === 'am' ? 'የአባልነት ጠቀሜታዎች' : 'Member Exclusives'}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300/90 font-normal max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300/90 font-normal max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
@@ -103,12 +103,12 @@ export function BenefitsSection({ config }: BenefitsSectionProps) {
               >
                 <div>
                   <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-glow-gold transition-all">
-                    <Icon className="w-7 h-7 text-amber-400 group-hover:text-amber-300 transition-colors" />
+                    <Icon className="w-7 h-7 text-amber-500 dark:text-amber-400 group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors" />
                   </div>
-                  <h3 className="text-xl font-black text-white mb-3 font-display tracking-tight group-hover:text-gradient-gold transition-all">
+                  <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 font-display tracking-tight group-hover:text-gradient-gold transition-all">
                     {lang === 'am' && item.titleAm ? item.titleAm : item.title}
                   </h3>
-                  <p className="text-sm text-slate-300/80 leading-relaxed font-sans">
+                  <p className="text-sm text-slate-600 dark:text-slate-300/80 leading-relaxed font-sans">
                     {lang === 'am' && item.descAm ? item.descAm : item.desc}
                   </p>
                 </div>

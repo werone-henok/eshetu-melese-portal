@@ -11,8 +11,15 @@ const zipPath = path.join(__dirname, 'deploy.zip');
 if (fs.existsSync(zipPath)) {
   try {
     console.log('📦 Found deploy.zip, auto-extracting bundle...');
-    execSync('unzip -o deploy.zip', { cwd: __dirname, stdio: 'inherit' });
-    fs.unlinkSync(zipPath);
+    try {
+      execSync('unzip -o deploy.zip', { cwd: __dirname, stdio: 'inherit' });
+    } catch (unzipErr) {
+      console.log('unzip binary failed or not found, falling back to python3 zipfile...');
+      execSync('python3 -c "import zipfile; zipfile.ZipFile(\'deploy.zip\').extractall(\'.\')"', { cwd: __dirname, stdio: 'inherit' });
+    }
+    if (fs.existsSync(zipPath)) {
+      fs.unlinkSync(zipPath);
+    }
     console.log('✅ deploy.zip extracted successfully!');
   } catch (err) {
     console.error('Failed to extract deploy.zip:', err);

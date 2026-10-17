@@ -41,7 +41,7 @@ export function AboutSection({ config }: AboutSectionProps) {
   const mediaUrl = config?.mediaUrl || '/images/eshetu-portrait.png';
 
   return (
-    <section id="about" className="py-24 lg:py-32 relative overflow-hidden border-t border-white/5">
+    <section id="about" className="py-24 lg:py-32 relative overflow-hidden border-t border-slate-200 dark:border-white/5">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-amber-500/10 blur-[150px] pointer-events-none rounded-full" />
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[400px] h-[400px] bg-purple-600/10 blur-[150px] pointer-events-none rounded-full" />
@@ -77,29 +77,29 @@ export function AboutSection({ config }: AboutSectionProps) {
 
           {/* Bio & Highlights */}
           <div className="space-y-7">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider shadow-sm backdrop-blur-md">
-              <Mic className="w-3.5 h-3.5 text-amber-400" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider shadow-sm backdrop-blur-md">
+              <Mic className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
               <span>{lang === 'am' ? 'የህይወት ጉዞ' : 'The Visionary'}</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] font-display">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15] font-display">
               {heading}
             </h2>
 
-            <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed font-normal font-sans">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300/90 leading-relaxed font-normal font-sans">
               {bio}
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-slate-200 dark:border-white/10">
               <div className="p-5 rounded-2xl glass-panel-gold">
                 <span className="text-3xl font-black text-gradient-gold font-mono block">3.2M+</span>
-                <span className="text-xs text-slate-300 font-medium block mt-1">
+                <span className="text-xs text-slate-600 dark:text-slate-300 font-medium block mt-1">
                   {lang === 'am' ? 'ተከታዮችና ተመልካቾች' : 'Subscribers & Global Fans'}
                 </span>
               </div>
               <div className="p-5 rounded-2xl glass-panel-violet">
                 <span className="text-3xl font-black text-gradient-violet font-mono block">10+ Yrs</span>
-                <span className="text-xs text-slate-300 font-medium block mt-1">
+                <span className="text-xs text-slate-600 dark:text-slate-300 font-medium block mt-1">
                   {lang === 'am' ? 'የኪነ-ጥበብ አገልግሎት' : 'Artistic & Community Leadership'}
                 </span>
               </div>

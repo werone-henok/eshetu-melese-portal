@@ -69,21 +69,21 @@ export function EventsSection({ config }: EventsSectionProps) {
   const events = config?.events || defaultEvents;
 
   return (
-    <section id="events" className="py-24 lg:py-32 relative overflow-hidden border-t border-white/5">
+    <section id="events" className="py-24 lg:py-32 relative overflow-hidden border-t border-slate-200 dark:border-white/5">
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[400px] bg-amber-500/10 blur-[160px] pointer-events-none rounded-full" />
       <div className="absolute bottom-10 right-1/4 w-[450px] h-[450px] bg-purple-600/10 blur-[150px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm backdrop-blur-md">
-            <Calendar className="w-3.5 h-3.5 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm backdrop-blur-md">
+            <Calendar className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
             <span>{lang === 'am' ? 'የቀጥታ መድረክ ዝግጅቶች' : 'Live Performances'}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight font-display">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight font-display">
             {heading}
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300/90 max-w-2xl mx-auto leading-relaxed">
             {subheading}
           </p>
         </div>
@@ -96,28 +96,28 @@ export function EventsSection({ config }: EventsSectionProps) {
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <span className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono text-xs font-bold tracking-wider">
+                  <span className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-300 font-mono text-xs font-bold tracking-wider">
                     {ev.badge || 'Upcoming'}
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                  <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform">
                     <Ticket className="w-4 h-4" />
                   </div>
                 </div>
 
-                <h3 className="text-xl font-black text-white mb-3 font-display tracking-tight group-hover:text-amber-200 transition-colors">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 font-display tracking-tight group-hover:text-amber-600 dark:group-hover:text-amber-200 transition-colors">
                   {lang === 'am' && ev.titleAm ? ev.titleAm : ev.title}
                 </h3>
 
-                <p className="text-xs text-slate-300/80 mb-6 leading-relaxed font-sans min-h-[48px]">
+                <p className="text-xs text-slate-600 dark:text-slate-300/80 mb-6 leading-relaxed font-sans min-h-[48px]">
                   {ev.description}
                 </p>
 
-                <div className="space-y-2.5 mb-7 text-xs text-slate-300 font-medium p-4 rounded-2xl bg-slate-950/40 border border-white/5">
-                  <div className="flex items-center gap-2.5 text-amber-300">
-                    <Calendar className="w-4 h-4 shrink-0 text-amber-400" />
+                <div className="space-y-2.5 mb-7 text-xs text-slate-700 dark:text-slate-300 font-medium p-4 rounded-2xl bg-slate-100 dark:bg-slate-950/40 border border-slate-200 dark:border-white/5">
+                  <div className="flex items-center gap-2.5 text-amber-700 dark:text-amber-300">
+                    <Calendar className="w-4 h-4 shrink-0 text-amber-500 dark:text-amber-400" />
                     <span dangerouslySetInnerHTML={{ __html: ev.date }} />
                   </div>
-                  <div className="flex items-center gap-2.5 text-slate-400">
+                  <div className="flex items-center gap-2.5 text-slate-500 dark:text-slate-400">
                     <MapPin className="w-4 h-4 shrink-0 text-slate-400" />
                     <span>{ev.location}</span>
                   </div>

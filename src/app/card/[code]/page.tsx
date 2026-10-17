@@ -62,28 +62,28 @@ export default function MemberCardDetailsPage({ params }: { params: Promise<{ co
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100">
       <NavigationHeader />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link
           href="/search"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-amber-400 transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-amber-600 dark:text-slate-400 dark:hover:text-amber-400 transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{lang === 'am' ? 'ወደ ካርድ ማረጋገጫ ተመለስ' : 'Back to Verification Search'}</span>
         </Link>
 
         {loading && (
-          <div className="text-center py-20 text-slate-400">
+          <div className="text-center py-20 text-slate-500 dark:text-slate-400">
             {lang === 'am' ? 'የዲጂታል ካርዱ እየተጫነ ነው...' : 'Loading digital pass...'}
           </div>
         )}
 
         {error && (
-          <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 text-center">
-            <h2 className="text-xl font-bold text-rose-400 mb-2">{error}</h2>
-            <p className="text-sm text-slate-400">
+          <div className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-xl">
+            <h2 className="text-xl font-bold text-rose-500 dark:text-rose-400 mb-2">{error}</h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               {lang === 'am'
                 ? `የአባልነት መለያ "${code}" አልተረጋገጠም ወይም አልተገኘም።`
                 : `The membership code "${code}" may be pending verification or does not exist.`}
@@ -94,16 +94,16 @@ export default function MemberCardDetailsPage({ params }: { params: Promise<{ co
         {member && (
           <div className="space-y-10">
             {/* Card Showcase Container */}
-            <div className="rounded-3xl p-6 sm:p-10 bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800 mb-8">
+            <div className="rounded-3xl p-6 sm:p-10 bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 shadow-xl dark:shadow-2xl backdrop-blur-xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-800 mb-8">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                    <ShieldCheck className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                       {lang === 'am' ? 'ይፋዊ የተረጋገጠ ባጅ' : 'Official Cryptographic Badge'}
                     </span>
                   </div>
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100">
                     {member.fullName}
                   </h1>
                 </div>
@@ -130,7 +130,7 @@ export default function MemberCardDetailsPage({ params }: { params: Promise<{ co
               </div>
 
               {/* Download Buttons */}
-              <div className="mt-8 pt-6 border-t border-slate-800 flex flex-wrap items-center justify-center gap-4">
+              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-center gap-4">
                 <a
                   href={`/api/cards/download/${encodeURIComponent(member.membershipCode)}`}
                   download={`Eshetu-Melese-Card-${member.membershipCode}.png`}
@@ -140,13 +140,12 @@ export default function MemberCardDetailsPage({ params }: { params: Promise<{ co
                   <span>{lang === 'am' ? 'ባጁን በከፍተኛ ጥራት (PNG) አውርድ' : 'Download High-Res PNG'}</span>
                 </a>
 
-
                 <button
                   type="button"
                   onClick={copyLink}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition-all"
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-sm font-semibold transition-all"
                 >
-                  <Share2 className="w-4 h-4 text-amber-400" />
+                  <Share2 className="w-4 h-4 text-amber-500 dark:text-amber-400" />
                   <span>
                     {copied
                       ? (lang === 'am' ? 'ሊንኩ ተገልብጧል!' : 'Link Copied!')
@@ -157,8 +156,8 @@ export default function MemberCardDetailsPage({ params }: { params: Promise<{ co
             </div>
 
             {/* Social Share Box */}
-            <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 text-center">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">
+            <div className="p-6 rounded-3xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-lg text-center">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4">
                 {lang === 'am' ? 'ይፋዊውን ባጅ በማህበራዊ ሚዲያ ያጋሩ' : 'Share Official Badge On Social Media'}
               </h3>
               <div className="flex flex-wrap items-center justify-center gap-4">

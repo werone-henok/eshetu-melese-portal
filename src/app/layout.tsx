@@ -27,7 +27,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="min-h-full bg-[#0B0F19] text-slate-100 dark:bg-[#0B0F19] dark:text-slate-100 flex flex-col font-sans transition-colors duration-300 selection:bg-amber-500/30 selection:text-amber-200"
+        className="min-h-full bg-slate-50 text-slate-900 dark:bg-[#0B0F19] dark:text-slate-100 flex flex-col font-sans transition-colors duration-300 selection:bg-amber-500/30 selection:text-amber-200"
         suppressHydrationWarning
       >
         <AppSettingsProvider>

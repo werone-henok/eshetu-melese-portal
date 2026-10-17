@@ -75,13 +75,13 @@ export function HeroSection({ config }: HeroProps) {
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 backdrop-blur-xl mb-8 shadow-glow-gold hover:border-amber-400/50 transition-all cursor-default"
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 dark:border-amber-400/30 dark:bg-amber-400/10 backdrop-blur-xl mb-8 shadow-glow-gold hover:border-amber-400/50 transition-all cursor-default"
         >
-          <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
-          <span className="text-xs sm:text-sm font-bold text-amber-200 tracking-wider uppercase font-heading">
+          <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-300 animate-pulse" />
+          <span className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-200 tracking-wider uppercase font-heading">
             {badgeText}
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 animate-ping" />
         </motion.div>
 
         {/* Dynamic CMS Headline */}
@@ -89,7 +89,7 @@ export function HeroSection({ config }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="font-heading text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-white max-w-5xl mx-auto leading-[1.08] sm:leading-[1.12]"
+          className="font-heading text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight text-slate-900 dark:text-white max-w-5xl mx-auto leading-[1.08] sm:leading-[1.12]"
         >
           {headline.split(' ').map((word, i) =>
             ['Official', 'Eshetu', 'Melese', 'Community', 'Verified', 'እሸቱ', 'መለሰ'].some((highlight) =>
@@ -112,7 +112,7 @@ export function HeroSection({ config }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl text-slate-300/90 max-w-3xl mx-auto font-normal leading-relaxed"
+          className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-300/90 max-w-3xl mx-auto font-normal leading-relaxed"
         >
           {subheadline}
         </motion.p>
@@ -125,7 +125,7 @@ export function HeroSection({ config }: HeroProps) {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-10 mb-6 max-w-4xl mx-auto rounded-3xl overflow-hidden p-1.5 bg-gradient-to-b from-amber-400/30 via-violet-500/20 to-transparent shadow-2xl shadow-violet-950/40"
           >
-            <div className="rounded-[22px] overflow-hidden bg-charcoal-950 border border-white/10">
+            <div className="rounded-[22px] overflow-hidden bg-slate-900 dark:bg-charcoal-950 border border-slate-200 dark:border-white/10">
               <img
                 src={mediaUrl}
                 alt={headline}
@@ -154,7 +154,7 @@ export function HeroSection({ config }: HeroProps) {
             href={ctaSecondaryUrl}
             className="btn-luxury-ghost w-full sm:w-auto text-base sm:text-lg group"
           >
-            <QrCode className="w-5 h-5 text-violet-400 group-hover:scale-110 transition-transform" />
+            <QrCode className="w-5 h-5 text-violet-500 dark:text-violet-400 group-hover:scale-110 transition-transform" />
             <span>{ctaSecondaryText}</span>
           </Link>
         </motion.div>
@@ -164,18 +164,18 @@ export function HeroSection({ config }: HeroProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.45 }}
-          className="mt-14 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-slate-300 font-medium"
+          className="mt-14 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium"
         >
-          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-white/10">
-            <CheckCircle2 className="w-4 h-4 text-amber-400" />
+          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-slate-200 dark:border-white/10">
+            <CheckCircle2 className="w-4 h-4 text-amber-500 dark:text-amber-400" />
             <span>{lang === 'am' ? 'ፈጣን የQR ማረጋገጫ' : 'Instant Cryptographic Verification'}</span>
           </div>
-          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-white/10">
-            <CheckCircle2 className="w-4 h-4 text-violet-400" />
+          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-slate-200 dark:border-white/10">
+            <CheckCircle2 className="w-4 h-4 text-violet-500 dark:text-violet-400" />
             <span>{lang === 'am' ? 'በቴሌብርና ሲቢኢ ብር የሚከፈል' : 'Telebirr, CBE & International Wire'}</span>
           </div>
-          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-white/10">
-            <Users className="w-4 h-4 text-amber-400" />
+          <div className="glass-panel px-4 py-2 rounded-full flex items-center gap-2 border-slate-200 dark:border-white/10">
+            <Users className="w-4 h-4 text-amber-500 dark:text-amber-400" />
             <span>{lang === 'am' ? 'ለመላው የዲያስፖራ አባላት ክፍት' : 'Global Community in 50+ Countries'}</span>
           </div>
         </motion.div>

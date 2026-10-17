@@ -267,14 +267,14 @@ function GalleryContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
           <Award className="w-3.5 h-3.5" />
           <span>{t('gallery.badge', 'Official Community Registry', 'ይፋዊ የአባላት መዝገብ')}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
           {t('gallery.title', 'Members Gallery & Digital Passes', 'የአባላት ጋለሪ እና ዲጂታል ካርዶች')}
         </h1>
-        <p className="mt-4 text-base sm:text-lg text-slate-400">
+        <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400">
           {t(
             'gallery.desc',
             'Explore the community directory of verified patrons and fans. Search below using your name, phone number, email address, or membership code.',
@@ -286,7 +286,7 @@ function GalleryContent() {
       {/* Search Input Bar */}
       <div className="max-w-2xl mx-auto mb-10">
         <form onSubmit={handleSearchSubmit} className="relative" suppressHydrationWarning>
-          <div className="flex items-center bg-slate-900/90 border-2 border-slate-700 hover:border-amber-500/50 focus-within:border-amber-400 rounded-2xl p-2 shadow-2xl transition-all">
+          <div className="flex items-center bg-white dark:bg-slate-900/90 border-2 border-slate-300 dark:border-slate-700 hover:border-amber-500/50 focus-within:border-amber-500 rounded-2xl p-2 shadow-lg dark:shadow-2xl transition-all">
             <Search className="w-5 h-5 text-slate-400 ml-3 shrink-0" />
             <input
               type="text"
@@ -297,7 +297,7 @@ function GalleryContent() {
                 'Search by Full Name, Phone Number, Email, or Member Code...',
                 'በስም፣ በስልክ ቁጥር፣ በኢሜይል ወይም በካርድ መለያ ይፈልጉ...'
               )}
-              className="w-full px-4 py-2.5 bg-transparent text-slate-100 placeholder-slate-500 text-sm focus:outline-none"
+              className="w-full px-4 py-2.5 bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none"
               suppressHydrationWarning
             />
             {query && (
@@ -307,7 +307,7 @@ function GalleryContent() {
                   setQuery('');
                   fetchMembers('');
                 }}
-                className="text-xs text-slate-400 hover:text-slate-200 px-2"
+                className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 px-2"
                 suppressHydrationWarning
               >
                 Clear
@@ -342,7 +342,7 @@ function GalleryContent() {
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${
                   activeTier === tier
                     ? 'bg-amber-500 text-slate-950 shadow-md scale-105'
-                    : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200'
+                    : 'bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 shadow-sm'
                 }`}
               >
                 {tier === 'ALL' ? t('gallery.allTiers', 'All Tiers', 'ሁሉም ደረጃዎች') : tier}
@@ -355,18 +355,18 @@ function GalleryContent() {
       {/* Loading State */}
       {loading ? (
         <div className="py-24 text-center">
-          <Loader2 className="w-8 h-8 text-amber-400 animate-spin mx-auto mb-3" />
-          <p className="text-sm text-slate-400">
+          <Loader2 className="w-8 h-8 text-amber-500 dark:text-amber-400 animate-spin mx-auto mb-3" />
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             {lang === 'am' ? 'የተረጋገጡ የአባላት ዲጂታል ካርዶች እየተጫኑ ነው...' : 'Loading verified member digital cards...'}
           </p>
         </div>
       ) : filtered.length === 0 ? (
-        <div className="max-w-md mx-auto text-center py-16 px-6 rounded-3xl bg-slate-900/60 border border-slate-800">
-          <AlertCircle className="w-10 h-10 text-amber-400 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-slate-200">
+        <div className="max-w-md mx-auto text-center py-16 px-6 rounded-3xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 shadow-xl">
+          <AlertCircle className="w-10 h-10 text-amber-500 dark:text-amber-400 mx-auto mb-3" />
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200">
             {lang === 'am' ? 'ምንም አባል አልተገኘም' : 'No Members Found'}
           </h3>
-          <p className="text-xs text-slate-400 mt-2">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">
             {lang === 'am'
               ? `በ"${query}" የተገኘ አባል የለም። እባክዎ ስልክ ቁጥርዎን፣ ስምዎን ወይም ኢሜይልዎን በሌላ የፊደል አጻጻፍ ይሞክሩ።`
               : `We couldn't find any verified member matching "${query}". Try searching with an alternate phone number, name spelling, or email.`}
@@ -375,19 +375,19 @@ function GalleryContent() {
       ) : (
         /* Member Card Gallery Grid */
         <div>
-          <div className="flex items-center justify-between mb-6 text-xs text-slate-400 px-2 font-medium">
+          <div className="flex items-center justify-between mb-6 text-xs text-slate-500 dark:text-slate-400 px-2 font-medium">
             <span>
               {lang === 'am' ? (
                 <>
-                  <strong className="text-slate-200">{filtered.length}</strong> ይፋዊ የአባላት ዲጂታል ካርዶች እየታዩ ነው
+                  <strong className="text-slate-800 dark:text-slate-200">{filtered.length}</strong> ይፋዊ የአባላት ዲጂታል ካርዶች እየታዩ ነው
                 </>
               ) : (
                 <>
-                  Showing <strong className="text-slate-200">{filtered.length}</strong> official member digital passes
+                  Showing <strong className="text-slate-800 dark:text-slate-200">{filtered.length}</strong> official member digital passes
                 </>
               )}
             </span>
-            <span className="flex items-center gap-1 text-emerald-400">
+            <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold">
               <ShieldCheck className="w-3.5 h-3.5" />
               {lang === 'am' ? 'የተረጋገጠ ዲጂታል ካርድ' : 'Cryptographically Verified'}
             </span>
@@ -397,13 +397,13 @@ function GalleryContent() {
             {filtered.map((member) => (
               <div
                 key={member.membershipCode}
-                className="group flex flex-col justify-between p-5 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1"
+                className="group flex flex-col justify-between p-5 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 hover:border-amber-500/50 transition-all duration-300 shadow-lg dark:shadow-xl hover:shadow-2xl dark:hover:shadow-amber-500/10 hover:-translate-y-1"
               >
                 {/* Top Info Bar */}
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800/80 mb-4">
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                       {lang === 'am' ? 'የተረጋገጠ' : 'Verified'}
                     </span>
                   </div>
@@ -430,18 +430,18 @@ function GalleryContent() {
                 </div>
 
                 {/* Card Quick Action Toolbar: Download, Print & Details */}
-                <div className="mt-5 pt-4 border-t border-slate-800/80 space-y-3">
+                <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-sm font-bold text-slate-100 line-clamp-1">{member.fullName}</h3>
-                      <p className="font-mono text-[11px] text-amber-400 font-semibold mt-0.5">
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-1">{member.fullName}</h3>
+                      <p className="font-mono text-[11px] text-amber-600 dark:text-amber-400 font-semibold mt-0.5">
                         {member.membershipCode}
                       </p>
                     </div>
 
                     <Link
                       href={`/card/${member.membershipCode}`}
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-slate-100 font-bold text-xs transition-all shrink-0"
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 font-bold text-xs transition-all shrink-0"
                     >
                       <span>{lang === 'am' ? 'ዝርዝር' : 'Details'}</span>
                       <ExternalLink className="w-3 h-3" />
@@ -469,13 +469,13 @@ function GalleryContent() {
                       type="button"
                       onClick={() => handlePrintCard(member)}
                       disabled={printingCode === member.membershipCode}
-                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-xs shadow-sm transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white border border-slate-300 dark:border-slate-700/80 font-bold text-xs shadow-sm transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
                       title={lang === 'am' ? 'ካርዱን አትም' : 'Print Card'}
                     >
                       {printingCode === member.membershipCode ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
                       ) : (
-                        <Printer className="w-3.5 h-3.5 text-amber-400" />
+                        <Printer className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                       )}
                       <span>{lang === 'am' ? 'አትም' : 'Print'}</span>
                     </button>
@@ -492,10 +492,10 @@ function GalleryContent() {
 
 export default function MembersGalleryPage() {
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950">
       <NavigationHeader />
       <main>
-        <Suspense fallback={<div className="text-center py-20 text-slate-400">Loading members gallery...</div>}>
+        <Suspense fallback={<div className="text-center py-20 text-slate-500 dark:text-slate-400">Loading members gallery...</div>}>
           <GalleryContent />
         </Suspense>
       </main>
