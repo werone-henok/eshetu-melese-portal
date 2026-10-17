@@ -34,84 +34,89 @@ jobs:
       - name: Build Next.js Production Bundle
         run: npm run build
 
-      - name: Fast Deploy via HTTP API
-        id: fast_deploy
-        continue-on-error: true
+      - name: Package Production Build Archive
         run: |
-          echo "📦 Packaging production bundle for high-speed transfer..."
-          tar -czf deploy-bundle.tar.gz .next public server.js package.json package-lock.json next.config.ts tsconfig.json postcss.config.js tailwind.config.js reset-admin.js
-          echo "🚀 Dispatching 1-step archive over HTTPS..."
-          HTTP_STATUS=$(curl -k -s -w "%{http_code}" -o deploy_output.json -X POST --data-binary @deploy-bundle.tar.gz "https://comedianeshetu.com/api/admin/system/deploy?token=${{ secrets.JWT_SECRET || 'eshetu_super_secret_jwt_key_2026_change_in_production_min32chars' }}" || echo "000")
-          echo "API response HTTP $HTTP_STATUS:"
-          cat deploy_output.json || true
-          if [ "$HTTP_STATUS" = "200" ]; then
-            echo "DEPLOY_COMPLETED=true" >> $GITHUB_ENV
-            echo "✅ High-speed deploy succeeded in seconds!"
-          else
-            echo "DEPLOY_COMPLETED=false" >> $GITHUB_ENV
-            echo "⚠️ High-speed API deploy not available yet on live server. Falling back to FTP..."
-          fi
+          echo "📦 Creating optimized deploy-package..."
+          mkdir -p deploy-package
+          
+          # Copy .next excluding cache and diagnostics (reduces size significantly)
+          mkdir -p deploy-package/.next
+          rsync -av --exclude 'cache' --exclude 'diagnostics' .next/ deploy-package/.next/
+          
+          # Copy source, prisma and public
+          cp -r src deploy-package/
+          cp -r prisma deploy-package/
+          mkdir -p deploy-package/public
+          rsync -av --exclude 'uploads' public/ deploy-package/public/
+          
+          # Stamp deploy status
+          node -e "const fs = require('fs'); fs.writeFileSync('deploy-package/public/deploy-status.json', JSON.stringify({commit: '${{ github.sha }}', deployedAt: new Date().toISOString()}, null, 2));"
+          
+          # Copy configs and server
+          cp package.json package-lock.json server.js next.config.ts tsconfig.json postcss.config.js tailwind.config.js reset-admin.js deploy-package/
+          
+          # Create tmp/restart.txt
+          mkdir -p deploy-package/tmp
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > deploy-package/tmp/restart.txt
+          
+          # Create single compressed archive
+          cd deploy-package
+          zip -rq ../deploy.zip .
+          cd ..
+          ls -lh deploy.zip
 
-      - name: Prepare Deployment Staging Directories
-        if: env.DEPLOY_COMPLETED != 'true'
+      - name: Instant Upload via FTP in Seconds
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER || 'ftp.comedianeshetu.com' }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME || 'comedizx' }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR || 'eshetu-portal' }}
         run: |
-          # 1. Compute target server directories
-          TARGET_DIR="${{ secrets.FTP_SERVER_DIR || 'eshetu-portal/' }}"
-          [[ "${TARGET_DIR}" != */ ]] && TARGET_DIR="${TARGET_DIR}/"
-          echo "ROOT_SERVER_DIR=${TARGET_DIR}" >> $GITHUB_ENV
-          echo "NEXT_SERVER_DIR=${TARGET_DIR}.next/" >> $GITHUB_ENV
+          python3 -c "
+          import ftplib, os, io, datetime
 
-          # 2. Stage .next files into a non-dot directory so FTP-Deploy-Action does not skip them
-          mkdir -p deploy-staging-next
-          rsync -av --exclude 'cache' .next/ deploy-staging-next/
+          server = os.environ.get('FTP_SERVER', 'ftp.comedianeshetu.com')
+          username = os.environ.get('FTP_USERNAME', 'comedizx')
+          password = os.environ.get('FTP_PASSWORD', '')
+          target_dir = os.environ.get('FTP_SERVER_DIR', 'eshetu-portal').strip('/')
 
-          # 3. Stage root application files
-          mkdir -p deploy-staging
-          cp -r src deploy-staging/
-          cp -r prisma deploy-staging/
-          
-          # Copy public assets excluding runtime uploads
-          mkdir -p deploy-staging/public
-          rsync -av --exclude 'uploads' public/ deploy-staging/public/
-          
-          # Stamp deployment info for verification
-          node -e "const fs = require('fs'); fs.writeFileSync('deploy-staging/public/deploy-status.json', JSON.stringify({commit: '${{ github.sha }}', deployedAt: new Date().toISOString(), routes: {marketing: '/marketing', marketingInquiry: '/api/marketing/inquiry', systemRestart: '/api/admin/system/restart'}}, null, 2));"
+          print(f'Connecting to {server}...')
+          ftp = ftplib.FTP(server, timeout=120)
+          ftp.login(username, password)
+          print(f'Logged in as {username}. Current dir: {ftp.pwd()}')
 
-          # Copy root server and config files
-          cp package.json package-lock.json server.js next.config.ts tsconfig.json postcss.config.js tailwind.config.js reset-admin.js deploy-staging/
-          
-          # Create restart.txt to trigger automatic Phusion Passenger restart on cPanel
-          mkdir -p deploy-staging/tmp
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > deploy-staging/tmp/restart.txt
+          try:
+              ftp.cwd(target_dir)
+          except Exception as e:
+              print(f'Directory {target_dir} error: {e}')
+              ftp.cwd('eshetu-portal')
 
-      - name: Deploy .next Compiled Output via FTP
-        if: env.DEPLOY_COMPLETED != 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER || 'ftp.comedianeshetu.com' }}
-          username: ${{ secrets.FTP_USERNAME || 'comedizx' }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ env.NEXT_SERVER_DIR }}
-          local-dir: ./deploy-staging-next/
-          protocol: ftp
-          port: ${{ secrets.FTP_PORT || 21 }}
-          timeout: 600000
+          print(f'Uploading deploy.zip to {ftp.pwd()}...')
+          with open('deploy.zip', 'rb') as f:
+              ftp.storbinary('STOR deploy.zip', f, blocksize=1024*1024)
+          print('✅ deploy.zip uploaded successfully in seconds!')
 
-      - name: Deploy Application Root via FTP
-        if: env.DEPLOY_COMPLETED != 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER || 'ftp.comedianeshetu.com' }}
-          username: ${{ secrets.FTP_USERNAME || 'comedizx' }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ env.ROOT_SERVER_DIR }}
-          local-dir: ./deploy-staging/
-          protocol: ftp
-          port: ${{ secrets.FTP_PORT || 21 }}
-          timeout: 600000
+          # Upload server.js directly so auto-unzip hook is immediately available
+          if os.path.exists('server.js'):
+              print('Uploading updated server.js...')
+              with open('server.js', 'rb') as f:
+                  ftp.storbinary('STOR server.js', f)
+              print('✅ server.js uploaded!')
+
+          # Upload restart.txt
+          try:
+              ftp.mkd('tmp')
+          except Exception:
+              pass
+          restart_stamp = datetime.datetime.utcnow().isoformat()
+          ftp.storbinary('STOR tmp/restart.txt', io.BytesIO(restart_stamp.encode('utf-8')))
+          print('✅ tmp/restart.txt updated!')
+
+          ftp.quit()
+          print('🎉 Fast deployment upload complete!')
+          "
 
       - name: Trigger Node.js Worker Reload
-        if: env.DEPLOY_COMPLETED != 'true'
         run: |
           echo "Sending reload signal to live Node.js worker..."
           curl -k -s "https://comedianeshetu.com/api/admin/system/restart?token=${{ secrets.JWT_SECRET || 'eshetu_super_secret_jwt_key_2026_change_in_production_min32chars' }}" || true

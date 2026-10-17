@@ -1,7 +1,23 @@
 // Custom server.js optimized for cPanel Passenger / Phusion Passenger Node.js deployments
 const { createServer } = require('http');
 const { parse } = require('url');
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
 const next = require('next');
+
+// Auto-extract deploy.zip if delivered via fast archive deployment
+const zipPath = path.join(__dirname, 'deploy.zip');
+if (fs.existsSync(zipPath)) {
+  try {
+    console.log('📦 Found deploy.zip, auto-extracting bundle...');
+    execSync('unzip -o deploy.zip', { cwd: __dirname, stdio: 'inherit' });
+    fs.unlinkSync(zipPath);
+    console.log('✅ deploy.zip extracted successfully!');
+  } catch (err) {
+    console.error('Failed to extract deploy.zip:', err);
+  }
+}
 
 // CRITICAL FOR CPANEL PERFORMANCE: Ensure Next.js NEVER runs in dev/compiler mode on cPanel
 process.env.NODE_ENV = 'production';
