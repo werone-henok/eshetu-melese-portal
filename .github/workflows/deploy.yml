@@ -34,51 +34,36 @@ jobs:
       - name: Build Next.js Production Bundle
         run: npm run build
 
-      - name: Prepare Deployment Staging Directories
+      - name: Prepare Deployment Staging Directory
         run: |
-          # 1. Compute target server directories
-          TARGET_DIR="${{ secrets.FTP_SERVER_DIR || 'eshetu-portal/' }}"
-          [[ "${TARGET_DIR}" != */ ]] && TARGET_DIR="${TARGET_DIR}/"
-          echo "ROOT_SERVER_DIR=${TARGET_DIR}" >> $GITHUB_ENV
-          echo "NEXT_SERVER_DIR=${TARGET_DIR}.next/" >> $GITHUB_ENV
-
-          # 2. Stage .next files into a non-dot directory so FTP-Deploy-Action does not skip them
-          mkdir -p deploy-staging-next
-          rsync -av --exclude 'cache' .next/ deploy-staging-next/
-
-          # 3. Stage root application files
           mkdir -p deploy-staging
+          
+          # Copy .next excluding cache (reduces upload size significantly)
+          mkdir -p deploy-staging/.next
+          rsync -av --exclude 'cache' .next/ deploy-staging/.next/
+          
+          # Copy source code and Prisma
           cp -r src deploy-staging/
           cp -r prisma deploy-staging/
           
+          # Copy public assets excluding runtime uploads
           mkdir -p deploy-staging/public
           rsync -av --exclude 'uploads' public/ deploy-staging/public/
           
+          # Copy root server and config files
           cp package.json package-lock.json server.js next.config.ts tsconfig.json postcss.config.js tailwind.config.js reset-admin.js deploy-staging/
           
           # Create restart.txt to trigger automatic Phusion Passenger restart on cPanel
           mkdir -p deploy-staging/tmp
           date -u +"%Y-%m-%dT%H:%M:%SZ" > deploy-staging/tmp/restart.txt
 
-      - name: Deploy .next Compiled Output via FTP
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER || 'ftp.comedianeshetu.com' }}
           username: ${{ secrets.FTP_USERNAME || 'comedizx' }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ env.NEXT_SERVER_DIR }}
-          local-dir: ./deploy-staging-next/
-          protocol: ftp
-          port: ${{ secrets.FTP_PORT || 21 }}
-          timeout: 600000
-
-      - name: Deploy Application Root via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER || 'ftp.comedianeshetu.com' }}
-          username: ${{ secrets.FTP_USERNAME || 'comedizx' }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ env.ROOT_SERVER_DIR }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || 'eshetu-portal/' }}
           local-dir: ./deploy-staging/
           protocol: ftp
           port: ${{ secrets.FTP_PORT || 21 }}
