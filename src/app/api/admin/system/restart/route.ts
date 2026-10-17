@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,9 +18,31 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized restart request' }, { status: 401 });
     }
 
+    const rootDir = process.cwd();
+    const zipPath = path.join(rootDir, 'deploy.zip');
+    let extracted = false;
+
+    if (fs.existsSync(zipPath)) {
+      try {
+        console.log('📦 Auto-extracting deploy.zip via restart API...');
+        try {
+          execSync('unzip -o deploy.zip', { cwd: rootDir, stdio: 'inherit' });
+        } catch {
+          execSync('python3 -c "import zipfile; zipfile.ZipFile(\'deploy.zip\').extractall(\'.\')"', { cwd: rootDir, stdio: 'inherit' });
+        }
+        if (fs.existsSync(zipPath)) {
+          fs.unlinkSync(zipPath);
+        }
+        extracted = true;
+        console.log('✅ deploy.zip extracted successfully!');
+      } catch (extractErr) {
+        console.error('Failed to extract deploy.zip in restart API:', extractErr);
+      }
+    }
+
     // Touch tmp/restart.txt so Phusion Passenger detects the restart signal on the next HTTP request
     try {
-      const tmpDir = path.join(process.cwd(), 'tmp');
+      const tmpDir = path.join(rootDir, 'tmp');
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir, { recursive: true });
       }
@@ -34,7 +60,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Worker restart initiated. cPanel will reload the application with fresh build manifests within seconds.',
+      extracted,
+      message: extracted
+        ? 'deploy.zip extracted and worker restart initiated. cPanel will reload the application with fresh build manifests.'
+        : 'Worker restart initiated. cPanel will reload the application with fresh build manifests within seconds.',
       timestamp: new Date().toISOString(),
     });
   } catch (error: any) {
