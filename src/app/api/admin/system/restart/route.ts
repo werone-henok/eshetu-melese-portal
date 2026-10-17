@@ -19,22 +19,37 @@ export async function POST(req: NextRequest) {
     }
 
     const rootDir = process.cwd();
-    const zipPath = path.join(rootDir, 'deploy.zip');
+    const candidatePaths = [
+      path.join(rootDir, 'deploy.zip'),
+      '/home/comedizx/comedianeshetu.com/deploy/eshetu-portal/deploy.zip',
+      '/home/comedizx/comedianeshetu.com/deploy/deploy.zip',
+      path.join(process.env.HOME || '/home/comedizx', 'comedianeshetu.com/deploy/eshetu-portal/deploy.zip'),
+      path.join(process.env.HOME || '/home/comedizx', 'comedianeshetu.com/deploy/deploy.zip'),
+    ];
+
+    let foundZip: string | null = null;
+    for (const p of candidatePaths) {
+      if (fs.existsSync(p)) {
+        foundZip = p;
+        break;
+      }
+    }
+
     let extracted = false;
 
-    if (fs.existsSync(zipPath)) {
+    if (foundZip) {
       try {
-        console.log('📦 Auto-extracting deploy.zip via restart API...');
+        console.log(`📦 Auto-extracting ${foundZip} via restart API into ${rootDir}...`);
         try {
-          execSync('unzip -o deploy.zip', { cwd: rootDir, stdio: 'inherit' });
+          execSync(`unzip -o "${foundZip}" -d "${rootDir}"`, { cwd: rootDir, stdio: 'inherit' });
         } catch {
-          execSync('python3 -c "import zipfile; zipfile.ZipFile(\'deploy.zip\').extractall(\'.\')"', { cwd: rootDir, stdio: 'inherit' });
+          execSync(`python3 -c "import zipfile; zipfile.ZipFile('${foundZip}').extractall('${rootDir}')"`, { cwd: rootDir, stdio: 'inherit' });
         }
-        if (fs.existsSync(zipPath)) {
-          fs.unlinkSync(zipPath);
+        if (fs.existsSync(foundZip)) {
+          fs.unlinkSync(foundZip);
         }
         extracted = true;
-        console.log('✅ deploy.zip extracted successfully!');
+        console.log('✅ deploy.zip extracted successfully into live root!');
       } catch (extractErr) {
         console.error('Failed to extract deploy.zip in restart API:', extractErr);
       }

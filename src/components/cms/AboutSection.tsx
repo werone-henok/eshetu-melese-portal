@@ -38,7 +38,7 @@ export function AboutSection({ config }: AboutSectionProps) {
         'Eshetu Melese is one of Ethiopia’s most iconic stand-up comedians, show hosts, and visionary media creators. Founder of Donkey Tube with over 3.2M+ subscribers, his unique comedy, storytelling, and transformative projects bridge laughter with profound social impact.';
 
   const [imgError, setImgError] = React.useState(false);
-  const mediaUrl = config?.mediaUrl || '/images/eshetu-portrait.png';
+  const mediaUrl = config?.mediaUrl || '/images/eshetu-yellow-curtain.jpg';
 
   return (
     <section id="about" className="py-24 lg:py-32 relative overflow-hidden border-t border-slate-200 dark:border-white/5">

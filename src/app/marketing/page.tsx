@@ -602,7 +602,7 @@ export default function MarketingPage() {
                   <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 rounded-3xl blur-md opacity-40 group-hover:opacity-75 transition duration-500" />
                   <div className="relative w-64 sm:w-80 h-80 sm:h-96 rounded-2xl overflow-hidden border-2 border-amber-500/40 bg-slate-950 shadow-2xl">
                     <img
-                      src="/images/eshetu-portrait.png"
+                      src="/images/eshetu-yellow-curtain.jpg"
                       alt="Comedian Eshetu Melese"
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                     />
