@@ -40,19 +40,23 @@ interface AppSettingsContextType {
 }
 
 const DICTIONARY: Record<string, { en: string; am: string }> = {
-  // Navigation
-  'nav.home': { en: 'Home', am: 'ዋና ገጽ' },
-  'nav.about': { en: 'About Eshetu', am: 'ስለ እሸቱ መለሰ' },
-  'nav.charity': { en: 'Lmetsdek Charity', am: 'ለመጽደቅ በጎ አድራጎት' },
-  'nav.events': { en: 'Upcoming Events', am: 'መጪ ዝግጅቶች' },
-  'nav.benefits': { en: 'Benefits', am: 'ጥቅማ ጥቅሞች' },
-  'nav.tiers': { en: 'Membership Tiers', am: 'የአባልነት ደረጃዎች' },
-  'nav.howItWorks': { en: 'How It Works', am: 'አሰራሩ' },
-  'nav.faq': { en: 'FAQ', am: 'ተደጋጋሚ ጥያቄዎች' },
-  'nav.verify': { en: 'Verify Card', am: 'ካርድ አረጋግጥ' },
-  'nav.joinNow': { en: 'Join Now', am: 'አባል ይሁኑ' },
-  'nav.contact': { en: 'Contact Us', am: 'ያግኙን' },
-  'nav.talk': { en: 'Let’s Talk', am: 'እንነጋገር' },
+  // Navigation (Single-Word Concise Labels)
+  'nav.home': { en: 'Home', am: 'ዋና' },
+  'nav.about': { en: 'About', am: 'ስለ' },
+  'nav.charity': { en: 'Charity', am: 'ለመጽደቅ' },
+  'nav.events': { en: 'Events', am: 'ዝግጅቶች' },
+  'nav.benefits': { en: 'Benefits', am: 'ጥቅሞች' },
+  'nav.tiers': { en: 'Tiers', am: 'ደረጃዎች' },
+  'nav.media': { en: 'Media', am: 'ሚዲያ' },
+  'nav.gallery': { en: 'Members', am: 'አባላት' },
+  'nav.profile': { en: 'Profile', am: 'መገለጫ' },
+  'nav.howItWorks': { en: 'Steps', am: 'አሰራር' },
+  'nav.faq': { en: 'FAQ', am: 'ጥያቄዎች' },
+  'nav.more': { en: 'More', am: 'ተጨማሪ' },
+  'nav.verify': { en: 'Verify', am: 'አረጋግጥ' },
+  'nav.joinNow': { en: 'Join', am: 'አባል' },
+  'nav.contact': { en: 'Contact', am: 'ያግኙን' },
+  'nav.talk': { en: 'Talk', am: 'እንነጋገር' },
   // General Buttons
   'btn.register': { en: 'Get Your Membership Card', am: 'የአባልነት ካርድዎን ያግኙ' },
   'btn.verify': { en: 'Verify / Search Card', am: 'ካርድ ያረጋግጡ / ይፈልጉ' },
