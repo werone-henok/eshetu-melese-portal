@@ -381,7 +381,7 @@ html.light ::-webkit-scrollbar-thumb:hover {
 .partner-marquee-track {
   display: flex;
   width: max-content;
-  animation: marqueeLine 50s linear infinite;
+  animation: marqueeLine 120s linear infinite;
   will-change: transform;
 }
 
