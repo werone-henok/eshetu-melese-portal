@@ -21,9 +21,13 @@ import {
   Download,
   Info,
   Check,
+  Flame,
+  Tv,
+  ArrowRight,
 } from 'lucide-react';
 import { useAppSettings } from '@/context/AppSettingsContext';
 import { MEDIA_GALLERY_ITEMS, MediaGalleryItem } from '@/data/mediaGalleryData';
+import { ALL_SHOWS } from '@/data/showsData';
 
 interface MediaCarouselSectionProps {
   config?: {
@@ -224,9 +228,20 @@ export function MediaCarouselSection({ config }: MediaCarouselSectionProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm backdrop-blur-md">
-            <Film className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
-            <span>{lang === 'am' ? 'ይፋዊ የሚዲያ ማህደር' : 'Official Media Showcase'}</span>
+          <div className="flex items-center justify-center gap-3 mb-4 flex-wrap">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 text-xs font-bold uppercase tracking-wider shadow-sm backdrop-blur-md">
+              <Film className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
+              <span>{lang === 'am' ? 'ይፋዊ የሚዲያ ማህደር' : 'Official Media Showcase'}</span>
+            </div>
+
+            <Link
+              href="/shows"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-amber-500 text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-red-600/25 hover:scale-105 active:scale-95 transition-all"
+            >
+              <Flame className="w-3.5 h-3.5 text-yellow-300 animate-pulse" />
+              <span>{lang === 'am' ? 'ኔትፍሊክስ ትርኢቶች (60+ ቪዲዮዎች)' : 'Netflix Shows Catalog (60+ Episodes)'}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight font-display">
@@ -319,7 +334,12 @@ export function MediaCarouselSection({ config }: MediaCarouselSectionProps) {
             {/* Top Bar inside Slideshow */}
             <div className="absolute top-0 inset-x-0 z-20 p-4 sm:p-6 bg-gradient-to-b from-slate-950/80 via-slate-950/40 to-transparent flex items-center justify-between text-white pointer-events-auto">
               {/* Category & Badge */}
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 to-amber-600 text-white text-[10px] font-black uppercase tracking-widest shadow-md">
+                  <Flame className="w-3 h-3 text-yellow-300 animate-pulse" />
+                  ORIGINAL
+                </span>
+
                 <span
                   className="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider backdrop-blur-md shadow-lg"
                   style={{
@@ -560,6 +580,37 @@ export function MediaCarouselSection({ config }: MediaCarouselSectionProps) {
             </div>
           </div>
         )}
+
+        {/* Netflix Streaming Shows Showcase Bar */}
+        <div className="mt-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-red-950/40 via-slate-900/90 to-amber-950/40 border border-white/10 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 flex-wrap text-xs font-black uppercase tracking-wider text-amber-400">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600 text-white text-[10px] font-black uppercase tracking-widest shadow-md">
+                <Flame className="w-3.5 h-3.5 text-yellow-300 animate-pulse" />
+                NETFLIX STYLE
+              </span>
+              <span>{lang === 'am' ? 'ዶንኪ ቲዩብ ይፋዊ የትርኢቶች ማዕከል' : 'Donkey Tube Official Shows Hub'}</span>
+              <span className="px-2 py-0.5 rounded-full bg-white/10 text-slate-300 text-[10px] font-bold border border-white/10">60+ SHOWS</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-black text-white">
+              {lang === 'am' ? 'ድንቅ ልጆች፣ ጋሽ እሸቱ፣ ስታንዳፕ ኮሜዲ እና ዶክመንተሪዎችን ይመልከቱ' : 'Stream Amazing Kids, Gash Eshetu, Standup & Documentaries'}
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+              {lang === 'am'
+                ? 'በተለያዩ 10 ዘውጎች የተከፈሉ ከ60 በላይ ሙሉ ይፋዊ የቪዲዮ ስራዎች በኔትፍሊክስ ስታይል ተዘጋጅተው ይጠብቁዎታል።'
+                : 'Over 60 full episodes categorized across 10 official series with cinematic player and instant streaming.'}
+            </p>
+          </div>
+
+          <Link
+            href="/shows"
+            className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 font-black text-sm flex items-center gap-2.5 shadow-xl shadow-amber-500/25 hover:scale-105 active:scale-95 transition-all shrink-0"
+          >
+            <Play className="w-4 h-4 fill-slate-950" />
+            <span>{lang === 'am' ? 'ሁሉንም 60+ ትርኢቶች ክፈት' : 'Open Netflix Shows Catalog'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
         {/* ================================================================ */}
         {/* GALLERY GRID VIEW (Alternative Masonry / 3-Column Display)        */}

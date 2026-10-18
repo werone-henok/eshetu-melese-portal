@@ -23,6 +23,7 @@ import {
   Calendar,
   Heart,
   Award,
+  Tv,
 } from 'lucide-react';
 import { useAppSettings } from '@/context/AppSettingsContext';
 
@@ -91,6 +92,14 @@ export function NavigationHeader() {
       labelAm: 'ደረጃዎች',
       icon: Award,
       active: false,
+    },
+    {
+      href: '/shows',
+      labelEn: 'Shows',
+      labelAm: 'ትርኢቶች',
+      icon: Tv,
+      badge: 'Hot',
+      active: pathname === '/shows' || pathname === '/Shows',
     },
     {
       href: '/gallery',
