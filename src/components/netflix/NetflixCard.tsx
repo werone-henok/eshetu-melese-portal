@@ -68,11 +68,13 @@ export function NetflixCard({
         {/* Dark subtle gradient at bottom for title legibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
 
-        {/* Netflix Red "N" Ribbon on top-left (Authentic Netflix style) */}
-        <div className="absolute top-2 left-2 flex items-center gap-1 z-10 pointer-events-none">
-          <div className="w-5 h-6 bg-[#E50914] text-white font-black text-xs flex items-center justify-center rounded-sm shadow-md font-sans tracking-tighter">
-            N
-          </div>
+        {/* Donkey Tube Official Logo on top-left */}
+        <div className="absolute top-2 left-2 flex items-center z-10 pointer-events-none">
+          <img
+            src="/images/donkey-tube-logo.png"
+            alt="Donkey Tube"
+            className="w-7 h-7 sm:w-8 sm:h-8 object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)] filter"
+          />
         </div>
 
         {/* Red "TOP 10" vertical bookmark badge on top-right (as in user screenshot) */}

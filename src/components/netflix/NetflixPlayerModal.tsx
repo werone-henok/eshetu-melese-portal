@@ -132,10 +132,12 @@ export function NetflixPlayerModal({
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="w-4 h-5 bg-[#E50914] text-white font-black text-[10px] flex items-center justify-center rounded-xs">
-                  N
-                </span>
-                <span className="text-[11px] font-bold text-red-500 uppercase tracking-widest">
+                <img
+                  src="/images/donkey-tube-logo.png"
+                  alt="Donkey Tube"
+                  className="w-7 h-7 object-contain drop-shadow"
+                />
+                <span className="text-[11px] font-black text-amber-400 uppercase tracking-widest">
                   {lang === 'am' ? item.categoryLabelAm : item.categoryLabel}
                 </span>
                 {item.isTop10 && (
@@ -302,9 +304,11 @@ export function NetflixPlayerModal({
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                      <div className="absolute top-1.5 left-1.5 w-4 h-5 bg-[#E50914] text-white font-black text-[9px] flex items-center justify-center rounded-xs">
-                        N
-                      </div>
+                      <img
+                        src="/images/donkey-tube-logo.png"
+                        alt="Donkey Tube"
+                        className="absolute top-1.5 left-1.5 w-5 h-5 object-contain drop-shadow"
+                      />
                       <div className="absolute bottom-1.5 left-2 right-2">
                         <p className="text-white text-xs font-semibold truncate">
                           {lang === 'am' && rel.titleAm ? rel.titleAm : rel.title}

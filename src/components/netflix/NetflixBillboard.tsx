@@ -60,12 +60,18 @@ export function NetflixBillboard({
       <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-12 flex flex-col justify-end pb-10 sm:pb-14 md:pb-18">
         <div className="max-w-2xl space-y-3 sm:space-y-4">
           {/* Top Series Ribbon */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-red-600 text-white text-[11px] font-black uppercase tracking-widest shadow-md">
-              <Flame className="w-3.5 h-3.5 fill-white" />
-              <span>DONKEY TUBE ORIGINAL</span>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-amber-500/30 text-white shadow-lg">
+              <img
+                src="/images/donkey-tube-logo.png"
+                alt="Donkey Tube"
+                className="w-6 h-6 object-contain"
+              />
+              <span className="text-xs font-black tracking-widest uppercase text-amber-400">
+                DONKEY TUBE ORIGINAL
+              </span>
             </span>
-            <span className="px-2.5 py-0.5 rounded-md bg-white/10 backdrop-blur-md text-amber-400 font-bold text-xs border border-white/10">
+            <span className="px-2.5 py-0.5 rounded-md bg-white/10 backdrop-blur-md text-slate-200 font-bold text-xs border border-white/10">
               {current.categoryLabel.toUpperCase()}
             </span>
           </div>

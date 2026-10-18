@@ -45,12 +45,14 @@ export function NetflixHoverPopout({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-black/40" />
 
-        {/* Red "N" ribbon top left */}
+        {/* Donkey Tube Official Logo top left */}
         <div className="absolute top-2 left-2 z-10 pointer-events-none flex items-center gap-1.5">
-          <div className="w-5 h-6 bg-[#E50914] text-white font-black text-xs flex items-center justify-center rounded-sm shadow-md font-sans tracking-tighter">
-            N
-          </div>
-          <span className="text-[9px] font-bold text-red-500 uppercase tracking-wider drop-shadow">
+          <img
+            src="/images/donkey-tube-logo.png"
+            alt="Donkey Tube"
+            className="w-8 h-8 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]"
+          />
+          <span className="text-[10px] font-black text-amber-400 uppercase tracking-wider drop-shadow bg-black/40 px-1.5 py-0.5 rounded backdrop-blur-xs">
             ORIGINAL
           </span>
         </div>
