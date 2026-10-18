@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#14532D"/>
+    <circle cx="50" cy="60" r="24" fill="#16A34A"/>
+    <path d="M46 44h8v32h-8z M34 56h32v8h-32z" fill="#FFFFFF"/>
+    <text x="82" y="58" font-family="system-ui, sans-serif" font-weight="900" font-size="19" fill="#FFFFFF">MEKREZ</text>
+    <text x="84" y="76" font-family="system-ui, sans-serif" font-weight="700" font-size="10" fill="#4ADE80" letter-spacing="2">HOSPITAL</text>
+    <text x="84" y="92" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#86EFAC">መቅረዝ ሆስፒታል</text>
+  </svg>

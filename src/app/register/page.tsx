@@ -180,6 +180,32 @@ function RegisterForm() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Prominent Payment Account Instructions Card: Read Me First! / መጀመሪያ ያንብቡኝ! */}
+        <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-500/15 via-amber-500/10 to-amber-500/5 border-2 border-amber-500/40 text-slate-800 dark:text-slate-100 shadow-xl shadow-amber-500/5 ring-1 ring-amber-500/20">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b border-amber-500/20">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-amber-600 dark:text-amber-400 uppercase">
+                {lang === 'am' ? 'መጀመሪያ ያንብቡኝ!' : 'Read Me First!'}
+              </h2>
+              <div className="flex items-center gap-2 mt-1 text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-300">
+                <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>
+                  {lang === 'am' ? 'የክፍያ መመሪያ እና የባንክ / ቴሌብር ሂሳብ ዝርዝር' : 'Payment Instructions & Bank / Telebirr Details'}
+                </span>
+              </div>
+            </div>
+            <span className="self-start sm:self-center px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-[11px] font-extrabold uppercase tracking-wider">
+              {lang === 'am' ? 'አስፈላጊ ማሳሰቢያ' : 'Important Note'}
+            </span>
+          </div>
+
+          <div className="text-sm sm:text-base text-slate-700 dark:text-slate-200 whitespace-pre-line leading-relaxed font-semibold">
+            {lang === 'am'
+              ? (branding.paymentInstructionsAm || branding.paymentInstructions || 'እባክዎ የአባልነት ክፍያዎን በኢትዮጵያ ንግድ ባንክ (CBE)፡ 1000234567890 ወይም በቴሌብር (Telebirr)፡ 0911234567 ገቢ ያድርጉ። በመቀጠል የደረሰኙን ስክሪንሾት ከዚህ በታች ያያይዙ።')
+              : (branding.paymentInstructions || 'Please deposit the membership fee via Commercial Bank of Ethiopia (CBE): (Eshetu Melese) or Telebirr: . Then upload your deposit receipt or transfer screenshot below.')}
+          </div>
+        </div>
+
         {/* Tier Selector */}
         <div>
           <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
@@ -253,21 +279,6 @@ function RegisterForm() {
             placeholder="name@example.com"
             className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500"
           />
-        </div>
-
-        {/* Payment Account Instructions Card */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-slate-800 dark:text-slate-200">
-          <div className="flex items-center gap-2.5 mb-2.5 text-amber-700 dark:text-amber-400 font-bold text-sm">
-            <ShieldCheck className="w-5 h-5 shrink-0" />
-            <span>
-              {lang === 'am' ? 'የክፍያ መመሪያ እና የባንክ ሂሳብ ቁጥሮች' : 'Payment Instructions & Bank / Telebirr Details'}
-            </span>
-          </div>
-          <div className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 whitespace-pre-line leading-relaxed font-medium">
-            {lang === 'am'
-              ? (branding.paymentInstructionsAm || branding.paymentInstructions || 'እባክዎ የአባልነት ክፍያዎን በኢትዮጵያ ንግድ ባንክ (CBE)፡ 1000234567890 ወይም በቴሌብር (Telebirr)፡ 0911234567 ገቢ ያድርጉ። በመቀጠል የደረሰኙን ስክሪንሾት ከዚህ በታች ያያይዙ።')
-              : (branding.paymentInstructions || 'Please deposit the membership fee to Commercial Bank of Ethiopia (CBE): 1000234567890 or Telebirr: 0911234567. Then upload your transfer receipt or screenshot below.')}
-          </div>
         </div>
 
         {/* File Uploads: Profile Photo & Payment Receipt */}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#334155"/>
+    <polygon points="50,34 72,50 72,76 50,92 28,76 28,50" fill="none" stroke="#E2E8F0" stroke-width="4"/>
+    <polygon points="50,44 64,54 64,72 50,82 36,72 36,54" fill="#94A3B8"/>
+    <text x="82" y="58" font-family="system-ui, sans-serif" font-weight="900" font-size="20" fill="#FFFFFF">DRADIS</text>
+    <text x="84" y="76" font-family="system-ui, sans-serif" font-weight="700" font-size="10" fill="#CBD5E1" letter-spacing="2">ALUMINUM</text>
+    <text x="84" y="92" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#94A3B8">ድራዲስ አልሙኒየም</text>
+  </svg>

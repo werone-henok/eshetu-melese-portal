@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#29180D"/>
+    <ellipse cx="50" cy="60" rx="18" ry="24" fill="#854D0E" transform="rotate(-20 50 60)"/>
+    <path d="M42 42 Q52 60 48 78" stroke="#FEF08A" stroke-width="3" fill="none"/>
+    <text x="80" y="58" font-family="Georgia, serif" font-weight="bold" font-size="24" fill="#FEF08A">KAFFA</text>
+    <text x="82" y="77" font-family="system-ui, sans-serif" font-weight="700" font-size="12" fill="#D97706" letter-spacing="3">COFFEE</text>
+    <text x="82" y="93" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#A16207">ከፋ ቡና</text>
+  </svg>

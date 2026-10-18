@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#18181B"/>
+    <path d="M34 82V52l16-14 16 14v30H34zm8-22h6v6h-6zm10 0h6v6h-6zm-10 10h6v6h-6zm10 0h6v6h-6z" fill="#EAB308"/>
+    <text x="76" y="56" font-family="system-ui, sans-serif" font-weight="900" font-size="19" fill="#FFFFFF">ETHIO BEST</text>
+    <text x="78" y="74" font-family="system-ui, sans-serif" font-weight="700" font-size="10" fill="#EAB308" letter-spacing="2">REAL ESTATE</text>
+    <text x="78" y="90" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#A1A1AA">ኢትዮ ቤስት ሪል እስቴት</text>
+  </svg>

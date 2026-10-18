@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#082F49"/>
+    <path d="M50 36 C50 36 34 56 34 68 C34 78 41 85 50 85 C59 85 66 78 66 68 C66 56 50 36 50 36 Z" fill="#0EA5E9"/>
+    <path d="M44 64 C44 58 49 48 49 48 C49 48 40 56 40 65 C40 70 43 74 46 76 C44 73 44 68 44 64 Z" fill="#BAE6FD"/>
+    <text x="82" y="60" font-family="system-ui, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" letter-spacing="1">ONE</text>
+    <text x="84" y="80" font-family="system-ui, sans-serif" font-weight="700" font-size="13" fill="#38BDF8" letter-spacing="3">WATER</text>
+    <text x="84" y="95" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#7DD3FC">ዋን የተፈጥሮ ውሃ</text>
+  </svg>

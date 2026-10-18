@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#991B1B"/>
+    <circle cx="50" cy="60" r="24" fill="#DC2626"/>
+    <path d="M40 60h20 M50 45v30" stroke="#FEF08A" stroke-width="3" stroke-linecap="round"/>
+    <text x="82" y="58" font-family="system-ui, sans-serif" font-weight="900" font-size="20" fill="#FFFFFF">ARIF FOODS</text>
+    <text x="84" y="76" font-family="system-ui, sans-serif" font-weight="700" font-size="10" fill="#FECACA" letter-spacing="2">NORTH AMERICA</text>
+    <text x="84" y="92" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#FCA5A5">አሪፍ ፉድስ (USA)</text>
+  </svg>

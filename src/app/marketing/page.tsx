@@ -111,48 +111,48 @@ export default function MarketingPage() {
 
   const partnersData = [
     // Aviation & Finance
-    { name: 'Ethiopian Airlines', nameAm: 'የኢትዮጵያ አየር መንገድ', category: 'aviation-finance', tag: 'Flagship Partner', icon: Plane },
-    { name: 'Dashen Bank', nameAm: 'ዳሸን ባንክ', category: 'aviation-finance', tag: 'Banking & FinTech', icon: Coins },
-    { name: 'Ahadu Bank', nameAm: 'አሃዱ ባንክ', category: 'aviation-finance', tag: 'Banking & FinTech', icon: Coins },
+    { name: 'Ethiopian Airlines', nameAm: 'የኢትዮጵያ አየር መንገድ', category: 'aviation-finance', tag: 'Flagship Partner', logo: '/partners/ethiopian-airlines.svg' },
+    { name: 'Dashen Bank', nameAm: 'ዳሸን ባንክ', category: 'aviation-finance', tag: 'Banking & FinTech', logo: '/partners/dashen-bank.png' },
+    { name: 'Ahadu Bank', nameAm: 'አሃዱ ባንክ', category: 'aviation-finance', tag: 'Banking & FinTech', logo: '/partners/ahadu-bank.svg' },
 
     // Tech & Transport
-    { name: 'Ashewa Technology Solution', nameAm: 'አሸዋ ቴክኖሎጂ ሶሉሽን', category: 'tech-transport', tag: 'Digital Platforms', icon: Cpu },
-    { name: 'Ashewa.com', nameAm: 'አሸዋ ዶት ኮም', category: 'tech-transport', tag: 'E-Commerce', icon: Cpu },
-    { name: 'Wegen Fund (USA)', nameAm: 'ወገን ፈንድ (አሜሪካ)', category: 'tech-transport', tag: 'Global FinTech', icon: Globe2 },
-    { name: 'DStv Ethiopia', nameAm: 'ዲኤስ ቲቪ (DStv)', category: 'tech-transport', tag: 'Broadcast Media', icon: Tv },
-    { name: 'Arada FM', nameAm: 'አራዳ ኤፍ ኤም', category: 'tech-transport', tag: 'Radio & Media', icon: Tv },
-    { name: 'RIDE Transport', nameAm: 'ራይድ (RIDE)', category: 'tech-transport', tag: 'Ride Hailing', icon: Cpu },
+    { name: 'Ashewa Technology Solution', nameAm: 'አሸዋ ቴክኖሎጂ ሶሉሽን', category: 'tech-transport', tag: 'Digital Platforms', logo: '/partners/ashewa.svg' },
+    { name: 'Ashewa.com', nameAm: 'አሸዋ ዶት ኮም', category: 'tech-transport', tag: 'E-Commerce', logo: '/partners/ashewa.svg' },
+    { name: 'Wegen Fund (USA)', nameAm: 'ወገን ፈንድ (አሜሪካ)', category: 'tech-transport', tag: 'Global FinTech', logo: '/partners/wegen-fund.svg' },
+    { name: 'DStv Ethiopia', nameAm: 'ዲኤስ ቲቪ (DStv)', category: 'tech-transport', tag: 'Broadcast Media', logo: '/partners/dstv.svg' },
+    { name: 'Arada FM', nameAm: 'አራዳ ኤፍ ኤም', category: 'tech-transport', tag: 'Radio & Media', logo: '/partners/arada-fm.svg' },
+    { name: 'RIDE Transport', nameAm: 'ራይድ (RIDE)', category: 'tech-transport', tag: 'Ride Hailing', logo: '/partners/ride.svg' },
 
     // Hospitality & Real Estate
-    { name: 'Kuriftu Resort & Spa', nameAm: 'ኩሪፍቱ ሪዞርት', category: 'hospitality-realestate', tag: 'Luxury Hospitality', icon: Hotel },
-    { name: 'Marriott Executive Apartments', nameAm: 'ማርዮት አዲስ ሆቴል', category: 'hospitality-realestate', tag: '5-Star Hospitality', icon: Hotel },
-    { name: 'Negash Resort', nameAm: 'ነጋሽ ሪዞርት', category: 'hospitality-realestate', tag: 'Resort & Tourism', icon: Hotel },
-    { name: 'Adwest Hotel', nameAm: 'አድዌስት ሆቴል', category: 'hospitality-realestate', tag: 'Boutique Hotel', icon: Hotel },
-    { name: 'Ethio Best Real Estate', nameAm: 'ኢትዮ ቤስት ሪል እስቴት', category: 'hospitality-realestate', tag: 'Urban Real Estate', icon: Building2 },
-    { name: 'Fison Real Estate', nameAm: 'ፊሶን ሪልስቴት', category: 'hospitality-realestate', tag: 'Luxury Living', icon: Building2 },
+    { name: 'Kuriftu Resort & Spa', nameAm: 'ኩሪፍቱ ሪዞርት', category: 'hospitality-realestate', tag: 'Luxury Hospitality', logo: '/partners/kuriftu.svg' },
+    { name: 'Marriott Executive Apartments', nameAm: 'ማርዮት አዲስ ሆቴል', category: 'hospitality-realestate', tag: '5-Star Hospitality', logo: '/partners/marriott.svg' },
+    { name: 'Negash Resort', nameAm: 'ነጋሽ ሪዞርት', category: 'hospitality-realestate', tag: 'Resort & Tourism', logo: '/partners/negash-resort.svg' },
+    { name: 'Adwest Hotel', nameAm: 'አድዌስት ሆቴል', category: 'hospitality-realestate', tag: 'Boutique Hotel', logo: '/partners/adwest-hotel.svg' },
+    { name: 'Ethio Best Real Estate', nameAm: 'ኢትዮ ቤስት ሪል እስቴት', category: 'hospitality-realestate', tag: 'Urban Real Estate', logo: '/partners/ethio-best-realestate.svg' },
+    { name: 'Fison Real Estate', nameAm: 'ፊሶን ሪልስቴት', category: 'hospitality-realestate', tag: 'Luxury Living', logo: '/partners/fison-realestate.svg' },
 
     // FMCG, Trade & Health
-    { name: 'Knorr (Green Gursha)', nameAm: 'ክኖር (ግሪን ጉርሻ)', category: 'fmcg-health', tag: 'Global FMCG Food', icon: ShoppingBag },
-    { name: 'Kaffa Coffee', nameAm: 'ከፋ ኮፊ', category: 'fmcg-health', tag: 'Premium Beverage', icon: ShoppingBag },
-    { name: 'One Water', nameAm: 'ዋን ውሃ', category: 'fmcg-health', tag: 'Pure Mineral Water', icon: ShoppingBag },
-    { name: 'Dradis Aluminum', nameAm: 'ድራዲስ አልሙኒየም', category: 'fmcg-health', tag: 'Industrial Manufacturing', icon: Building2 },
-    { name: 'Kasma Furniture', nameAm: 'ካስማ ፈርኒቸር', category: 'fmcg-health', tag: 'Interior Design', icon: Building2 },
-    { name: 'SMILE Dental Clinic', nameAm: 'SMILE ዴንታል', category: 'fmcg-health', tag: 'Specialized Healthcare', icon: Heart },
-    { name: 'Mekrez Hospital', nameAm: 'መቅረዝ ሆስፒታል', category: 'fmcg-health', tag: 'General Medical Care', icon: Heart },
-    { name: 'Life Line Home Care', nameAm: 'ላይፍ ላይን የቤት ለቤት ህክምና', category: 'fmcg-health', tag: 'Home Healthcare', icon: Heart },
-    { name: 'Asheten Mental Health', nameAm: 'አሸተን የአእምሮ ህክምና', category: 'fmcg-health', tag: 'Mental Health Clinic', icon: Heart },
-    { name: 'Zion Physiotherapy', nameAm: 'ዛየን ፊዝዮ ቴራፒ', category: 'fmcg-health', tag: 'Physical Therapy', icon: Heart },
-    { name: 'KT Catering', nameAm: 'ኬቲ ኬተሪንግ', category: 'fmcg-health', tag: 'Food & Events', icon: ShoppingBag },
-    { name: 'Escafer Culinary School', nameAm: 'እስካፌር የምግብ ማሰልጠኛ', category: 'fmcg-health', tag: 'Culinary Academy', icon: Award },
-    { name: 'Yonas Mobile', nameAm: 'ዮናስ ሞባይል', category: 'fmcg-health', tag: 'Consumer Electronics', icon: Cpu },
-    { name: 'Helen Bridal & Decor', nameAm: 'ሄለን ብራይዳል እና ዲኮር', category: 'fmcg-health', tag: 'Events & Bridal', icon: Sparkles },
-    { name: 'ETS Ticket Office', nameAm: 'ETS ትኬት ኦፊስ', category: 'fmcg-health', tag: 'Travel & Ticketing', icon: Globe2 },
-    { name: 'Asnake Advert', nameAm: 'አስናቀ አድቨርት', category: 'fmcg-health', tag: 'Advertising Agency', icon: Tv },
+    { name: 'Knorr (Green Gursha)', nameAm: 'ክኖር (ግሪን ጉርሻ)', category: 'fmcg-health', tag: 'Global FMCG Food', logo: '/partners/knorr.webp' },
+    { name: 'Kaffa Coffee', nameAm: 'ከፋ ኮፊ', category: 'fmcg-health', tag: 'Premium Beverage', logo: '/partners/kaffa-coffee.svg' },
+    { name: 'One Water', nameAm: 'ዋን ውሃ', category: 'fmcg-health', tag: 'Pure Mineral Water', logo: '/partners/one-water.svg' },
+    { name: 'Dradis Aluminum', nameAm: 'ድራዲስ አልሙኒየም', category: 'fmcg-health', tag: 'Industrial Manufacturing', logo: '/partners/dradis-aluminum.svg' },
+    { name: 'Kasma Furniture', nameAm: 'ካስማ ፈርኒቸር', category: 'fmcg-health', tag: 'Interior Design', logo: '/partners/kasma-furniture.svg' },
+    { name: 'SMILE Dental Clinic', nameAm: 'SMILE ዴንታል', category: 'fmcg-health', tag: 'Specialized Healthcare', logo: '/partners/smile-dental.svg' },
+    { name: 'Mekrez Hospital', nameAm: 'መቅረዝ ሆስፒታል', category: 'fmcg-health', tag: 'General Medical Care', logo: '/partners/mekrez-hospital.svg' },
+    { name: 'Life Line Home Care', nameAm: 'ላይፍ ላይን የቤት ለቤት ህክምና', category: 'fmcg-health', tag: 'Home Healthcare', logo: '/partners/lifeline-homecare.svg' },
+    { name: 'Asheten Mental Health', nameAm: 'አሸተን የአእምሮ ህክምና', category: 'fmcg-health', tag: 'Mental Health Clinic', logo: '/partners/asheten-mental-health.svg' },
+    { name: 'Zion Physiotherapy', nameAm: 'ዛየን ፊዝዮ ቴራፒ', category: 'fmcg-health', tag: 'Physical Therapy', logo: '/partners/zion-physiotherapy.svg' },
+    { name: 'KT Catering', nameAm: 'ኬቲ ኬተሪንግ', category: 'fmcg-health', tag: 'Food & Events', logo: '/partners/kt-catering.svg' },
+    { name: 'Escafer Culinary School', nameAm: 'እስካፌር የምግብ ማሰልጠኛ', category: 'fmcg-health', tag: 'Culinary Academy', logo: '/partners/escafer-culinary.svg' },
+    { name: 'Yonas Mobile', nameAm: 'ዮናስ ሞባይል', category: 'fmcg-health', tag: 'Consumer Electronics', logo: '/partners/yonas-mobile.svg' },
+    { name: 'Helen Bridal & Decor', nameAm: 'ሄለን ብራይዳል እና ዲኮር', category: 'fmcg-health', tag: 'Events & Bridal', logo: '/partners/helen-bridal.svg' },
+    { name: 'ETS Ticket Office', nameAm: 'ETS ትኬት ኦፊስ', category: 'fmcg-health', tag: 'Travel & Ticketing', logo: '/partners/ets-ticket.svg' },
+    { name: 'Asnake Advert', nameAm: 'አስናቀ አድቨርት', category: 'fmcg-health', tag: 'Advertising Agency', logo: '/partners/asnake-advert.svg' },
 
     // Diaspora
-    { name: 'Arif Foods (USA)', nameAm: 'አሪፍ ፉድስ (አሜሪካ)', category: 'diaspora', tag: 'North America FMCG', icon: Globe2 },
-    { name: 'Walia Teff (USA)', nameAm: 'ዋሊያ ጤፍ (አሜሪካ)', category: 'diaspora', tag: 'Diaspora Staples', icon: Globe2 },
-    { name: 'Smart Fidel (USA)', nameAm: 'ስማርት ፊደል (አሜሪካ)', category: 'diaspora', tag: 'EdTech & Cultural', icon: Award },
+    { name: 'Arif Foods (USA)', nameAm: 'አሪፍ ፉድስ (አሜሪካ)', category: 'diaspora', tag: 'North America FMCG', logo: '/partners/arif-foods.svg' },
+    { name: 'Walia Teff (USA)', nameAm: 'ዋሊያ ጤፍ (አሜሪካ)', category: 'diaspora', tag: 'Diaspora Staples', logo: '/partners/walia-teff.svg' },
+    { name: 'Smart Fidel (USA)', nameAm: 'ስማርት ፊደል (አሜሪካ)', category: 'diaspora', tag: 'EdTech & Cultural', logo: '/partners/smart-fidel.svg' },
   ];
 
   const filteredPartners = activePartnerCategory === 'all'
@@ -767,14 +767,18 @@ export default function MarketingPage() {
           {/* Interactive Partners Directory Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {filteredPartners.map((partner, idx) => {
-              const IconComp = partner.icon;
               return (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 hover:border-amber-500/40 hover:bg-slate-50 dark:hover:bg-slate-900/90 shadow-sm transition-all flex items-center gap-3.5 group"
+                  className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 hover:border-amber-500/40 hover:bg-slate-50 dark:hover:bg-slate-900/90 shadow-sm hover:shadow-md transition-all flex items-center gap-3.5 group"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:scale-105 transition-transform shrink-0">
-                    <IconComp className="w-5 h-5" />
+                  <div className="w-14 h-12 sm:w-16 sm:h-12 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800/90 flex items-center justify-center p-1.5 shadow-xs overflow-hidden group-hover:scale-105 group-hover:border-amber-500/40 transition-all shrink-0">
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="max-h-full max-w-full object-contain filter group-hover:brightness-105 transition-all"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="min-w-0">
                     <div className="text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#1C1917"/>
+    <path d="M100 24l7 14 15-8-6 16 17 2-13 11 9 14-16-4-3 16-10-13-10 13-3-16-16 4 9-14-13-11 17-2-6-16 15 8z" fill="#D97706" opacity="0.9"/>
+    <text x="100" y="92" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="20" fill="#FDE68A" letter-spacing="2">KURIFTU</text>
+    <text x="100" y="106" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#F59E0B" letter-spacing="4">RESORT &amp; SPA</text>
+  </svg>

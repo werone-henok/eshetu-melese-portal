@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#0E7490"/>
+    <path d="M50 35c-8 0-14 6-14 14 0 7 3 14 5 21 2 6 4 14 9 14s7-8 9-14c2-7 5-14 5-21 0-8-6-14-14-14z" fill="#FFFFFF"/>
+    <text x="78" y="58" font-family="system-ui, sans-serif" font-weight="900" font-size="20" fill="#FFFFFF">SMILE</text>
+    <text x="80" y="76" font-family="system-ui, sans-serif" font-weight="700" font-size="10" fill="#67E8F9" letter-spacing="2">DENTAL CLINIC</text>
+    <text x="80" y="92" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#A5F3FC">SMILE ዴንታል ክሊኒክ</text>
+  </svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
+    <rect width="200" height="120" rx="16" fill="#581C87"/>
+    <circle cx="50" cy="60" r="24" fill="#7E22CE"/>
+    <path d="M50 42l4 10 10 2-8 7 2 10-8-5-8 5 2-10-8-7 10-2z" fill="#FDE047"/>
+    <text x="82" y="58" font-family="Georgia, serif" font-weight="bold" font-size="21" fill="#FFFFFF">HELEN</text>
+    <text x="84" y="76" font-family="system-ui, sans-serif" font-weight="700" font-size="10" fill="#E9D5FF" letter-spacing="2">BRIDAL &amp; DECOR</text>
+    <text x="84" y="92" font-family="system-ui, sans-serif" font-weight="600" font-size="9" fill="#D8B4FE">ሄለን ብራይዳል</text>
+  </svg>
