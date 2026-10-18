@@ -38,6 +38,12 @@ export function NetflixPlayerModal({
 }: NetflixPlayerModalProps) {
   const [isCopied, setIsCopied] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+
+  // Reset video error on item change
+  useEffect(() => {
+    setVideoError(false);
+  }, [item?.id]);
 
   // Close on Escape key
   useEffect(() => {
@@ -76,7 +82,16 @@ export function NetflixPlayerModal({
     lang === 'am' && item.descriptionAm ? item.descriptionAm : item.description;
   const genres = lang === 'am' && item.genresAm?.length ? item.genresAm : item.genres;
 
-  // Build embed URL with autoplay
+  const isYouTube =
+    item.type === 'video' &&
+    (Boolean(item.embedUrl?.includes('youtube.com')) ||
+      Boolean(item.embedUrl?.includes('youtu.be')) ||
+      Boolean(item.url?.includes('youtube.com')) ||
+      Boolean(item.url?.includes('youtu.be')));
+
+  const isDriveOrDirectVideo = item.type === 'video' && !isYouTube;
+
+  // Build embed URL with autoplay for YouTube
   let finalEmbedUrl = item.embedUrl;
   if (finalEmbedUrl && finalEmbedUrl.includes('youtube.com')) {
     finalEmbedUrl = finalEmbedUrl.includes('?')
@@ -107,7 +122,7 @@ export function NetflixPlayerModal({
 
         {/* Top: 16:9 Video Embed Player or High-Res Image */}
         <div className="relative aspect-video w-full bg-black">
-          {item.type === 'video' && finalEmbedUrl ? (
+          {isYouTube && finalEmbedUrl ? (
             <iframe
               src={finalEmbedUrl}
               title={title}
@@ -115,6 +130,53 @@ export function NetflixPlayerModal({
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
+          ) : isDriveOrDirectVideo ? (
+            !videoError ? (
+              <div className="relative w-full h-full bg-black flex items-center justify-center">
+                <video
+                  controls
+                  autoPlay
+                  playsInline
+                  poster={item.highResUrl || item.thumbnailUrl}
+                  className="w-full h-full object-contain bg-black"
+                  onError={() => setVideoError(true)}
+                >
+                  <source src={`/api/media/stream?id=${item.id}`} type="video/mp4" />
+                  <source src={`/api/media/stream?id=${item.id}`} type="video/quicktime" />
+                  Your browser does not support HTML5 video playback.
+                </video>
+              </div>
+            ) : (
+              <div className="relative w-full h-full bg-black">
+                <img
+                  src={item.highResUrl || item.thumbnailUrl}
+                  alt={title}
+                  className="w-full h-full object-cover opacity-60"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col items-center justify-center p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-amber-500/90 text-slate-950 flex items-center justify-center shadow-2xl mb-4">
+                    <Play className="w-8 h-8 fill-slate-950 ml-1" />
+                  </div>
+                  <h3 className="text-white font-extrabold text-lg sm:text-xl drop-shadow mb-2">{title}</h3>
+                  <p className="text-zinc-300 text-xs sm:text-sm max-w-md drop-shadow mb-4">
+                    {lang === 'am'
+                      ? 'ከመጋረጃው ጀርባ የተወሰደ የቀጥታ ቪዲዮ። በGoogle Drive ላይ ሙሉ ጥራቱን ይመልከቱ።'
+                      : 'Exclusive master footage from the Dubai production set. Open directly in Google Drive to stream.'}
+                  </p>
+                  {item.url && (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-transform active:scale-95"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>{lang === 'am' ? 'በGoogle Drive ተመልከት' : 'Watch on Google Drive'}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            )
           ) : (
             <div className="relative w-full h-full">
               <img
@@ -206,10 +268,18 @@ export function NetflixPlayerModal({
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3.5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold text-xs flex items-center gap-1.5 transition-colors shadow-md"
+                  className={`px-3.5 py-2 rounded-lg text-white font-semibold text-xs flex items-center gap-1.5 transition-colors shadow-md ${
+                    isYouTube
+                      ? 'bg-red-600 hover:bg-red-700'
+                      : 'bg-amber-600 hover:bg-amber-700'
+                  }`}
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>{lang === 'am' ? 'በዩቲዩብ ተመልከት' : 'YouTube'}</span>
+                  <span>
+                    {isYouTube
+                      ? lang === 'am' ? 'በዩቲዩብ ተመልከት' : 'YouTube'
+                      : lang === 'am' ? 'በGoogle Drive ክፈት' : 'Open in Google Drive'}
+                  </span>
                 </a>
               )}
             </div>
