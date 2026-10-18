@@ -365,29 +365,39 @@ export function MediaCarouselSection({ config }: MediaCarouselSectionProps) {
               </div>
             </div>
 
-            {/* Main Stage Viewport (Aspect Ratio 16:9 on desktop, 4:3 on mobile) */}
-            <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] max-h-[640px] bg-slate-950 flex items-center justify-center overflow-hidden group">
+            {/* Main Stage Viewport with Theater Ambient Fill (NO CROPPING) */}
+            <div className="relative w-full h-[520px] sm:h-[620px] lg:h-[700px] bg-slate-950 flex items-center justify-center overflow-hidden group">
               {/* Image Loading Skeleton / Shimmer */}
               {!imageLoaded[currentItem.id] && (
-                <div className="absolute inset-0 bg-slate-900 animate-pulse flex items-center justify-center">
+                <div className="absolute inset-0 bg-slate-900 animate-pulse flex items-center justify-center z-20">
                   <div className="w-12 h-12 rounded-full border-2 border-amber-500 border-t-transparent animate-spin" />
                 </div>
               )}
 
-              {/* Main Media Preview Image */}
-              <img
-                key={currentItem.id}
-                src={currentItem.thumbnailUrl}
-                alt={currentItem.title}
-                onLoad={() => setImageLoaded((prev) => ({ ...prev, [currentItem.id]: true }))}
-                className={`w-full h-full object-cover object-center transition-all duration-700 select-none ${
-                  imageLoaded[currentItem.id] ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-                }`}
-              />
+              {/* Ambient Blurred Backdrop - Fills widescreen canvas with matching glowing tones */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+                <img
+                  src={currentItem.thumbnailUrl}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-full h-full object-cover blur-3xl opacity-35 dark:opacity-25 scale-125 select-none"
+                />
+                <div className="absolute inset-0 bg-slate-950/40" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60" />
+              </div>
 
-              {/* Subtle Vignette & Gradient Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
-              <div className="absolute inset-0 bg-radial from-transparent via-slate-950/20 to-slate-950/60 pointer-events-none" />
+              {/* Main Media Preview Image (100% visible, NEVER cropped or trimmed) */}
+              <div className="relative z-10 w-full h-full flex items-center justify-center pt-16 sm:pt-20 pb-28 sm:pb-32 px-4 sm:px-16 pointer-events-none">
+                <img
+                  key={currentItem.id}
+                  src={currentItem.thumbnailUrl}
+                  alt={currentItem.title}
+                  onLoad={() => setImageLoaded((prev) => ({ ...prev, [currentItem.id]: true }))}
+                  className={`max-w-full max-h-full w-auto h-auto object-contain rounded-2xl shadow-2xl transition-all duration-500 pointer-events-auto select-none ${
+                    imageLoaded[currentItem.id] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                  }`}
+                />
+              </div>
 
               {/* Video Play Button Overlay for Footage */}
               {currentItem.type === 'video' ? (
@@ -410,7 +420,7 @@ export function MediaCarouselSection({ config }: MediaCarouselSectionProps) {
                 <button
                   type="button"
                   onClick={() => setActiveModalItem(currentItem)}
-                  className="absolute z-20 inset-0 flex items-end justify-center pb-24 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-zoom-in"
+                  className="absolute z-20 inset-0 flex items-end justify-center pb-28 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-zoom-in pointer-events-auto"
                 >
                   <span className="px-4 py-2 rounded-full bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold border border-white/20 shadow-xl flex items-center gap-1.5">
                     <Maximize2 className="w-3.5 h-3.5 text-amber-400" />
@@ -426,7 +436,7 @@ export function MediaCarouselSection({ config }: MediaCarouselSectionProps) {
                   e.stopPropagation();
                   prevSlide();
                 }}
-                className="absolute left-3 sm:left-6 z-20 p-3 sm:p-3.5 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white border border-white/15 hover:border-amber-400 backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+                className="absolute left-3 sm:left-6 z-30 p-3 sm:p-3.5 rounded-full bg-slate-950/70 hover:bg-amber-500 hover:text-slate-950 text-white border border-white/20 hover:border-amber-400 backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
                 title="Previous Slide (Left Arrow)"
               >
                 <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -438,7 +448,7 @@ export function MediaCarouselSection({ config }: MediaCarouselSectionProps) {
                   e.stopPropagation();
                   nextSlide();
                 }}
-                className="absolute right-3 sm:right-6 z-20 p-3 sm:p-3.5 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white border border-white/15 hover:border-amber-400 backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
+                className="absolute right-3 sm:right-6 z-30 p-3 sm:p-3.5 rounded-full bg-slate-950/70 hover:bg-amber-500 hover:text-slate-950 text-white border border-white/20 hover:border-amber-400 backdrop-blur-md shadow-2xl transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
                 title="Next Slide (Right Arrow)"
               >
                 <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />

@@ -33,10 +33,17 @@ export function NavigationHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 8);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Close dropdown on outside click
@@ -128,11 +135,26 @@ export function NavigationHeader() {
   const allNavItems = [...primaryNavItems, ...secondaryNavItems];
 
   return (
-    <header className="sticky top-2 sm:top-4 z-50 w-full px-3 sm:px-6 transition-all duration-300">
-      {/* Floating Dynamic Island Container */}
-      <div className="max-w-7xl mx-auto rounded-2xl sm:rounded-full bg-white/80 dark:bg-[#0B0F19]/80 backdrop-blur-2xl border border-slate-200/90 dark:border-white/10 shadow-xl dark:shadow-2xl shadow-slate-950/10 px-3.5 sm:px-6 h-16 sm:h-18 flex items-center justify-between transition-all duration-300">
-        {/* Brand Identity (Left) */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+    <>
+      {/* Top Edge-to-Edge Scroll Fade Curtain: Smoothly fades any scrolling content behind and above the navbar */}
+      <div
+        className={`fixed top-0 inset-x-0 h-28 sm:h-36 pointer-events-none z-40 bg-gradient-to-b from-slate-50 via-slate-50/95 to-transparent dark:from-[#0B0F19] dark:via-[#0B0F19]/95 dark:to-transparent transition-opacity duration-300 ${
+          isScrolled ? 'opacity-100' : 'opacity-0'
+        }`}
+        aria-hidden="true"
+      />
+
+      <header className="sticky top-2 sm:top-4 z-50 w-full px-3 sm:px-6 transition-all duration-300">
+        {/* Floating Dynamic Island Container */}
+        <div
+          className={`max-w-7xl mx-auto rounded-2xl sm:rounded-full ${
+            isScrolled
+              ? 'bg-white/95 dark:bg-[#0B0F19]/95 border-slate-300 dark:border-white/15 shadow-2xl shadow-slate-950/15'
+              : 'bg-white/85 dark:bg-[#0B0F19]/85 border-slate-200/90 dark:border-white/10 shadow-xl shadow-slate-950/5'
+          } backdrop-blur-2xl border px-3.5 sm:px-6 h-16 sm:h-18 flex items-center justify-between transition-all duration-300`}
+        >
+          {/* Brand Identity (Left) */}
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
           {branding?.logoUrl ? (
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl overflow-hidden border border-amber-500/30 bg-amber-50 dark:bg-[#0E1526] flex items-center justify-center shadow-md shadow-amber-500/10 group-hover:scale-105 group-hover:border-amber-400 transition-all shrink-0">
               <img src={branding.logoUrl} alt={displayName} className="w-full h-full object-contain p-1" />
@@ -394,5 +416,6 @@ export function NavigationHeader() {
         </div>
       )}
     </header>
-  );
+  </>
+);
 }
