@@ -601,13 +601,13 @@ export default function MarketingPage() {
               <div className="lg:col-span-5 flex justify-center">
                 <div className="relative group">
                   <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 rounded-3xl blur-md opacity-40 group-hover:opacity-75 transition duration-500" />
-                  <div className="relative w-64 sm:w-80 h-80 sm:h-96 rounded-2xl overflow-hidden border-2 border-amber-500/40 bg-slate-950 shadow-2xl">
+                  <div className="relative w-64 sm:w-80 h-[380px] sm:h-[450px] rounded-2xl overflow-hidden border-2 border-amber-500/40 bg-slate-950 shadow-2xl">
                     <img
-                      src="/images/eshetu-yellow-curtain.jpg"
+                      src="/images/eshetu-award.jpg"
                       alt="Comedian Eshetu Melese"
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4 text-center">
                       <span className="font-extrabold text-white text-lg block">ኮሜዲያን እሸቱ መለሰ</span>
                       <span className="text-xs text-amber-400 font-semibold uppercase tracking-wider block">Founder & CEO</span>
@@ -1152,27 +1152,35 @@ export default function MarketingPage() {
             </form>
 
             {/* Quick Contact Cards */}
-            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs">
+            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-center text-xs">
               <a
-                href="https://t.me/eshetumelese"
+                href="https://t.me/DonkeyTubeSupport"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center justify-center gap-2 transition-colors"
               >
-                <MessageCircle className="w-4 h-4 text-blue-500" />
-                <span>Telegram: @eshetumelese</span>
+                <MessageCircle className="w-4 h-4 text-blue-500 shrink-0" />
+                <span>Telegram: @DonkeyTubeSupport</span>
               </a>
 
               <a
-                href="mailto:marketing@eshetumelese.com"
+                href="mailto:marketing@comedianeshetu.com"
                 className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center justify-center gap-2 transition-colors"
               >
-                <Mail className="w-4 h-4 text-amber-500" />
-                <span>marketing@eshetumelese.com</span>
+                <Mail className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>marketing@comedianeshetu.com</span>
+              </a>
+
+              <a
+                href="tel:+251913610673"
+                className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center justify-center gap-2 transition-colors"
+              >
+                <Phone className="w-4 h-4 text-emerald-500 shrink-0" />
+                <span>+251913610673</span>
               </a>
 
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2">
-                <Building2 className="w-4 h-4 text-emerald-500" />
+                <Building2 className="w-4 h-4 text-purple-500 shrink-0" />
                 <span>Addis Ababa, Ethiopia</span>
               </div>
             </div>
