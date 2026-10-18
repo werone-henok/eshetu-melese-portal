@@ -82,12 +82,10 @@ export function AppSettingsProvider({ children }: { children: React.ReactNode })
     if (savedLang === 'en' || savedLang === 'am') {
       setLangState(savedLang);
     }
-    const savedMode = localStorage.getItem('eshetu_color_mode') as ColorMode;
-    if (savedMode === 'dark' || savedMode === 'light') {
-      setColorModeState(savedMode);
-      document.documentElement.classList.toggle('light', savedMode === 'light');
-      document.documentElement.classList.toggle('dark', savedMode === 'dark');
-    }
+    const savedMode = (localStorage.getItem('eshetu_color_mode') as ColorMode) || 'dark';
+    setColorModeState(savedMode);
+    document.documentElement.classList.toggle('light', savedMode === 'light');
+    document.documentElement.classList.toggle('dark', savedMode === 'dark');
 
     // Load cached branding immediately from localStorage for zero-latency load
     try {

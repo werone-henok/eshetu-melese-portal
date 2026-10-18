@@ -314,14 +314,6 @@ export function NavigationHeader() {
             <span>{t('nav.joinNow', 'Join', 'አባል')}</span>
           </Link>
 
-          {/* Staff Login Icon */}
-          <Link
-            href="/admin/login"
-            title="Staff CMS Login"
-            className="hidden sm:flex p-2 rounded-full border border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-white/[0.04] hover:bg-slate-200 dark:hover:bg-white/[0.08] text-slate-600 dark:text-slate-400 hover:text-amber-500 transition-all shadow-sm"
-          >
-            <LayoutDashboard className="w-3.5 h-3.5" />
-          </Link>
 
           {/* Mobile Menu Hamburger Button */}
           <button
@@ -339,7 +331,7 @@ export function NavigationHeader() {
       {/* MOBILE FULL-SCREEN FROSTED GLASS DRAWER                                   */}
       {/* ========================================================================= */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-3 top-20 z-50 rounded-3xl bg-white/95 dark:bg-[#0B0F19]/98 backdrop-blur-3xl border border-slate-200 dark:border-white/10 p-5 shadow-2xl animate-in fade-in slide-in-from-top-3 duration-200 max-h-[85vh] overflow-y-auto">
+        <div className="lg:hidden fixed inset-x-3 top-20 z-50 rounded-3xl bg-white dark:bg-[#0B0F19] backdrop-blur-3xl border border-slate-200 dark:border-white/15 p-5 shadow-2xl animate-in fade-in slide-in-from-top-3 duration-200 max-h-[85vh] overflow-y-auto">
           {/* Mobile Nav Links Grid */}
           <div className="grid grid-cols-2 gap-2 mb-4">
             {allNavItems.map((item) => {
@@ -352,8 +344,8 @@ export function NavigationHeader() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-2.5 p-3 rounded-2xl border transition-all text-xs font-bold whitespace-nowrap ${
                     item.active
-                      ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md'
-                      : 'bg-slate-50 dark:bg-white/[0.03] border-slate-200 dark:border-white/5 text-slate-700 dark:text-slate-200 hover:border-amber-400/40 hover:text-amber-500'
+                      ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md font-extrabold'
+                      : 'bg-slate-100 dark:bg-white/[0.06] border-slate-200 dark:border-white/10 text-slate-800 dark:text-slate-100 hover:border-amber-400/40 hover:text-amber-500'
                   }`}
                 >
                   <Icon className="w-4 h-4 text-amber-500 shrink-0" />
@@ -368,7 +360,7 @@ export function NavigationHeader() {
             <Link
               href="/search"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-violet-700 dark:text-violet-300 text-xs font-bold"
+              className="flex items-center justify-between p-3 rounded-2xl bg-violet-500/10 dark:bg-violet-950/30 border border-violet-500/20 text-violet-700 dark:text-violet-300 text-xs font-bold"
             >
               <div className="flex items-center gap-2">
                 <Search className="w-4 h-4 text-violet-500" />
@@ -386,16 +378,7 @@ export function NavigationHeader() {
               <span>{t('nav.joinNow', 'Join', 'አባል ይሁኑ')}</span>
             </Link>
 
-            <div className="flex items-center justify-between pt-2 text-xs text-slate-500">
-              <Link
-                href="/admin/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-amber-500 font-medium"
-              >
-                <LayoutDashboard className="w-3.5 h-3.5" />
-                <span>Staff Portal</span>
-              </Link>
-
+            <div className="flex items-center justify-end pt-2 text-xs text-slate-500">
               <button
                 type="button"
                 onClick={() => setLang(lang === 'en' ? 'am' : 'en')}

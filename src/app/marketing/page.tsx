@@ -764,33 +764,37 @@ export default function MarketingPage() {
             ))}
           </div>
 
-          {/* Interactive Partners Directory Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredPartners.map((partner, idx) => {
-              return (
+          {/* Continuous Single-Line Partner Brands Marquee */}
+          <div className="relative w-full overflow-hidden py-4 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+            {/* Left and Right Fade Gradients */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-slate-50 dark:from-[#070A12] to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-slate-50 dark:from-[#070A12] to-transparent z-10" />
+
+            <div className="partner-marquee-track flex items-center gap-4 sm:gap-5">
+              {[...filteredPartners, ...filteredPartners].map((partner, idx) => (
                 <div
-                  key={idx}
-                  className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 hover:border-amber-500/40 hover:bg-slate-50 dark:hover:bg-slate-900/90 shadow-sm hover:shadow-md transition-all flex items-center gap-3.5 group"
+                  key={`${partner.name}-${idx}`}
+                  className="px-5 py-4 sm:px-6 sm:py-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800/90 hover:border-amber-500/50 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm hover:shadow-lg transition-all flex items-center gap-4 group min-w-[290px] sm:min-w-[340px] shrink-0"
                 >
-                  <div className="w-14 h-12 sm:w-16 sm:h-12 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800/90 flex items-center justify-center p-1.5 shadow-xs overflow-hidden group-hover:scale-105 group-hover:border-amber-500/40 transition-all shrink-0">
+                  <div className="w-18 h-14 sm:w-22 sm:h-16 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800/90 flex items-center justify-center p-2 shadow-xs overflow-hidden group-hover:scale-105 group-hover:border-amber-500/40 transition-all shrink-0">
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      className="max-h-full max-w-full object-contain filter group-hover:brightness-105 transition-all"
+                      className="max-h-11 sm:max-h-12 max-w-full object-contain filter group-hover:brightness-105 transition-all"
                       loading="lazy"
                     />
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-sm font-bold text-slate-900 dark:text-white truncate group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white truncate group-hover:text-amber-500 transition-colors">
                       {lang === 'am' ? partner.nameAm : partner.name}
                     </div>
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                    <div className="text-xs text-slate-500 dark:text-slate-400 truncate mt-0.5">
                       {partner.tag}
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </section>
 
@@ -1152,36 +1156,38 @@ export default function MarketingPage() {
             </form>
 
             {/* Quick Contact Cards */}
-            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-center text-xs">
+            <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 text-center text-xs">
               <a
                 href="https://t.me/DonkeyTubeSupport"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center justify-center gap-2 transition-colors"
+                className="px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 hover:bg-sky-500/[0.04] text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 flex items-center justify-center gap-2.5 transition-all font-semibold shadow-xs overflow-hidden"
               >
-                <MessageCircle className="w-4 h-4 text-blue-500 shrink-0" />
-                <span>Telegram: @DonkeyTubeSupport</span>
+                <svg className="w-4 h-4 text-[#229ED9] fill-current shrink-0" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.05-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.75 3.98-1.73 6.64-2.87 7.97-3.44 3.79-1.61 4.58-1.89 5.09-1.9.11 0 .37.03.53.16.14.12.18.28.2.45-.01.07.01.22 0 .33z"/>
+                </svg>
+                <span className="truncate">@DonkeyTubeSupport</span>
               </a>
 
               <a
                 href="mailto:marketing@comedianeshetu.com"
-                className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center justify-center gap-2 transition-colors"
+                className="px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-amber-500/50 hover:bg-amber-500/[0.04] text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center justify-center gap-2.5 transition-all font-semibold shadow-xs overflow-hidden"
               >
                 <Mail className="w-4 h-4 text-amber-500 shrink-0" />
-                <span>marketing@comedianeshetu.com</span>
+                <span className="truncate">marketing@comedianeshetu.com</span>
               </a>
 
               <a
                 href="tel:+251913610673"
-                className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center justify-center gap-2 transition-colors"
+                className="px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:bg-emerald-500/[0.04] text-slate-700 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center justify-center gap-2.5 transition-all font-semibold shadow-xs overflow-hidden"
               >
                 <Phone className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>+251913610673</span>
+                <span className="truncate">+251913610673</span>
               </a>
 
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2">
+              <div className="px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2.5 font-semibold shadow-xs overflow-hidden">
                 <Building2 className="w-4 h-4 text-purple-500 shrink-0" />
-                <span>Addis Ababa, Ethiopia</span>
+                <span className="truncate">Addis Ababa, Ethiopia</span>
               </div>
             </div>
           </div>

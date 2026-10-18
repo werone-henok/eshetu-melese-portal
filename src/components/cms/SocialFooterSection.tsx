@@ -85,9 +85,6 @@ export function SocialFooterSection({ config }: FooterProps) {
             <Link href="/#tiers" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
               {lang === 'am' ? 'የአባልነት ደረጃዎች' : 'Pricing Tiers'}
             </Link>
-            <Link href="/admin/login" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
-              {lang === 'am' ? 'የአስተዳዳሪ መግቢያ' : 'Staff CMS Login'}
-            </Link>
           </div>
         </div>
       </div>

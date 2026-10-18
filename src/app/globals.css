@@ -367,3 +367,25 @@ html.light ::-webkit-scrollbar-thumb:hover {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Continuous Single-Line Partner Brands Marquee */
+@keyframes marqueeLine {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeLine 50s linear infinite;
+  will-change: transform;
+}
+
+.partner-marquee-track:hover {
+  animation-play-state: paused;
+}
+
