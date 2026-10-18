@@ -281,6 +281,17 @@ function GalleryContent() {
             'የተረጋገጡ የክብር አባላትን ካርዶች እዚህ ይመልከቱ። ስም፣ ስልክ ቁጥር፣ ኢሜይል ወይም የአባልነት መለያ በማስገባት ካርድዎን በቀላሉ ያግኙ።'
           )}
         </p>
+
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <Link
+            href="/gallery"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500/15 via-amber-500/25 to-amber-500/15 border border-amber-500/40 text-amber-700 dark:text-amber-300 font-bold text-xs hover:border-amber-400 hover:scale-105 transition-all shadow-sm"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <span>{lang === 'am' ? 'ከመጋረጃው ጀርባ የዱባይ ቪዲዮዎችን እና የመድረክ ምስሎችን ይመልከቱ' : 'Watch Dubai BTS Footage & Stand-Up Media Vault'}</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
 
       {/* Search Input Bar */}

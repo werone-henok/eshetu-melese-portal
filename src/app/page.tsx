@@ -14,6 +14,7 @@ import { CardShowcaseSection } from '@/components/cms/CardShowcaseSection';
 import { FaqSection } from '@/components/cms/FaqSection';
 import { SocialFooterSection } from '@/components/cms/SocialFooterSection';
 import { SocialsSection } from '@/components/cms/SocialsSection';
+import { MediaCarouselSection } from '@/components/cms/MediaCarouselSection';
 
 export default function HomePage() {
   const [sections, setSections] = useState<any[]>([]);
@@ -81,6 +82,9 @@ export default function HomePage() {
         return <HeroSection key={section.id} config={section.configuration} />;
       case 'about':
         return <AboutSection key={section.id} config={section.configuration} />;
+      case 'media_carousel':
+      case 'gallery':
+        return <MediaCarouselSection key={section.id} config={section.configuration} />;
       case 'charity':
         return <CharitySection key={section.id} config={section.configuration} />;
       case 'events':
@@ -117,6 +121,7 @@ export default function HomePage() {
           <>
             <HeroSection config={{}} />
             <SocialsSection config={{}} />
+            <MediaCarouselSection config={{}} />
             <BenefitsSection config={{}} />
             <TiersSection config={{}} tiers={tiers} />
             <HowItWorksSection config={{}} />
