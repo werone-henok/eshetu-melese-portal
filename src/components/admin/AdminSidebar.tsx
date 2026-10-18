@@ -19,6 +19,7 @@ import {
   Languages,
   UserPlus,
   Settings,
+  Award,
 } from 'lucide-react';
 import { useAppSettings } from '@/context/AppSettingsContext';
 
@@ -52,6 +53,7 @@ export function AdminSidebar({ userRole = 'ADMIN', userName = 'Administrator' }:
     { name: 'Members & Approvals', href: '/admin/members', icon: Users },
     { name: 'Membership Tiers & Pricing', href: '/admin/tiers', icon: CreditCard },
     { name: 'Card Editing Studio', href: '/admin/card-studio', icon: CreditCard },
+    { name: 'Certificate Studio', href: '/admin/certificate-studio', icon: Award },
     { name: 'Section Builder & Media', href: '/admin/sections', icon: Layers },
     { name: 'Theme & Styling', href: '/admin/theme', icon: Palette },
     { name: 'User & Role Manager', href: '/admin/users', icon: UserPlus },
