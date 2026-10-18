@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Play, Plus, Check, ThumbsUp, ChevronDown } from 'lucide-react';
-import { NetflixMediaItem } from './types';
+import { NetflixMediaItem, cleanMediaTitle } from './types';
 
 interface NetflixHoverPopoutProps {
   item: NetflixMediaItem;
@@ -28,7 +28,8 @@ export function NetflixHoverPopout({
   const thumbSrc = imgError || !item.thumbnailUrl ? fallbackThumb : item.thumbnailUrl;
 
   const genresToDisplay = lang === 'am' && item.genresAm?.length ? item.genresAm : item.genres;
-  const titleToDisplay = lang === 'am' && item.titleAm ? item.titleAm : item.title;
+  const rawTitle = lang === 'am' && item.titleAm ? item.titleAm : item.title;
+  const titleToDisplay = cleanMediaTitle(rawTitle);
 
   return (
     <div className="w-full bg-[#181818] rounded-lg overflow-hidden ring-1 ring-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.95)]">
@@ -83,17 +84,17 @@ export function NetflixHoverPopout({
       </div>
 
       {/* Bottom: The Dark Control Tray */}
-      <div className="p-3.5 bg-[#181818] space-y-2.5">
+      <div className="p-2.5 sm:p-3 bg-[#181818] space-y-2">
         {/* ROW 1: Circular Action Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {/* White circular play button */}
           <button
             type="button"
             onClick={() => onPlay(item)}
             title="Play"
-            className="w-8 h-8 rounded-full bg-white hover:bg-white/90 text-black flex items-center justify-center transition-transform active:scale-95 shadow-md flex-none cursor-pointer"
+            className="w-7 h-7 rounded-full bg-white hover:bg-white/90 text-black flex items-center justify-center transition-transform active:scale-95 shadow-md flex-none cursor-pointer"
           >
-            <Play className="w-4 h-4 fill-black ml-0.5" />
+            <Play className="w-3.5 h-3.5 fill-black ml-0.5" />
           </button>
 
           {/* Plus (+) / Checkmark Add to My List */}
@@ -104,13 +105,13 @@ export function NetflixHoverPopout({
               onToggleMyList?.(item);
             }}
             title={isInMyList ? 'Remove from My List' : 'Add to My List'}
-            className={`w-8 h-8 rounded-full border border-white/40 flex items-center justify-center transition-colors cursor-pointer flex-none ${
+            className={`w-7 h-7 rounded-full border border-white/40 flex items-center justify-center transition-colors cursor-pointer flex-none ${
               isInMyList
                 ? 'bg-white text-black border-white'
                 : 'bg-zinc-800/80 hover:border-white text-white'
             }`}
           >
-            {isInMyList ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            {isInMyList ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
           </button>
 
           {/* Thumbs Up Like Button */}
@@ -121,13 +122,13 @@ export function NetflixHoverPopout({
               setIsLiked((prev) => !prev);
             }}
             title="I like this"
-            className={`w-8 h-8 rounded-full border border-white/40 flex items-center justify-center transition-colors cursor-pointer flex-none ${
+            className={`w-7 h-7 rounded-full border border-white/40 flex items-center justify-center transition-colors cursor-pointer flex-none ${
               isLiked
                 ? 'bg-red-600 text-white border-red-500'
                 : 'bg-zinc-800/80 hover:border-white text-white'
             }`}
           >
-            <ThumbsUp className={`w-3.5 h-3.5 ${isLiked ? 'fill-white' : ''}`} />
+            <ThumbsUp className={`w-3 h-3 ${isLiked ? 'fill-white' : ''}`} />
           </button>
 
           {/* Chevron Down for More Info (Right-aligned) */}
@@ -139,33 +140,33 @@ export function NetflixHoverPopout({
               else onPlay(item);
             }}
             title="More details"
-            className="ml-auto w-8 h-8 rounded-full border border-white/40 bg-zinc-800/80 hover:border-white text-white flex items-center justify-center transition-colors cursor-pointer flex-none"
+            className="ml-auto w-7 h-7 rounded-full border border-white/40 bg-zinc-800/80 hover:border-white text-white flex items-center justify-center transition-colors cursor-pointer flex-none"
           >
-            <ChevronDown className="w-4 h-4" />
+            <ChevronDown className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* ROW 2: Metadata Badges */}
-        <div className="flex items-center gap-2 text-xs flex-wrap">
+        <div className="flex items-center gap-1.5 text-[11px] flex-wrap">
           <span className="text-[#46d369] font-bold tracking-tight">
             {item.matchScore}% Match
           </span>
-          <span className="border border-white/40 text-[10px] px-1.5 py-0.5 rounded text-white/90 font-semibold leading-none">
+          <span className="border border-white/40 text-[9px] px-1 py-0.2 rounded text-white/90 font-semibold leading-none">
             {item.ratingBadge}
           </span>
-          <span className="text-zinc-300 text-[11px] font-medium">
+          <span className="text-zinc-300 text-[10px] font-medium">
             {item.duration}
           </span>
-          <span className="border border-white/30 text-[9px] px-1 py-0.5 rounded text-zinc-300 font-bold uppercase tracking-wider leading-none">
+          <span className="border border-white/30 text-[8px] px-1 py-0.2 rounded text-zinc-300 font-bold uppercase tracking-wider leading-none">
             HD
           </span>
         </div>
 
         {/* ROW 3: Dot-separated Genre Badges (as in screenshot) */}
-        <div className="flex items-center gap-1.5 text-[11px] text-zinc-300 overflow-hidden text-ellipsis whitespace-nowrap">
+        <div className="flex items-center gap-1.5 text-[10px] text-zinc-400 overflow-hidden text-ellipsis whitespace-nowrap">
           {genresToDisplay.map((genre, idx) => (
             <React.Fragment key={idx}>
-              {idx > 0 && <span className="text-zinc-500 text-xs">•</span>}
+              {idx > 0 && <span className="text-zinc-600 text-[9px]">•</span>}
               <span className="hover:text-white transition-colors">{genre}</span>
             </React.Fragment>
           ))}

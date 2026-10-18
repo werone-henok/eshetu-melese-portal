@@ -121,25 +121,25 @@ export default function ShowsPage() {
   }, [allNetflixItems, selectedItem]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-slate-950 font-sans transition-colors duration-300 pb-20">
+    <div className="min-h-screen bg-[#0B0F19] text-slate-100 selection:bg-amber-500 selection:text-slate-950 font-sans pb-20">
       {/* 1. Original Website Top Bar / Menu Bar */}
       <NavigationHeader />
 
-      <main className="relative z-10 pt-16 sm:pt-20">
+      <main className="relative z-10 -mt-20 sm:-mt-24 pt-0">
         {/* ========================================================
             CASE A: SEARCH ACTIVE
             ======================================================== */}
         {searchQuery.trim() ? (
-          <section className="max-w-7xl mx-auto px-4 sm:px-12 pt-8 pb-16">
-            <div className="flex items-center justify-between mb-6 border-b border-slate-200 dark:border-white/10 pb-4">
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+          <section className="max-w-7xl mx-auto px-4 sm:px-12 pt-28 sm:pt-32 pb-16">
+            <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+              <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
                 <Search className="w-5 h-5 text-amber-500" />
                 <span>
                   {lang === 'am'
                     ? `ለ"${searchQuery}" የተገኙ ውጤቶች`
                     : `Search Results for "${searchQuery}"`}
                 </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold border border-amber-500/20">
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 font-semibold border border-amber-500/20">
                   {searchedItems.length}
                 </span>
               </h2>
@@ -147,14 +147,14 @@ export default function ShowsPage() {
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="text-xs font-semibold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white"
+                className="text-xs font-semibold text-zinc-400 hover:text-white"
               >
                 {lang === 'am' ? 'ፍለጋ አጽዳ' : 'Clear search'}
               </button>
             </div>
 
             {searchedItems.length === 0 ? (
-              <div className="text-center py-20 text-slate-500 dark:text-zinc-400">
+              <div className="text-center py-20 text-zinc-400">
                 <Film className="w-12 h-12 mx-auto mb-3 opacity-40" />
                 <p className="text-base font-medium">
                   {lang === 'am'
@@ -183,10 +183,10 @@ export default function ShowsPage() {
           /* ========================================================
              CASE B: MY LIST TAB ACTIVE
              ======================================================== */
-          <section className="max-w-7xl mx-auto px-4 sm:px-12 pt-8 pb-16">
-            <div className="flex items-center justify-between mb-6 border-b border-slate-200 dark:border-white/10 pb-4">
+          <section className="max-w-7xl mx-auto px-4 sm:px-12 pt-28 sm:pt-32 pb-16">
+            <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
                   <Heart className="w-5 h-5 text-red-500 fill-red-500" />
                   <span>{lang === 'am' ? 'የኔ የተመረጡ ዝግጅቶች' : 'My List'}</span>
                   <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-600/10 text-red-600 dark:text-red-400 font-semibold border border-red-500/20">

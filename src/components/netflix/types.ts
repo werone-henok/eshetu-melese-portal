@@ -102,6 +102,25 @@ const GENRE_MAP: Record<string, { en: string[]; am: string[]; rating: string; du
   },
 };
 
+/**
+ * Strips all #hashtag words, @handles, and trailing separator artifacts from titles
+ * e.g. "እኔ መሱድ ነኝ ማንንም አልፈራም!  @donkeytube.eshetumelese   #kids #dinklejoch #award"
+ * becomes "እኔ መሱድ ነኝ ማንንም አልፈራም!"
+ */
+export function cleanMediaTitle(rawTitle?: string): string {
+  if (!rawTitle) return '';
+  return rawTitle
+    // Remove hashtags with Unicode letters, numbers, or underscores
+    .replace(/#[\p{L}\p{N}_]+/gu, '')
+    // Remove YouTube handles/mentions (@channel, @donkeytube.eshetumelese)
+    .replace(/@[\w.-]+/g, '')
+    // Replace multiple spaces with single space
+    .replace(/\s+/g, ' ')
+    // Trim extra spaces and leading/trailing dashes, colons, or pipes
+    .trim()
+    .replace(/^[\s|:,-]+|[\s|:,-]+$/g, '');
+}
+
 export function convertShowToNetflixItem(show: ShowItem, index = 0): NetflixMediaItem {
   const meta = GENRE_MAP[show.categorySlug] || {
     en: [show.categoryLabel, 'Entertainment', 'Show'],
@@ -113,12 +132,13 @@ export function convertShowToNetflixItem(show: ShowItem, index = 0): NetflixMedi
   // Top 10 flag: assign to top items of each category
   const isTop10 = index < 3 || show.badge.includes('TOP 10');
   const matchScore = 95 + (Math.abs((show.title.length * 7 + index * 3) % 5)); // 95 - 99% match
+  const cleanTitle = cleanMediaTitle(show.title);
 
   return {
     id: show.id,
     uniqueId: show.uniqueId,
-    title: show.title,
-    titleAm: show.title,
+    title: cleanTitle,
+    titleAm: cleanTitle,
     author: show.author || 'Comedian Eshetu Melese',
     thumbnailUrl: show.thumbnailUrl,
     highResUrl: show.maxResThumbnailUrl,
@@ -145,12 +165,14 @@ export function convertGalleryToNetflixItem(item: MediaGalleryItem, index = 0): 
   const isBts = item.category === 'bts';
   const isTop10 = index < 3 || item.featured === true;
   const matchScore = 96 + (index % 4);
+  const cleanTitle = cleanMediaTitle(item.title);
+  const cleanTitleAm = cleanMediaTitle(item.titleAm || item.title);
 
   return {
     id: item.id,
     uniqueId: `gallery-${item.id}`,
-    title: item.title,
-    titleAm: item.titleAm,
+    title: cleanTitle,
+    titleAm: cleanTitleAm,
     author: 'Comedian Eshetu Melese Vault',
     thumbnailUrl: item.thumbnailUrl,
     highResUrl: item.highResUrl,

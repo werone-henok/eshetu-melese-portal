@@ -64,29 +64,16 @@ export function CharitySection({ config }: CharitySectionProps) {
                 {description}
               </p>
 
-              <div className="space-y-3.5 pt-2 text-sm text-slate-800 dark:text-slate-200">
-                <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-500 dark:text-amber-400 flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                  <span>{lang === 'am' ? 'ለአቅመ ደካሞች የመኖሪያ ቤቶችን መገንባት' : 'Building safe shelters for vulnerable families'}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-500 dark:text-amber-400 flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                  <span>{lang === 'am' ? 'የህክምና እና የትምህርት ወጪዎችን መሸፈን' : 'Emergency medical funding & child scholarships'}</span>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <Link
-                  href="/register"
-                  className="btn-luxury-gold inline-flex items-center gap-3 px-8 py-4 text-sm"
+              <div className="pt-2">
+                <a
+                  href="https://www.lemetsdek.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-luxury-gold inline-flex items-center gap-3 px-8 py-4 text-sm font-bold cursor-pointer"
                 >
-                  <span>{lang === 'am' ? 'በአባልነት ይደግፉ' : 'Support Through Membership'}</span>
+                  <span>{lang === 'am' ? 'ለመጽደቅን ይጎብኙ' : 'Visit Lemetsdek'}</span>
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </a>
               </div>
             </div>
 

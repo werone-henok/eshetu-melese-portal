@@ -232,7 +232,7 @@ export function NetflixRow({
             width: `${hoveredCard.width}px`,
             zIndex: 60,
           }}
-          className={`transition-all duration-300 ease-out ${hoveredCard.originClass} scale-125 sm:scale-130 -translate-y-5 pointer-events-auto`}
+          className={`transition-all duration-300 ease-out ${hoveredCard.originClass} scale-105 sm:scale-108 -translate-y-2 pointer-events-auto`}
         >
           <NetflixHoverPopout
             item={hoveredCard.item}

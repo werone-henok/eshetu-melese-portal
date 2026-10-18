@@ -80,13 +80,6 @@ export function NavigationHeader() {
       active: false,
     },
     {
-      href: '/#events',
-      labelEn: 'Events',
-      labelAm: 'ዝግጅቶች',
-      icon: Calendar,
-      active: false,
-    },
-    {
       href: '/#tiers',
       labelEn: 'Tiers',
       labelAm: 'ደረጃዎች',
@@ -106,7 +99,6 @@ export function NavigationHeader() {
       labelEn: 'Media',
       labelAm: 'ሚዲያ',
       icon: Film,
-      badge: 'Dubai',
       active: pathname === '/gallery',
     },
   ];
@@ -129,15 +121,6 @@ export function NavigationHeader() {
       descEn: 'Official company dossier',
       descAm: 'የድርጅት ይፋዊ መገለጫ',
       active: pathname === '/marketing',
-    },
-    {
-      href: '/#faq',
-      labelEn: 'FAQ',
-      labelAm: 'ጥያቄዎች',
-      icon: HelpCircle,
-      descEn: 'Frequently asked questions',
-      descAm: 'ተደጋጋሚ የጋራ ጥያቄዎች',
-      active: false,
     },
   ];
 

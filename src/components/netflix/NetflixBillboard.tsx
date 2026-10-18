@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Play, Info, Plus, Check, Sparkles, Flame } from 'lucide-react';
-import { NetflixMediaItem } from './types';
+import { NetflixMediaItem, cleanMediaTitle } from './types';
 
 interface NetflixBillboardProps {
   items: NetflixMediaItem[];
@@ -36,12 +36,14 @@ export function NetflixBillboard({
 
   const current = items[currentIndex] || items[0];
   const isInMyList = myListIds.has(current.id);
-  const title = lang === 'am' && current.titleAm ? current.titleAm : current.title;
-  const description =
+  const rawTitle = lang === 'am' && current.titleAm ? current.titleAm : current.title;
+  const title = cleanMediaTitle(rawTitle);
+  const rawDescription =
     lang === 'am' && current.descriptionAm ? current.descriptionAm : current.description;
+  const description = cleanMediaTitle(rawDescription);
 
   return (
-    <div className="relative w-full h-[55vh] sm:h-[65vh] md:h-[75vh] lg:h-[80vh] overflow-hidden select-none bg-slate-950">
+    <div className="relative w-full h-[62vh] sm:h-[72vh] md:h-[82vh] lg:h-[88vh] overflow-hidden select-none bg-slate-950">
       {/* Background Hero Image with Zoom Effect */}
       <div className="absolute inset-0">
         <img
@@ -50,14 +52,15 @@ export function NetflixBillboard({
           alt={title}
           className="w-full h-full object-cover object-center sm:object-top transition-all duration-1000 transform scale-100 animate-in fade-in"
         />
-        {/* Cinematic Vignettes: Dark gradient on bottom, left, and subtle top */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent w-full md:w-2/3 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0B0F19] via-slate-950/60 to-transparent z-10" />
-        <div className="absolute inset-0 bg-black/25 z-10" />
+        {/* Cinematic Vignettes: Dark gradient on bottom, left, and seamless top blend */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-transparent w-full md:w-2/3 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-slate-950/40 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/25 to-transparent h-48 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/20 z-10" />
       </div>
 
       {/* Hero Content Overlay */}
-      <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-12 flex flex-col justify-end pb-10 sm:pb-14 md:pb-18">
+      <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-12 flex flex-col justify-end pt-24 sm:pt-32 pb-10 sm:pb-14 md:pb-18">
         <div className="max-w-2xl space-y-3 sm:space-y-4">
           {/* Top Series Ribbon */}
           <div className="flex items-center gap-2.5 flex-wrap">

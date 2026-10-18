@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Play } from 'lucide-react';
-import { NetflixMediaItem } from './types';
+import { NetflixMediaItem, cleanMediaTitle } from './types';
 import { NetflixHoverPopout } from './NetflixHoverPopout';
 
 interface NetflixCardProps {
@@ -36,7 +36,8 @@ export function NetflixCard({
   const fallbackThumb = `https://images.unsplash.com/photo-1518173946687-a4c8a383392e?w=800&auto=format&fit=crop&q=80`;
   const thumbSrc = imgError || !item.thumbnailUrl ? fallbackThumb : item.thumbnailUrl;
 
-  const titleToDisplay = lang === 'am' && item.titleAm ? item.titleAm : item.title;
+  const rawTitle = lang === 'am' && item.titleAm ? item.titleAm : item.title;
+  const titleToDisplay = cleanMediaTitle(rawTitle);
 
   return (
     <div
@@ -97,7 +98,7 @@ export function NetflixCard({
 
       {/* Grid-Only Hover Popout (Visible overflow container, no clipping) */}
       {isGrid && isGridHovered && (
-        <div className="absolute top-0 left-0 w-full z-50 transition-all duration-300 ease-out origin-center scale-115 -translate-y-4 shadow-[0_15px_45px_rgba(0,0,0,0.95)]">
+        <div className="absolute top-0 left-0 w-full z-50 transition-all duration-300 ease-out origin-center scale-105 sm:scale-108 -translate-y-2 shadow-[0_15px_45px_rgba(0,0,0,0.95)]">
           <NetflixHoverPopout
             item={item}
             lang={lang}
