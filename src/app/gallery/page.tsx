@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { NavigationHeader } from '@/components/common/NavigationHeader';
 import {
-  NetflixHeader,
   NetflixBillboard,
   NetflixRow,
   NetflixCard,
@@ -15,10 +15,10 @@ import {
 import { useAppSettings } from '@/context/AppSettingsContext';
 import { MEDIA_GALLERY_ITEMS } from '@/data/mediaGalleryData';
 import { ALL_SHOWS } from '@/data/showsData';
-import { Film, Camera, Heart, Search, ArrowRight, Sparkles, Users } from 'lucide-react';
+import { Film, Camera, Heart, Search, X, Users, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function GalleryPage() {
-  const { lang } = useAppSettings();
+  const { lang, t } = useAppSettings();
 
   // Search & Navigation Tabs
   const [searchQuery, setSearchQuery] = useState('');
@@ -70,7 +70,6 @@ export default function GalleryPage() {
 
   // Top featured billboard items for gallery
   const billboardItems = useMemo(() => {
-    // Pick the top Dubai BTS studio set, Reel I, and top comedy stills
     return [
       allGalleryNetflixItems[0], // Dubai studio still
       allGalleryNetflixItems[1], // Dubai Reel I
@@ -80,10 +79,6 @@ export default function GalleryPage() {
   }, [allGalleryNetflixItems]);
 
   // Group into curated rows:
-  // 1. Behind The Scenes & Dubai Production (Video Reels & Studio Stills)
-  // 2. Stand-Up Comedy Live Concerts & Tour Stills
-  // 3. Motion Reels & Behind the Lens Footage
-  // 4. Donkey Tube Blockbusters (Selected Top Shows crossover)
   const curatedRows = useMemo(() => {
     const btsItems = allGalleryNetflixItems.filter((i) => i.categorySlug === 'bts');
     const comedyItems = allGalleryNetflixItems.filter((i) => i.categorySlug === 'comedy');
@@ -161,19 +156,9 @@ export default function GalleryPage() {
   }, [allGalleryNetflixItems, selectedItem]);
 
   return (
-    <div className="min-h-screen bg-[#141414] text-white font-sans selection:bg-[#E50914] selection:text-white pb-20">
-      {/* 1. Netflix Header */}
-      <NetflixHeader
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        myListCount={myListIds.size}
-        activeTab={activeTab}
-        onSelectTab={(tab) => {
-          setActiveTab(tab as 'all' | 'mylist');
-          setSearchQuery('');
-        }}
-        totalShowsCount={allGalleryNetflixItems.length}
-      />
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 selection:bg-amber-500 selection:text-slate-950 font-sans transition-colors duration-300 pb-20">
+      {/* 1. Original Website Top Bar / Menu Bar */}
+      <NavigationHeader />
 
       <main className="relative z-10 pt-16 sm:pt-20">
         {/* ========================================================
@@ -181,15 +166,15 @@ export default function GalleryPage() {
             ======================================================== */}
         {searchQuery.trim() ? (
           <section className="max-w-7xl mx-auto px-4 sm:px-12 pt-8 pb-16">
-            <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                <Search className="w-5 h-5 text-red-500" />
+            <div className="flex items-center justify-between mb-6 border-b border-slate-200 dark:border-white/10 pb-4">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <Search className="w-5 h-5 text-amber-500" />
                 <span>
                   {lang === 'am'
                     ? `ለ"${searchQuery}" የተገኙ ውጤቶች`
                     : `Search Results for "${searchQuery}"`}
                 </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-600/30 text-red-400 font-semibold border border-red-500/30">
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold border border-amber-500/20">
                   {searchedItems.length}
                 </span>
               </h2>
@@ -197,15 +182,15 @@ export default function GalleryPage() {
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="text-xs text-zinc-400 hover:text-white"
+                className="text-xs font-semibold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white"
               >
                 {lang === 'am' ? 'ፍለጋ አጽዳ' : 'Clear search'}
               </button>
             </div>
 
             {searchedItems.length === 0 ? (
-              <div className="text-center py-20 text-zinc-400">
-                <Camera className="w-12 h-12 mx-auto mb-3 text-zinc-600" />
+              <div className="text-center py-20 text-slate-500 dark:text-zinc-400">
+                <Camera className="w-12 h-12 mx-auto mb-3 opacity-40" />
                 <p className="text-base font-medium">
                   {lang === 'am'
                     ? 'ምንም የተዛመደ የሚዲያ ፋይል አልተገኘም።'
@@ -233,16 +218,16 @@ export default function GalleryPage() {
              CASE B: MY LIST ACTIVE
              ======================================================== */
           <section className="max-w-7xl mx-auto px-4 sm:px-12 pt-8 pb-16">
-            <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between mb-6 border-b border-slate-200 dark:border-white/10 pb-4">
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
                   <Heart className="w-5 h-5 text-red-500 fill-red-500" />
                   <span>{lang === 'am' ? 'የኔ የተመረጡ የሚዲያ ፋይሎች' : 'My Saved Media'}</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-600/30 text-red-400 font-semibold border border-red-500/30">
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-600/10 text-red-600 dark:text-red-400 font-semibold border border-red-500/20">
                     {myListItems.length}
                   </span>
                 </h2>
-                <p className="text-zinc-400 text-xs mt-1">
+                <p className="text-slate-500 dark:text-zinc-400 text-xs mt-1">
                   {lang === 'am'
                     ? 'በዝርዝርዎ ውስጥ ያስቀመጧቸው ፎቶዎችና ቪዲዮዎች'
                     : 'Footage, reels, and stills you have bookmarked.'}
@@ -252,7 +237,7 @@ export default function GalleryPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('all')}
-                className="text-xs text-zinc-400 hover:text-white flex items-center gap-1"
+                className="text-xs font-semibold text-slate-600 dark:text-zinc-400 hover:text-amber-500 flex items-center gap-1"
               >
                 <span>{lang === 'am' ? 'ወደ ሙሉ ጋለሪ ተመለስ' : 'Back to Gallery'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -260,12 +245,12 @@ export default function GalleryPage() {
             </div>
 
             {myListItems.length === 0 ? (
-              <div className="text-center py-20 text-zinc-400">
-                <Heart className="w-12 h-12 mx-auto mb-3 text-zinc-700" />
-                <p className="text-base font-semibold text-white mb-2">
+              <div className="text-center py-20 text-slate-500 dark:text-zinc-400">
+                <Heart className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                <p className="text-base font-bold text-slate-900 dark:text-white mb-2">
                   {lang === 'am' ? 'ዝርዝርዎ ባዶ ነው' : 'Your Media List is Empty'}
                 </p>
-                <p className="text-xs text-zinc-400 max-w-md mx-auto mb-6">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-md mx-auto mb-6">
                   {lang === 'am'
                     ? 'በማንኛውም ፎቶ ወይም ቪዲዮ ላይ የ(+) ምልክት በመጫን ወደዚህ ማከል ይችላሉ።'
                     : 'Click the (+) button on any media card to bookmark footage to your personal list.'}
@@ -273,7 +258,7 @@ export default function GalleryPage() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('all')}
-                  className="px-5 py-2 rounded-md bg-white text-black font-bold text-xs hover:bg-white/90"
+                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md"
                 >
                   {lang === 'am' ? 'ጋለሪን ያስሱ' : 'Browse Gallery'}
                 </button>
@@ -296,11 +281,11 @@ export default function GalleryPage() {
           </section>
         ) : (
           /* ========================================================
-             CASE C: FULL NETFLIX BROWSE INTERFACE
-             Hero Billboard + Categorized Horizontal Rows
+             CASE C: NETFLIX STYLE STRUCTURE WITH WEBSITE THEME
+             Billboard Hero Banner + Categorized Horizontal Rows
              ======================================================== */
           <>
-            {/* Cinematic Billboard */}
+            {/* 1. Cinematic Billboard */}
             <NetflixBillboard
               items={billboardItems}
               onPlay={(item) => setSelectedItem(item)}
@@ -310,20 +295,72 @@ export default function GalleryPage() {
               onToggleMyList={toggleMyList}
             />
 
-            {/* Quick Links Sub-bar to Members Digital Passes */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-12 -mt-4 mb-4 flex items-center justify-between">
-              <Link
-                href="/membersgallary"
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-800/80 hover:bg-zinc-700 border border-white/10 text-xs font-semibold text-zinc-200 hover:text-white transition-all shadow-md"
-              >
-                <Users className="w-3.5 h-3.5 text-amber-500" />
-                <span>{lang === 'am' ? 'የአባላት ካርድ ጋለሪን ይመልከቱ' : 'Explore Members Digital Passes'}</span>
-                <ArrowRight className="w-3 h-3 text-zinc-400" />
-              </Link>
+            {/* 2. Interactive Discovery Toolbar & Pass Link */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-12 pt-6 pb-2 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('all')}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    activeTab === 'all'
+                      ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                      : 'bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-zinc-300 hover:bg-slate-300 dark:hover:bg-white/15'
+                  }`}
+                >
+                  {lang === 'am' ? 'ሁሉም ሚዲያ' : 'All Media'}
+                  <span className="ml-1.5 opacity-80">({allGalleryNetflixItems.length})</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('mylist')}
+                  className="px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer bg-slate-200/80 dark:bg-white/10 text-slate-700 dark:text-zinc-300 hover:bg-slate-300 dark:hover:bg-white/15"
+                >
+                  <Heart className="w-3.5 h-3.5 fill-current text-red-500" />
+                  <span>{lang === 'am' ? 'የኔ ዝርዝር' : 'My List'}</span>
+                  {myListIds.size > 0 && (
+                    <span className="px-1.5 py-0.2 rounded-full bg-red-600 text-white text-[10px] font-bold">
+                      {myListIds.size}
+                    </span>
+                  )}
+                </button>
+
+                <Link
+                  href="/membersgallary"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-200/60 dark:bg-white/5 hover:bg-slate-300/80 dark:hover:bg-white/10 text-slate-700 dark:text-zinc-300 text-xs font-semibold border border-slate-300/50 dark:border-white/10 transition-colors"
+                >
+                  <Users className="w-3.5 h-3.5 text-amber-500" />
+                  <span>{lang === 'am' ? 'የአባላት ካርዶች' : 'Member Passes'}</span>
+                  <ArrowRight className="w-3 h-3 text-slate-400" />
+                </Link>
+              </div>
+
+              {/* Search Pill Input */}
+              <div className="relative flex items-center">
+                <div className="flex items-center bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-white/10 rounded-full px-3 py-1.5 text-slate-900 dark:text-white shadow-sm">
+                  <Search className="w-4 h-4 text-slate-400 mr-2 flex-none" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder={lang === 'am' ? 'ሚዲያ ፈልግ...' : 'Search media...'}
+                    className="bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-400 outline-none w-36 sm:w-56"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-white"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
 
-            {/* Categorized Netflix Rows with Negative Top Margin for Layering */}
-            <div className="relative z-20 space-y-2 sm:space-y-4">
+            {/* 3. Categorized Horizontal Rows with Smooth Chevrons */}
+            <div className="relative z-20 pt-2 space-y-2 sm:space-y-4">
               {curatedRows.map((row) => (
                 <NetflixRow
                   key={row.id}
@@ -346,7 +383,7 @@ export default function GalleryPage() {
         )}
       </main>
 
-      {/* Full Cinema Player Modal */}
+      {/* 4. Full Cinema Player Modal */}
       <NetflixPlayerModal
         item={selectedItem}
         onClose={() => setSelectedItem(null)}

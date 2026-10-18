@@ -73,22 +73,22 @@ export function NetflixRow({
       {/* Row Header */}
       <div className="px-4 sm:px-12 mb-1 flex items-baseline justify-between">
         <div className="flex items-baseline gap-2.5 sm:gap-3 flex-wrap">
-          <h3 className="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight flex items-center gap-2 group-hover/row:text-zinc-100 transition-colors">
+          <h3 className="text-base sm:text-xl md:text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 group-hover/row:text-amber-500 dark:group-hover/row:text-amber-400 transition-colors">
             <span>{displayTitle}</span>
             {badge && (
-              <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded bg-red-600/20 text-red-400 border border-red-500/30 uppercase">
+              <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 uppercase">
                 {badge}
               </span>
             )}
           </h3>
           {displaySubtitle && (
-            <span className="text-zinc-400 text-xs sm:text-sm font-normal hidden md:inline">
+            <span className="text-slate-500 dark:text-zinc-400 text-xs sm:text-sm font-normal hidden md:inline">
               {displaySubtitle}
             </span>
           )}
         </div>
 
-        <div className="text-xs font-semibold text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1 select-none">
+        <div className="text-xs font-semibold text-slate-500 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1 select-none">
           <span>{lang === 'am' ? 'ሁሉንም ይመልከቱ' : 'Explore All'}</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </div>
@@ -104,7 +104,7 @@ export function NetflixRow({
             onClick={() => handleScroll('left')}
             className="absolute left-0 top-0 bottom-0 w-10 sm:w-12 z-40 bg-black/60 hover:bg-black/85 text-white flex items-center justify-center transition-all opacity-0 group-hover/row:opacity-100 backdrop-blur-xs cursor-pointer shadow-2xl"
           >
-            <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8 hover:scale-125 transition-transform" />
+            <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8 hover:scale-125 transition-transform text-amber-400" />
           </button>
         )}
 
@@ -143,7 +143,7 @@ export function NetflixRow({
             onClick={() => handleScroll('right')}
             className="absolute right-0 top-0 bottom-0 w-10 sm:w-12 z-40 bg-black/60 hover:bg-black/85 text-white flex items-center justify-center transition-all opacity-0 group-hover/row:opacity-100 backdrop-blur-xs cursor-pointer shadow-2xl"
           >
-            <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8 hover:scale-125 transition-transform" />
+            <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8 hover:scale-125 transition-transform text-amber-400" />
           </button>
         )}
       </div>

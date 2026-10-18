@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Play, Info, Plus, Check, Volume2, VolumeX, Sparkles } from 'lucide-react';
+import { Play, Info, Plus, Check, Sparkles, Flame } from 'lucide-react';
 import { NetflixMediaItem } from './types';
 
 interface NetflixBillboardProps {
@@ -41,7 +41,7 @@ export function NetflixBillboard({
     lang === 'am' && current.descriptionAm ? current.descriptionAm : current.description;
 
   return (
-    <div className="relative w-full h-[52vh] sm:h-[65vh] md:h-[75vh] lg:h-[82vh] overflow-hidden select-none bg-black">
+    <div className="relative w-full h-[55vh] sm:h-[65vh] md:h-[75vh] lg:h-[80vh] overflow-hidden select-none bg-slate-950">
       {/* Background Hero Image with Zoom Effect */}
       <div className="absolute inset-0">
         <img
@@ -51,21 +51,22 @@ export function NetflixBillboard({
           className="w-full h-full object-cover object-center sm:object-top transition-all duration-1000 transform scale-100 animate-in fade-in"
         />
         {/* Cinematic Vignettes: Dark gradient on bottom, left, and subtle top */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/70 to-transparent w-full md:w-2/3 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/40 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent w-full md:w-2/3 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0B0F19] via-slate-950/60 to-transparent z-10" />
         <div className="absolute inset-0 bg-black/25 z-10" />
       </div>
 
       {/* Hero Content Overlay */}
-      <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-12 flex flex-col justify-end pb-12 sm:pb-16 md:pb-20">
+      <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-12 flex flex-col justify-end pb-10 sm:pb-14 md:pb-18">
         <div className="max-w-2xl space-y-3 sm:space-y-4">
           {/* Top Series Ribbon */}
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-6 bg-[#E50914] text-white font-black text-xs flex items-center justify-center rounded-xs shadow font-sans">
-              N
-            </div>
-            <span className="text-xs font-black tracking-widest uppercase text-white/90 drop-shadow">
-              {current.categoryLabel.toUpperCase()} • ORIGINAL
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-red-600 text-white text-[11px] font-black uppercase tracking-widest shadow-md">
+              <Flame className="w-3.5 h-3.5 fill-white" />
+              <span>DONKEY TUBE ORIGINAL</span>
+            </span>
+            <span className="px-2.5 py-0.5 rounded-md bg-white/10 backdrop-blur-md text-amber-400 font-bold text-xs border border-white/10">
+              {current.categoryLabel.toUpperCase()}
             </span>
           </div>
 
@@ -95,9 +96,9 @@ export function NetflixBillboard({
             <button
               type="button"
               onClick={() => onPlay(current)}
-              className="px-5 sm:px-7 py-2 sm:py-2.5 rounded-md bg-white hover:bg-white/90 text-black font-bold text-sm sm:text-base flex items-center gap-2.5 transition-transform active:scale-95 shadow-xl cursor-pointer"
+              className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm sm:text-base flex items-center gap-2.5 transition-transform active:scale-95 shadow-xl shadow-amber-500/25 cursor-pointer"
             >
-              <Play className="w-5 h-5 fill-black" />
+              <Play className="w-5 h-5 fill-slate-950" />
               <span>{lang === 'am' ? 'አጫውት' : 'Play'}</span>
             </button>
 
@@ -105,7 +106,7 @@ export function NetflixBillboard({
             <button
               type="button"
               onClick={() => (onMoreInfo ? onMoreInfo(current) : onPlay(current))}
-              className="px-5 sm:px-6 py-2 sm:py-2.5 rounded-md bg-zinc-600/70 hover:bg-zinc-600/90 text-white font-semibold text-sm sm:text-base flex items-center gap-2 transition-colors backdrop-blur-md shadow-xl cursor-pointer"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white/15 hover:bg-white/25 text-white font-semibold text-sm sm:text-base flex items-center gap-2 transition-colors backdrop-blur-md border border-white/20 shadow-xl cursor-pointer"
             >
               <Info className="w-5 h-5" />
               <span>{lang === 'am' ? 'ተጨማሪ መረጃ' : 'More Info'}</span>
@@ -116,10 +117,10 @@ export function NetflixBillboard({
               type="button"
               onClick={() => onToggleMyList?.(current)}
               title={isInMyList ? 'In My List' : 'Add to My List'}
-              className={`w-10 h-10 rounded-full border border-white/40 flex items-center justify-center transition-colors cursor-pointer ${
+              className={`w-11 h-11 rounded-full border border-white/40 flex items-center justify-center transition-colors cursor-pointer ${
                 isInMyList
-                  ? 'bg-white text-black border-white'
-                  : 'bg-zinc-800/80 hover:border-white text-white'
+                  ? 'bg-white text-slate-950 border-white'
+                  : 'bg-slate-900/80 hover:border-white text-white'
               }`}
             >
               {isInMyList ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
@@ -129,7 +130,7 @@ export function NetflixBillboard({
       </div>
 
       {/* Right Edge: Age Rating Badge & Carousel dots */}
-      <div className="absolute right-0 bottom-16 sm:bottom-20 z-20 flex items-center gap-3 pr-4 sm:pr-12">
+      <div className="absolute right-0 bottom-12 sm:bottom-16 z-20 flex items-center gap-3 pr-4 sm:pr-12">
         <div className="flex items-center gap-1.5 mr-2">
           {items.map((_, idx) => (
             <button
@@ -138,13 +139,13 @@ export function NetflixBillboard({
               aria-label={`Go to hero slide ${idx + 1}`}
               onClick={() => setCurrentIndex(idx)}
               className={`h-1.5 transition-all rounded-full cursor-pointer ${
-                idx === currentIndex ? 'w-6 bg-red-600' : 'w-2 bg-white/40 hover:bg-white/70'
+                idx === currentIndex ? 'w-6 bg-amber-500' : 'w-2 bg-white/40 hover:bg-white/70'
               }`}
             />
           ))}
         </div>
 
-        <div className="border-l-3 border-zinc-300 bg-black/60 backdrop-blur-xs px-3 py-1 text-white font-bold text-xs tracking-wider">
+        <div className="border-l-3 border-amber-500 bg-black/60 backdrop-blur-xs px-3 py-1 text-white font-bold text-xs tracking-wider">
           {current.ratingBadge || '13+'}
         </div>
       </div>
