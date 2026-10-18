@@ -203,6 +203,7 @@ export default function GalleryPage() {
                   <NetflixCard
                     key={item.id}
                     item={item}
+                    isGrid={true}
                     lang={lang as 'en' | 'am'}
                     isInMyList={myListIds.has(item.id)}
                     onToggleMyList={toggleMyList}
@@ -269,6 +270,7 @@ export default function GalleryPage() {
                   <NetflixCard
                     key={item.id}
                     item={item}
+                    isGrid={true}
                     lang={lang as 'en' | 'am'}
                     isInMyList={true}
                     onToggleMyList={toggleMyList}
