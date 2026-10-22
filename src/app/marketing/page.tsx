@@ -32,7 +32,16 @@ import {
   Cpu,
   Hotel,
   ShoppingBag,
-  Sparkle
+  Sparkle,
+  Flag,
+  HandHeart,
+  Landmark,
+  Target,
+  Shield,
+  Bot,
+  Lightbulb,
+  Scale,
+  BookOpen
 } from 'lucide-react';
 import { NavigationHeader } from '@/components/common/NavigationHeader';
 import { useAppSettings } from '@/context/AppSettingsContext';
@@ -232,8 +241,8 @@ export default function MarketingPage() {
               {/* Sub-Headline */}
               <p className="text-slate-600 dark:text-slate-300/90 text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-3xl mx-auto font-sans">
                 {lang === 'am'
-                  ? 'በኮሜዲያን እሸቱ መለሰ የተመሰረተ፣ ባለፉት 9 ዓመታት በማህበራዊ፣ ባህላዊ እና ኢኮኖሚያዊ ጉዳዮች ላይ ግንዛቤን በመፍጠር፣ ከ7 ሚሊዮን በላይ ንቁ ተከታዮችንና ከ500 ሚሊዮን በላይ እይታዎችን ያስመዘገበ ታዋቂ ተቋም።'
-                  : 'Founded by Comedian Eshetu Melese, championing community upliftment, transformative humor, and social change across 9+ years with over 7M+ active followers and 500M+ lifetime views.'}
+                  ? 'በኮሜዲያን እሸቱ መለሰ የተመሰረተ፣ ባለፉት 8 ዓመታት በማህበራዊ፣ ባህላዊ እና ኢኮኖሚያዊ ጉዳዮች ላይ ግንዛቤን በመፍጠር፣ ከ8 ሚሊዮን በላይ ንቁ ተከታዮችንና ከ677 ሚሊዮን በላይ እይታዎችን ያስመዘገበ ታዋቂ ተቋም።'
+                  : 'Founded by Comedian Eshetu Melese, championing community upliftment, ethical storytelling, and social transformation across 8+ years with over 8M+ active community members and 677M+ lifetime views.'}
               </p>
 
               {/* CTA Buttons */}
@@ -259,11 +268,11 @@ export default function MarketingPage() {
             {/* High-Impact Stat Grid Bar */}
             <div className="mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
               {[
-                { number: '7M+', labelEn: 'Active Followers', labelAm: 'ንቁ ተከታዮች', highlight: 'from-amber-500 via-amber-400 to-amber-600' },
-                { number: '500M+', labelEn: 'Lifetime Video Views', labelAm: 'አጠቃላይ እይታዎች', highlight: 'from-amber-500 to-yellow-600' },
-                { number: '3.27M+', labelEn: 'YouTube Subscribers', labelAm: 'የዩቲዩብ ቤተሰቦች', highlight: 'from-rose-500 to-red-600' },
+                { number: '8M+', labelEn: 'Active Community', labelAm: 'ንቁ ማህበረሰብ', highlight: 'from-amber-500 via-amber-400 to-amber-600' },
+                { number: '677M+', labelEn: 'Lifetime Video Views', labelAm: 'አጠቃላይ እይታዎች', highlight: 'from-amber-500 to-yellow-600' },
+                { number: '3.3M+', labelEn: 'YouTube Subscribers', labelAm: 'የዩቲዩብ ቤተሰቦች', highlight: 'from-rose-500 to-red-600' },
                 { number: '9.8M', labelEn: 'Single Video Record', labelAm: 'የአንድ ቪዲዮ ከፍተኛ እይታ', highlight: 'from-purple-500 to-indigo-500' },
-                { number: '50+', labelEn: 'Full-Time Team', labelAm: 'ቋሚ ባለሙያዎች', highlight: 'from-blue-500 to-cyan-500' },
+                { number: '12+', labelEn: 'Permanent Media Team', labelAm: 'ቋሚ ባለሙያዎች', highlight: 'from-blue-500 to-cyan-500' },
                 { number: '1.406B+', labelEn: 'ETB Mobilized for CSR', labelAm: 'ለበጎ አድራጎት የተሰበሰበ', highlight: 'from-emerald-500 to-teal-500' },
               ].map((stat, idx) => (
                 <div
@@ -283,10 +292,11 @@ export default function MarketingPage() {
         </section>
 
         {/* ============================================================ */}
-        {/* 1. COMPANY PROFILE, VISION, MISSION & VALUES                 */}
+        {/* 1. COMPANY PROFILE, VISION, MISSION & FOUNDATIONAL PILLARS   */}
         {/* ============================================================ */}
-        <section id="profile" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-32">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+        <section id="profile" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-32 space-y-16">
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="text-amber-600 dark:text-amber-500 text-xs font-bold tracking-widest uppercase">
               {lang === 'am' ? 'ክፍል 1' : 'Section 1'}
             </div>
@@ -295,132 +305,505 @@ export default function MarketingPage() {
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
               {lang === 'am'
-                ? 'ዶንኪ ቲዩብ (ጥንቅቅ መልቲ ሚዲያ እና ኤቨንት ኦርጋናይዘር) የተመሰረተበትን ራዕይ፣ ተልዕኮ እና መሰረታዊ ድርጅታዊ እሴቶች'
-                : 'The foundational vision, mission, and core values that drive Donkey Tube Media Group'}
+                ? 'ዶንኪ ቲዩብ (ጥንቅቅ መልቲ ሚዲያ እና ኤቨንት ኦርጋናይዘር) የተመሰረተበትን ራዕይ፣ ተልዕኮ፣ 3ቱ የማይነቃነቁ መሰረታዊ ምሰሶዎች እና 6ቱ ተቋማዊ እሴቶች'
+                : 'The foundational vision, mission, 3 unshakeable pillars, core institutional values, and strategic goals driving Donkey Tube Media Group'}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* Vision & Mission Cards */}
-            <div className="lg:col-span-7 space-y-6">
-              {/* Vision Card */}
-              <div className="p-7 rounded-2xl bg-white dark:bg-gradient-to-br dark:from-slate-900/90 dark:to-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-amber-500/40 transition-all shadow-md dark:shadow-xl space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-500 border border-amber-500/20">
-                    <Sparkle className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                      {lang === 'am' ? 'ራዕይ (Vision Statement)' : 'Our Vision'}
-                    </h3>
-                    <span className="text-xs text-amber-600 dark:text-amber-500/80 font-medium">Inspiring Society Through Quality Media</span>
-                  </div>
-                </div>
-                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed pl-1">
-                  {lang === 'am'
-                    ? 'ሚዲያን ለበጎ አላማ በመጠቀም ታማኝነት፣ አንድነት እና ማህበረሰባዊ እድገት የሚሰበክበት፣ ጥራት ያለው እና በጎ ተፅዕኖ ፈጣሪ የሚዲያ ስነ-ምህዳር መገንባት ።'
-                    : 'To build a high-caliber, ethical, and transformative media ecosystem that leverages creative storytelling to advance societal unity, community trust, and sustainable national progress.'}
-                </p>
-              </div>
-
-              {/* Mission Card */}
-              <div className="p-7 rounded-2xl bg-white dark:bg-gradient-to-br dark:from-slate-900/90 dark:to-slate-900/50 border border-slate-200 dark:border-slate-800 hover:border-amber-500/40 transition-all shadow-md dark:shadow-xl space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500 border border-blue-500/20">
-                    <TargetIcon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                      {lang === 'am' ? 'ተልዕኮ (Mission Statement)' : 'Our Mission'}
-                    </h3>
-                    <span className="text-xs text-blue-600 dark:text-blue-400/80 font-medium">Empowerment, Education & Philanthropy</span>
-                  </div>
-                </div>
-                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed pl-1">
-                  {lang === 'am'
-                    ? 'ስልጠናዎችን እና የMentorship ፕሮግራሞችን በመስጠት ቀጣዩን የሚዲያ ትውልድ ማብቃት (እስካሁን ከ1,000 በላይ ዩቲዩበሮችን አስመርቋል)፣ የራሱን የሚዲያ አካዳሚ መመስረት፣ እና እንደ አካል ጉዳተኛ ልጆች ያሏቸው እናቶች ያሉ የተገለሉ የህብረተሰብ ክፍሎችን በገጠር እና በከተማ የድጋፍ ማዕከላት በኩል መርዳት ።'
-                    : 'To empower the next generation of creative media leaders through intensive training and mentorship (over 1,000+ creators graduated to date), establish our premier Media Academy, and champion marginalized societal groups—including mothers of children with special needs—through dedicated urban and rural support hubs.'}
-                </p>
-              </div>
-
-              {/* Organizational Capacity Card */}
-              <div className="p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 shadow-md flex flex-col sm:flex-row items-center gap-5">
-                <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
-                  <Users className="w-7 h-7 text-amber-500 dark:text-amber-400" />
+          {/* Vision & Mission Highlight Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Vision Card */}
+            <div className="p-8 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-slate-900/90 dark:via-slate-900/70 dark:to-slate-950 border border-slate-200 dark:border-amber-500/20 hover:border-amber-500/50 transition-all shadow-lg dark:shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-36 h-36 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all" />
+              <div className="flex items-center gap-3.5 mb-5 relative z-10">
+                <div className="p-3 rounded-2xl bg-amber-500/15 text-amber-500 border border-amber-500/30">
+                  <Sparkle className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">
-                    {lang === 'am' ? 'የሰው ኃይል እና ድርጅታዊ አቅም (50+ ቋሚ ሰራተኞች)' : 'Workforce & Corporate Infrastructure (50+ Staff)'}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-normal">
-                    {lang === 'am'
-                      ? 'ከተራ የዩቲዩብ ቻናሎች በተለየ መልኩ ሰፊ የስራ ዕድል የፈጠረ ተቋም ሲሆን፣ በአሁኑ ሰዓት ከ50 በላይ ቋሚ ሰራተኞችን ይዞ የሚንቀሳቀስ በሚገባ የተዋቀረ የሚዲያ ቤት ነው። ተቋሙ የራሱ የዲጂታል እና ግራፊክስ ዲዛይን ክፍል ያለው ሲሆን፣ የቪዲዮዎችን አፈፃፀም እና የታዳሚ መረጃዎችን (Data/Analytics) በየቀኑ በመከታተል ይዘቶችን ከዘመናዊ የቴክኖሎጂ አዝማሚያዎች ጋር ያጣጥማል ።'
-                      : 'Unlike conventional YouTube channels, Donkey Tube is a fully incorporated media enterprise employing over 50 full-time specialists. Housing dedicated graphic design, data analytics, and audience intelligence desks, our team monitors viewer retention metrics daily to keep campaigns ahead of contemporary market trends.'}
-                  </p>
+                  <span className="text-[11px] font-bold tracking-widest uppercase text-amber-600 dark:text-amber-400 block">
+                    {lang === 'am' ? 'ተቋማዊ ራዕይ' : 'Institutional Vision'}
+                  </span>
+                  <h3 className="text-xl font-black text-slate-900 dark:text-white">
+                    {lang === 'am' ? 'ራዕይ (Vision Statement)' : 'Our Vision'}
+                  </h3>
+                </div>
+              </div>
+              <p className="text-slate-700 dark:text-slate-200 text-sm sm:text-base leading-relaxed relative z-10 italic">
+                {lang === 'am'
+                  ? '“በአሉታዊና በጊዜያዊ አጀንዳዎች (Clickbait) የሚመራ ሳይሆን በተጨባጭ ማህበራዊ ለውጥ (Impact) ላይ የተመሰረተ፣ የህዝብ ባለቤትነት የተረጋገጠለት፣ ኢትዮጵያዊ እሴትንና መንፈሳዊ ስብዕናን ጠብቆ ለትውልድ ብርሃን የሚሆን ቀዳሚ አዎንታዊ ሚዲያ መሆን።”'
+                  : '“To be a premier positive media beacon for generations—anchored in tangible social impact rather than fleeting clickbait, genuinely owned by the public, preserving Ethiopian values, moral dignity, and spiritual conscience.”'}
+              </p>
+            </div>
+
+            {/* Mission Card */}
+            <div className="p-8 rounded-3xl bg-white dark:bg-gradient-to-br dark:from-slate-900/90 dark:via-slate-900/70 dark:to-slate-950 border border-slate-200 dark:border-blue-500/20 hover:border-blue-500/50 transition-all shadow-lg dark:shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-36 h-36 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all" />
+              <div className="flex items-center gap-3.5 mb-5 relative z-10">
+                <div className="p-3 rounded-2xl bg-blue-500/15 text-blue-500 border border-blue-500/30">
+                  <Target className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-[11px] font-bold tracking-widest uppercase text-blue-600 dark:text-blue-400 block">
+                    {lang === 'am' ? 'ተቋማዊ ተልዕኮ' : 'Institutional Mission'}
+                  </span>
+                  <h3 className="text-xl font-black text-slate-900 dark:text-white">
+                    {lang === 'am' ? 'ተልዕኮ (Mission Statement)' : 'Our Mission'}
+                  </h3>
+                </div>
+              </div>
+              <p className="text-slate-700 dark:text-slate-200 text-sm sm:text-base leading-relaxed relative z-10 italic">
+                {lang === 'am'
+                  ? '“ከብሔር እና ከፖለቲካ ወገንተኝነት ነፃ በመሆን፤ ማህበረሰብን የሚያንጹ፣ ተስፋንና ፈጣሪን የሚያስከብሩ ይዘቶችን በጥራት ማዘጋጀት፤ ድምፅ ላጡ የታማሚ ልጆች እናቶች ድምፅ በመሆን ፈጣን ሰብአዊና ልማታዊ ድጋፍ ማስተባበር፤ እንዲሁም ወጣቱን ከሱስና ከቁስ-አምላኪነት ባህል ጠብቆ በስነ-ምግባር የታነጸ ሀገር ወዳድ ዜጋ እንዲሆን መስራት።”'
+                  : '“To craft high-caliber productions free from ethnic or political partisanship that uplift society, inspire hope, and honor the Creator; to be an unwavering voice for distressed mothers of critically ill children by coordinating rapid humanitarian and developmental relief; and to safeguard youth from addiction and unchecked materialism, nurturing ethical and patriotic citizens.”'}
+              </p>
+            </div>
+          </div>
+
+          {/* 3 Unshakeable Foundational Pillars */}
+          <div className="space-y-8">
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 text-xs font-bold uppercase tracking-wider">
+                <Landmark className="w-3.5 h-3.5" />
+                <span>{lang === 'am' ? 'መሰረታዊ ምሰሶዎች' : 'Core Foundations'}</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+                {lang === 'am' ? '3ቱ የማይነቃነቁ መሰረታዊ ምሰሶዎች' : 'The 3 Unshakeable Foundational Pillars'}
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
+                {lang === 'am'
+                  ? 'ዶንኪ ቲዩብ (ጥንቅቅ መልቲ ሚዲያ) ስራውን በጽናት የሚመራባቸው 3 የማይናወጡ የሞራል እና የእምነት ምሰሶዎች'
+                  : 'The immutable ethical and cultural bedrocks governing every Donkey Tube production and public engagement'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Pillar 1: Ethiopian Identity & Unity */}
+              <div className="p-8 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-amber-500/40 transition-all shadow-md space-y-5 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                    <Flag className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest block">
+                      {lang === 'am' ? 'ምሰሶ 1' : 'Pillar 01'}
+                    </span>
+                    <h4 className="text-xl font-black text-slate-900 dark:text-white mt-1">
+                      {lang === 'am' ? '1. ኢትዮጵያዊነት' : '1. Ethiopian Identity & Unity'}
+                    </h4>
+                  </div>
+                  <ul className="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'ከብሔርተኝነት የጸዳ አንድነት:' : 'Non-Partisan Unity:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'የትኛውም ብሔር ተለይቶ ጥቃት አይፈጸምበትም፤ የሁሉም ብሔር ድምጽ የሚሰማበት የጋራ ቤት ሆኖ ያገለግላል።'
+                          : 'A welcoming shared home where no ethnic identity is attacked or alienated, giving voice to every community.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'በመረጃ ቋት ውስጥ ብሔርን አለመመዝገብ:' : 'Zero Ethnic Tracking:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'በተቋሙ ዳታቤዝ ውስጥ "ብሔር" የሚል ሰንጠረዥ የለም፤ ማንም ሰው መስፈርቱን እስካሟላ ድረስ በእኩልነት ይስተናገዳል።'
+                          : 'Participant databases have zero ethnic metrics; benevolence and participation are awarded strictly on merit and need.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'ሀገራዊ አንድነትና እሴት:' : 'Nationwide Harmony:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'እንደ ጎሬ፣ ጅማ እና ሐዋሳ በመዘዋወር ኢትዮጵያዊነትን ማጠናከር፤ እንዲሁም የጉዞ አድዋ የሰላም መልዕክትን ማስተጋባት።'
+                          : 'Touring diverse regional towns including Gore, Jimma, Hawassa, and broadcasting Adwa peace initiatives.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'ባህልንና ትውልድን መጠበቅ:' : 'Preserving Culture:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'የባህል መሸርሸርንና ቁስ-አምላኪነትን በገንቢ ሂስ መመከት፣ የጥንት ሥነ-ምግባራዊ ልዕልናን ማጉላት።'
+                          : 'Actively countering social media cultural erosion, vanity, and shallow materialism through constructive satire.'}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Pillar 2: Universal Humanity & Compassion */}
+              <div className="p-8 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-rose-500/40 transition-all shadow-md space-y-5 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="w-14 h-14 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-600 dark:text-rose-400">
+                    <HandHeart className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-black text-rose-600 dark:text-rose-400 uppercase tracking-widest block">
+                      {lang === 'am' ? 'ምሰሶ 2' : 'Pillar 02'}
+                    </span>
+                    <h4 className="text-xl font-black text-slate-900 dark:text-white mt-1">
+                      {lang === 'am' ? '2. ሰብአዊነት' : '2. Universal Humanity & Compassion'}
+                    </h4>
+                  </div>
+                  <ul className="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'ድንበር ተሻጋሪ ቅድሚያ:' : 'Borderless Dignity:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'ከድንበር፣ ከዘርና ከሃይማኖት በላይ ለሰው ልጅ ቅድሚያ መስጠት፤ በችግር ውስጥ ለነበሩ ሶሪያውያንም ጭምር ድጋፍ ተደርጓል።'
+                          : 'Extending compassion across borders; direct humanitarian relief rendered to vulnerable Syrian refugees alongside Ethiopians.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'ለችግረኞችና እናቶች መድረስ:' : 'Mothers & Sick Children:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'በየሳምንቱ ታማሚ ልጆች ወዳሏቸው እናቶች ቤት በአካል በመሄድ ለ400+ እናቶች የገንዘብና የህክምና ድጋፍ ማድረስ።'
+                          : 'Weekly home visits delivering continuous medical and livelihood sustenance to over 400+ mothers of critically ill children.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'የቦረና ረሃብ እና የጦርነት ተጎጂዎች:' : 'Disaster & War Relief:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'በቦረና በአንድ ምሽት 8M+ ብር ማሰባሰብ፤ እንዲሁም ለ1,000 የጦርነት ተጎጂ አባወራዎች ከቀይ መስቀል ጋር ቀጥታ አካውንት መክፈት።'
+                          : 'Mobilized 8M+ ETB overnight for Borena famine, and opened verified bank accounts for 1,000 war-displaced families via Red Cross.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'የ"ይድናል" የወጣቶች ማገገሚያ:' : '“Yidnal” Youth Recovery:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'ወጣቶችን ከሱስና ከመንገድ ማዳን፤ በሱስ ተጎድተው የወደቁትን ወደ ማገገሚያ (Rehab) በማስገባት ህይወታቸውን መለወጥ።'
+                          : 'Rescuing young individuals battling severe addiction, funding rehabilitation enrollment to restore productive lives.'}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Pillar 3: Spirituality & Faith */}
+              <div className="p-8 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-purple-500/40 transition-all shadow-md space-y-5 flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="w-14 h-14 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                    <Shield className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest block">
+                      {lang === 'am' ? 'ምሰሶ 3' : 'Pillar 03'}
+                    </span>
+                    <h4 className="text-xl font-black text-slate-900 dark:text-white mt-1">
+                      {lang === 'am' ? '3. መንፈሳዊነት እና ፈሪሃ-እግዚአብሔር' : '3. Spirituality & Faith'}
+                    </h4>
+                  </div>
+                  <ul className="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'የገዳማትና ቅርሶች ህልውና:' : 'Monastery Preservation:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'ደብረ ሊባኖስ፣ ጥቁሯ ማርያም፣ ተድባማርያም፣ ዋልድባ እና በጀርመን፣ እንግሊዝ፣ ኳታር፣ አሜሪካ ላሉ አድባራት ድጋፍ ማሰባሰብ።'
+                          : 'Major fundraising and documentaries for historic monasteries (Debre Libanos, Waldba) and diaspora churches globally.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'ሁሉን አቀፍ የእምነት አንድነት:' : 'Interfaith Benevolence:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'የኡስታዝ አቡበከር፣ መስዑድ እና ዳሩ ሰላም መስጊድ ድጋፎች፤ እንዲሁም የፓስተር ጻድቁና ረ/ፕ ዘበነ ለማ የጋራ መድረክ።'
+                          : 'Promoting mutual respect: featuring Islamic charitable drives (Darul Salam Mosque) alongside prominent spiritual leaders.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'መንፈሳዊ እውቀት ማሰራጨት:' : 'Spiritual Illumination:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'በ"ዶንኪ በጎ" ቻናል በኩል ሊቃውንትን በማቅረብ ስለ እምነት ጥያቄዎች እና ፍትሐ ነገሥት ትምህርት መስጠት።'
+                          : 'Dedicated “Donkey Bego” channel hosting scholars to explore Fetha Negest, moral doctrine, and spiritual depth.'}
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+                      <span>
+                        <strong className="text-slate-900 dark:text-white">
+                          {lang === 'am' ? 'በረከትን መፈለግ:' : 'Divine Blessing:'}{' '}
+                        </strong>
+                        {lang === 'am'
+                          ? 'የሚገኘው ዋጋ ምድራዊ ሳይሆን ሰማያዊ በረከት እንደሆነ ማመንና ክብሩን ለፈጣሪ መስጠት።'
+                          : 'Steadfast conviction that the ultimate reward is heavenly blessing, consecrating all community success to the Almighty.'}
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Core Values (4 Pillars) */}
-            <div className="lg:col-span-5 flex flex-col justify-between p-7 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-md dark:shadow-xl space-y-6">
+          {/* 6 Core Institutional Values */}
+          <div className="space-y-6 pt-4">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
               <div>
                 <span className="text-xs uppercase font-extrabold text-amber-600 dark:text-amber-500 tracking-wider">
-                  {lang === 'am' ? 'ድርጅታዊ እሴቶች' : 'Pillars of Excellence'}
+                  {lang === 'am' ? 'ተቋማዊ እሴቶች' : 'Institutional Values'}
                 </span>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mt-1">
-                  {lang === 'am' ? '4ቱ መሰረታዊ ድርጅታዊ እሴቶች' : 'Our 4 Core Organizational Values'}
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+                  {lang === 'am' ? '6ቱ ተቋማዊ እሴቶች (Core Values)' : 'The 6 Institutional Core Values'}
                 </h3>
               </div>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                {lang === 'am' ? 'በሁሉም ስራዎቻችን የሚንጸባረቁ መርሆች' : 'Guiding principles embedded across every production'}
+              </span>
+            </div>
 
-              <div className="space-y-4">
-                {[
-                  {
-                    num: '01',
-                    titleAm: 'ታማኝነት (Integrity)',
-                    titleEn: 'Integrity',
-                    descAm: 'በሁሉም ይዘቶች እና ግንኙነቶች ከፍተኛ የሞራል እና የሙያ ስነ-ምግባርን መጠበቅ ።',
-                    descEn: 'Maintaining the highest moral, ethical, and journalistic standards across all content and partnerships.',
-                  },
-                  {
-                    num: '02',
-                    titleAm: 'የህዝብ አመኔታ (Community Trust)',
-                    titleEn: 'Community Trust',
-                    descAm: 'ትክክለኛ እና እውነተኛ ድምፅ በመሆን የህዝብን እምነት ማቆየት ።',
-                    descEn: 'Remaining an authentic and unwavering voice that commands deep, genuine public loyalty.',
-                  },
-                  {
-                    num: '03',
-                    titleAm: 'በጎ ተፅዕኖ (Positive Impact)',
-                    titleEn: 'Positive Impact',
-                    descAm: 'አንድነትን እና ማህበረሰባዊ እድገትን የሚያነቃቁ ይዘቶችን ማምረት ።',
-                    descEn: 'Producing narratives that actively foster unity, economic vitality, and social harmony.',
-                  },
-                  {
-                    num: '04',
-                    titleAm: 'ማብቃት (Education & Empowerment)',
-                    titleEn: 'Education & Empowerment',
-                    descAm: 'ማህበረሰቡን በሚዲያ እውቀት ማበልፀግ ።',
-                    descEn: 'Equipping our community and young creators with vital media literacy and technical skills.',
-                  },
-                ].map((val, idx) => (
-                  <div key={idx} className="flex gap-4 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 hover:border-amber-500/30 transition-colors">
-                    <span className="text-sm font-black text-amber-600 dark:text-amber-500/80">{val.num}</span>
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-900 dark:text-slate-200">
-                        {lang === 'am' ? val.titleAm : val.titleEn}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {[
+                {
+                  num: '01',
+                  icon: Flag,
+                  color: 'text-amber-500',
+                  bg: 'bg-amber-500/10 border-amber-500/20',
+                  titleAm: 'ኢትዮጵያዊነት (Ethiopian Identity)',
+                  titleEn: 'Ethiopian Identity & Unity',
+                  descAm: 'የሁሉንም ብሄር፣ ሃይማኖትና ስፍራ ሰዎች አዎንታዊ ድምጽ በእኩልነት ማስተናገድ፤ የጋራ ታሪክንና የሞራል ልዕልናን ማጉላት።',
+                  descEn: 'Equitably championing every community, celebrating ancient heritage, and fostering undivided national pride.',
+                },
+                {
+                  num: '02',
+                  icon: HandHeart,
+                  color: 'text-rose-500',
+                  bg: 'bg-rose-500/10 border-rose-500/20',
+                  titleAm: 'ሰብአዊነት (Universal Humanity)',
+                  titleEn: 'Universal Humanity',
+                  descAm: 'ከድንበር፣ ከዘርና ከቋንቋ በላይ ለሰው ልጅ ክብር ቅድሚያ መስጠት፤ ለተጎዱና ለህሙማን አፋጣኝ የሰብአዊ እርዳታ ማድረስ።',
+                  descEn: 'Prioritizing unconditional human dignity beyond geographic or cultural borders with immediate emergency relief.',
+                },
+                {
+                  num: '03',
+                  icon: ShieldCheck,
+                  color: 'text-purple-500',
+                  bg: 'bg-purple-500/10 border-purple-500/20',
+                  titleAm: 'መንፈሳዊነት እና ፈሪሃ-እግዚአብሔር',
+                  titleEn: 'Spirituality & Integrity',
+                  descAm: 'የሚሰራው መልካም ስራ ሁሉ ባለቤት እግዚአብሔር እንደሆነ ማመን፣ ክብሩን ለፈጣሪ መስጠትና በታማኝነት መመራት።',
+                  descEn: 'Anchoring every benevolent initiative in God-fearing integrity, acknowledging the Creator as the author of all goodness.',
+                },
+                {
+                  num: '04',
+                  icon: Target,
+                  color: 'text-emerald-500',
+                  bg: 'bg-emerald-500/10 border-emerald-500/20',
+                  titleAm: 'ተጨባጭ ለውጥ (Impact over Influence)',
+                  titleEn: 'Impact over Influence',
+                  descAm: 'በቪው እና በተከታይ ብዛት ብቻ ሳይሆን መሬት ላይ በሚታይ እውነተኛ ለውጥ (ት/ቤት፣ መንገድ፣ ውሃ፣ የታማሚዎች ህክምና) ላይ ማተኮር።',
+                  descEn: 'Measuring triumph not by vanity impressions, but by verifiable ground results—roads, clinics, water wells, and schools.',
+                },
+                {
+                  num: '05',
+                  icon: Scale,
+                  color: 'text-blue-500',
+                  bg: 'bg-blue-500/10 border-blue-500/20',
+                  titleAm: 'ግልጽነትና ተጠያቂነት (Transparency)',
+                  titleEn: 'Transparency & Accountability',
+                  descAm: 'የበጎ አድራጎት ገንዘብን በህጋዊ ሰነድና በባንክ ስቴትመንት ማረጋገጥ፤ የሚዲያ አባልነት (Membership) ገቢን ከእርዳታ ፈንድ መለየት።',
+                  descEn: 'Audited statements, open bank verification, and strict operational division between membership dues and charity funds.',
+                },
+                {
+                  num: '06',
+                  icon: Award,
+                  color: 'text-amber-500',
+                  bg: 'bg-amber-500/10 border-amber-500/20',
+                  titleAm: 'መስዋዕትነት እና ሙያዊ ጥራት',
+                  titleEn: 'Sacrifice & Professionalism',
+                  descAm: 'ሙያው የሚጠይቀውን የጊዜ እና የጉልበት መስዋዕትነት በመክፈል ዓለምአቀፍ ደረጃውን የጠበቀ የጥበብ ስራ ማበርከት።',
+                  descEn: 'Relentless work ethic, cinematic perfectionism, and deep personal sacrifice to deliver gold-standard media.',
+                },
+              ].map((val, idx) => {
+                const IconComponent = val.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-2xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800/80 hover:border-amber-500/40 transition-all space-y-3 group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className={`p-2.5 rounded-xl border ${val.bg} ${val.color}`}>
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                      <span className="text-xs font-mono font-black text-slate-400 dark:text-slate-500">
+                        {val.num}
+                      </span>
+                    </div>
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors">
+                      {lang === 'am' ? val.titleAm : val.titleEn}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300/90 leading-relaxed">
+                      {lang === 'am' ? val.descAm : val.descEn}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 6 Strategic Goals */}
+          <div className="space-y-6 pt-4">
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <span className="text-xs uppercase font-extrabold text-blue-600 dark:text-blue-400 tracking-wider">
+                {lang === 'am' ? 'ስትራቴጂካዊ ፍኖተ-ካርታ' : 'Strategic Roadmap'}
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+                {lang === 'am' ? '4. ስትራቴጂካዊ ግቦች (Strategic Goals)' : 'Our 6 Strategic Goals'}
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
+                {lang === 'am'
+                  ? 'ተቋሙ ወደፊት የሚራመድባቸው እና ማህበረሰቡን ወደ ላቀ ደረጃ የሚያሸጋግሩ ዋና ዋና ስትራቴጂካዊ ግቦች'
+                  : 'Milestones engineered to scale creative excellence, philanthropy, and global media competitiveness'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  goal: '01',
+                  icon: BookOpen,
+                  badgeAm: 'የትውልድ ግንባታ',
+                  badgeEn: 'Youth & Content',
+                  titleAm: 'ግብ 1፡ የትውልድ ግንባታና አዎንታዊ ሚዲያ (Content Creation)',
+                  titleEn: 'Goal 1: Generational Media & Youth Character',
+                  descAm: 'በ"ድንቅ ልጆች"፣ "ጀግና መፍጠር" እና "አንድ ሰው ህይወት" የህጻናት ተሰጥኦን ማውጣት፤ በ"ኖርማል አይደለም" ማህበራዊ ሂስ ጎጂ ልማዶችን መዋጋት።',
+                  descEn: 'Unleashing child genius via “Dink Lijocho”, inspiring role models via “Jegna Mefter”, and eliminating toxic social vices via “Normal Aydelem”.',
+                },
+                {
+                  goal: '02',
+                  icon: HandHeart,
+                  badgeAm: 'ማህበረሰብ ልማት',
+                  badgeEn: 'Development',
+                  titleAm: 'ግብ 2፡ ማህበረሰብ አቀፍ የልማትና የበጎ አድራጎት እንቅስቃሴ',
+                  titleEn: 'Goal 2: Community Development & Infrastructure',
+                  descAm: 'በየሳምንቱ ታማሚ ልጆች ላሏቸው በመቶዎች ለሚቆጠሩ እናቶች የህክምና ድጋፍ ማሰባሰብ፤ እንዲሁም የገጠር መንገድ፣ የንጹህ ውሃ እና የመንደር ግንባታ ማከናወን።',
+                  descEn: 'Weekly direct subsidies for mothers of critically ill children alongside potable clean water, rural access roads, and model village creation.',
+                },
+                {
+                  goal: '03',
+                  icon: Landmark,
+                  badgeAm: 'ቅርስ ጥበቃ',
+                  badgeEn: 'Heritage',
+                  titleAm: 'ግብ 3፡ ቅርሶችንና ታሪካዊ ቦታዎችን መጠበቅ (Heritage Preservation)',
+                  titleEn: 'Goal 3: Cultural & Ancient Monastery Heritage',
+                  descAm: 'በሀገር ውስጥም ሆነ በውጭ ሀገራት የሚገኙ ጥንታዊ አድባራትን፣ ገዳማትንና ቅርሶችን በዶክመንተሪ ማስተዋወቅና በገንዘብ ማሰባሰብ ህልውናቸውን መደገፍ።',
+                  descEn: 'Producing cinematic documentaries and global fundraising appeals to restore, safeguard, and sustain ancient Ethiopian shrines.',
+                },
+                {
+                  goal: '04',
+                  icon: ShieldCheck,
+                  badgeAm: 'ተቋማዊ ነፃነት',
+                  badgeEn: 'Independence',
+                  titleAm: 'ግብ 4፡ ተቋማዊና ፋይናንሳዊ ነፃነትን ማረጋገጥ (Financial Independence)',
+                  titleEn: 'Goal 4: Institutional & Financial Independence',
+                  descAm: 'ሚዲያው ለትርፍ ብቻ ከሚሮጡ ጎጂ ስፖንሰሮች (አልኮል) እና ከአልጎሪዝም ጥገኝነት ነፃ ሆኖ በህዝብ አባልነት (Membership) አስተማማኝ ህልውናን መገንባት።',
+                  descEn: 'Severing reliance on algorithm volatility and harmful advertisers (alcohol) by anchoring sustainability to our verified public Membership model.',
+                },
+                {
+                  goal: '05',
+                  icon: Globe2,
+                  badgeAm: 'ዓለምአቀፍ ብራንድ',
+                  badgeEn: 'Global Brand',
+                  titleAm: 'ግብ 5፡ የቲክቶክ እና የኢንስታግራም ዓለም አቀፍ ማስታወቂያዎች',
+                  titleEn: 'Goal 5: Worldwide Brand Campaign Placements',
+                  descAm: 'በአለም አቀፍ ደረጃ ላሉ ድርጅቶች የቲክቶክ እና የኢንስታግራም ማስታወቂያዎችን በከፍተኛ ፈጠራ በመስራት ዓለም አቀፍ ተቀባይነት ያለው ብራንድ መፍጠር።',
+                  descEn: 'Executing viral cross-platform campaigns on TikTok and Instagram tailored for multinational enterprises and diaspora corporate leaders.',
+                },
+                {
+                  goal: '06',
+                  icon: Bot,
+                  badgeAm: 'ኤአይ ፈጠራ',
+                  badgeEn: 'AI Innovation',
+                  titleAm: 'ግብ 6፡ ኤአይን ተጠቅሞ ዓለም አቀፍ ይዘትና ማርኬቲንግ መፍጠር',
+                  titleEn: 'Goal 6: AI-Driven Global Content & Market Expansion',
+                  descAm: 'ዘመናዊ የArtificial Intelligence ቴክኖሎጂዎችን በመጠቀም ዓለም አቀፍ ደረጃውን የጠበቀ ይዘት ማፍራትና ሰፊ የዓለም አቀፍ ማርኬቲንግ እድሎችን ማስፋት።',
+                  descEn: 'Harnessing generative AI tools to innovate global storytelling formats, unlocking unprecedented worldwide commercial and creative opportunities.',
+                },
+              ].map((item, idx) => {
+                const GoalIcon = item.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-blue-500/40 transition-all flex flex-col justify-between space-y-4 group"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-500">
+                          <GoalIcon className="w-5 h-5" />
+                        </div>
+                        <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-700 dark:text-slate-300">
+                          {lang === 'am' ? item.badgeAm : item.badgeEn}
+                        </span>
+                      </div>
+                      <h4 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
+                        {lang === 'am' ? item.titleAm : item.titleEn}
                       </h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
-                        {lang === 'am' ? val.descAm : val.descEn}
+                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300/90 leading-relaxed">
+                        {lang === 'am' ? item.descAm : item.descEn}
                       </p>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
+            </div>
+          </div>
 
-              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 flex items-center justify-between">
-                <span>{lang === 'am' ? 'በሜይ 12, 2017 የተመሰረተ' : 'Established May 12, 2017'}</span>
-                <span className="text-amber-600 dark:text-amber-500 font-semibold">{lang === 'am' ? '9 ዓመታት የላቀ አገልግሎት' : '9 Years of Excellence'}</span>
+          {/* Workforce & Organizational Infrastructure Card */}
+          <div className="p-8 rounded-3xl bg-white dark:bg-gradient-to-r dark:from-slate-900 dark:via-slate-900/90 dark:to-slate-950 border border-slate-200 dark:border-slate-800 shadow-md flex flex-col lg:flex-row items-center gap-8">
+            <div className="w-20 h-20 rounded-3xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0">
+              <Users className="w-10 h-10 text-amber-500" />
+            </div>
+            <div className="space-y-2 flex-1">
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/25 text-xs font-bold uppercase tracking-wider">
+                  {lang === 'am' ? 'የሰው ኃይል እና ድርጅታዊ አቅም' : 'Corporate Infrastructure'}
+                </span>
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+                  {lang === 'am' ? '12+ ቋሚ ባለሙያዎች' : '12+ Permanent Staff & Film Crew'}
+                </span>
               </div>
+              <h4 className="text-xl font-black text-slate-900 dark:text-white">
+                {lang === 'am'
+                  ? 'ሙሉ የፊልም እና ቪዲዮ ፕሮዳክሽን ባለቤትነት (In-House Production Power)'
+                  : 'Complete In-House Cinema Cinematography & Post-Production Suites'}
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                {lang === 'am'
+                  ? 'ዶንኪ ቲዩብ ከተራ የዩቲዩብ ቻናሎች በተለየ መልኩ ሰፊ የስራ ዕድል የፈጠረ ተቋም ሲሆን፣ በአሁኑ ሰዓት ከ12 በላይ ቋሚ ሰራተኞችን ይዞ የሚንቀሳቀስ በሚገባ የተዋቀረ የሚዲያ ቤት ነው። ተቋሙ የራሱ የሆኑ ዘመናዊ የሲኒማ ካሜራዎች፣ የድምፅና የመብራት እቃዎች ባለቤት በመሆኑ ከኪራይ መዘግየት የጸዳ ሲሆን፣ በAdobe Premiere Pro እና DaVinci Resolve ዓለምአቀፍ ደረጃቸውን የጠበቁ የቀለም ማስተካከያ (Color Grading) እና VFX ስራዎችን ያከናውናል።'
+                  : 'Unlike informal channels, Donkey Tube is a fully structured media powerhouse employing over 12 full-time permanent professionals. Owning 100% of its broadcast cinema camera rigs, wireless multi-point sound, and lighting grids eliminates equipment rental delays entirely, backed by Hollywood-grade DaVinci Resolve and Adobe Premiere post-production pipelines.'}
+              </p>
             </div>
           </div>
         </section>
@@ -438,8 +821,8 @@ export default function MarketingPage() {
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
               {lang === 'am'
-                ? 'በዋና ዋና ዲጂታል መድረኮች ላይ ከ7 ሚሊዮን በላይ ንቁ ተከታዮችን ያቀፈ ግዙፍ ማህበረሰብ'
-                : 'Over 7 Million active cross-platform followers commanding unmatched attention in Ethiopia and the Global Diaspora'}
+                ? 'በዋና ዋና ዲጂታል መድረኮች ላይ ከ8 ሚሊዮን በላይ ንቁ ተከታዮችን ያቀፈ ግዙፍ ማህበረሰብ'
+                : 'Over 8 Million active cross-platform followers commanding unmatched attention in Ethiopia and the Global Diaspora'}
             </p>
           </div>
 
@@ -455,7 +838,7 @@ export default function MarketingPage() {
                   YouTube
                 </span>
               </div>
-              <div className="text-4xl font-black text-slate-900 dark:text-white">3.27M+</div>
+              <div className="text-4xl font-black text-slate-900 dark:text-white">3.3M+</div>
               <div className="text-sm font-semibold text-red-600 dark:text-red-400 mt-1">
                 {lang === 'am' ? 'ሰብስክራይበርስ (Subscribers)' : 'Subscribers'}
               </div>
@@ -466,7 +849,7 @@ export default function MarketingPage() {
                 </div>
                 <div className="flex justify-between">
                   <span>{lang === 'am' ? 'አጠቃላይ እይታዎች:' : 'Lifetime Views:'}</span>
-                  <span className="font-bold text-slate-900 dark:text-white">500M+ Views</span>
+                  <span className="font-bold text-slate-900 dark:text-white">677M+ Views</span>
                 </div>
                 <div className="flex justify-between">
                   <span>{lang === 'am' ? 'የአንድ ቪዲዮ ከፍተኛ እይታ:' : 'Peak Single Video:'}</span>
@@ -485,7 +868,7 @@ export default function MarketingPage() {
                   TikTok
                 </span>
               </div>
-              <div className="text-4xl font-black text-slate-900 dark:text-white">2.8M+</div>
+              <div className="text-4xl font-black text-slate-900 dark:text-white">2.9M+</div>
               <div className="text-sm font-semibold text-pink-600 dark:text-pink-400 mt-1">
                 {lang === 'am' ? 'ተከታዮች (Followers)' : 'Followers'}
               </div>
@@ -845,25 +1228,96 @@ export default function MarketingPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800/80">
                 <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700/80">
-                  <div className="text-xl font-extrabold text-emerald-400">850+ Patients</div>
+                  <div className="text-xl font-extrabold text-emerald-400">400+ Mothers</div>
                   <div className="text-xs text-slate-300 mt-1">
-                    {lang === 'am' ? 'ወሳኝ የቀዶ ጥገና ድጋፍ' : 'Critical Surgeries Funded'}
+                    {lang === 'am' ? 'ሳምንታዊ የቤት ለቤት ድጋፍ' : 'Weekly Medical & Living Aid'}
                   </div>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700/80">
-                  <div className="text-xl font-extrabold text-emerald-400">12,000+ Students</div>
+                  <div className="text-xl font-extrabold text-emerald-400">1,000 Families</div>
                   <div className="text-xs text-slate-300 mt-1">
-                    {lang === 'am' ? 'የትምህርት ቁሳቁስና ክፍያ' : 'School Supplies & Grants'}
+                    {lang === 'am' ? 'የቀይ መስቀል ቀጥታ አካውንት' : 'Red Cross Direct Accounts'}
                   </div>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700/80">
-                  <div className="text-xl font-extrabold text-emerald-400">100% Transparent</div>
+                  <div className="text-xl font-extrabold text-emerald-400">100% Audited</div>
                   <div className="text-xs text-slate-300 mt-1">
-                    {lang === 'am' ? 'ፍፁም ታማኝነትና ቁጥጥር' : 'Direct Accountability'}
+                    {lang === 'am' ? 'ህጋዊ የባንክ ስቴትመንት' : 'Verified Bank Statements'}
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* 6 Key Verified CSR Campaigns Grid */}
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              {
+                titleAm: 'ለ400+ ታማሚ ልጆች እናቶች ሳምንታዊ ቀጥታ ድጋፍ',
+                titleEn: 'Weekly Aid to 400+ Mothers of Sick Children',
+                descAm: 'በየሳምንቱ ታማሚ ልጆች ወዳሏቸው እናቶች ቤት በአካል በመሄድ፣ ከ400 በላይ ለሚሆኑ እናቶች ቀጣይነት ያለው የገንዘብና የህክምና ድጋፍ ማድረስ።',
+                descEn: 'Regular in-person home visits delivering essential direct financial and hospital medical funding to 400+ mothers.',
+                tag: 'Healthcare & Family',
+                color: 'text-rose-500 border-rose-500/20 bg-rose-500/10',
+              },
+              {
+                titleAm: 'የቦረና ረሃብ አፋጣኝ ምላሽ (በአንድ ምሽት 8M+ ብር)',
+                titleEn: 'Borena Emergency Drought & Famine Relief',
+                descAm: 'በቦረና ለተከሰተው ከባድ ረሃብ በአንድ ምሽት ብቻ ከ8 ሚሊዮን ብር በላይ በማሰባሰብ አስቸኳይ የምግብ እህል ለተጎዱ ወገኖች እንዲደርስ ተደርጓል።',
+                descEn: 'Rapid mobilization campaign raising over 8 Million ETB in a single evening to deliver emergency food grain.',
+                tag: 'Emergency Relief',
+                color: 'text-amber-500 border-amber-500/20 bg-amber-500/10',
+              },
+              {
+                titleAm: 'ለሰሜን ጦርነት ተጎጂ 1,000 አባወራዎች ቀጥታ ድጋፍ',
+                titleEn: '1,000 War-Affected Households Direct Relief',
+                descAm: 'በሰሜኑ ጦርነት ረሃብና መፈናቀል ለገጠማቸው፣ በተለይም ነፍሰጡርና አጥቢ እናቶች ከኢትዮጵያ ቀይ መስቀል ጋር በመተባበር የባንክ አካውንት በማስከፈት ገንዘብ በቀጥታ ገቢ ተደርጓል።',
+                descEn: 'Partnered with Ethiopian Red Cross to open direct bank accounts for 1,000 displaced families, nursing mothers, and wounded.',
+                tag: 'Conflict Support',
+                color: 'text-blue-500 border-blue-500/20 bg-blue-500/10',
+              },
+              {
+                titleAm: 'የ"ይድናል" የወጣቶች ማገገሚያ ፕሮግራም',
+                titleEn: '“Yidnal” Youth Street Recovery & Rehabilitation',
+                descAm: 'ወጣቶችን ከሱስና ከመንገድ ህይወት ለማዳን ግንዛቤ ከመፍጠር ባለፈ፣ በሱስ ተጎድተው የወደቁትን ወደ ማገገሚያ (Rehab) ማዕከላት በማስገባት ህይወታቸውን መለወጥ።',
+                descEn: 'Directly rescuing street youth battling severe addiction, sponsoring full clinical rehab enrollment to rebuild productive lives.',
+                tag: 'Youth Rehab',
+                color: 'text-emerald-500 border-emerald-500/20 bg-emerald-500/10',
+              },
+              {
+                titleAm: 'የጥንታዊ ገዳማትና ቅርሶች ህልውና መጠበቅ',
+                titleEn: 'Monastery & Historic Heritage Restoration',
+                descAm: 'ደብረ ሊባኖስ፣ ጥቁሯ ማርያም፣ ተድባማርያም፣ ዋልድባ እንዲሁም በውጭ ሀገራት (ጀርመን፣ እንግሊዝ፣ ኳታር፣ አሜሪካ) ላሉ አድባራት ከፍተኛ ገንዘብ ማሰባሰብና ዶክመንተሪ ሰርቷል።',
+                descEn: 'Preserving ancient spiritual heritage (Debre Libanos, Waldba, Tedba Maryam) and global diaspora holy sanctuaries through documentary appeals.',
+                tag: 'Heritage & Faith',
+                color: 'text-purple-500 border-purple-500/20 bg-purple-500/10',
+              },
+              {
+                titleAm: 'የእምነት ልዩነት የሌለው ሁለንተናዊ በጎነትና ልማት',
+                titleEn: 'Interfaith Benevolence & Potable Water Projects',
+                descAm: 'የነኢማ ሙዘይን፣ ኡስታዝ አቡበከር እና የዳሩ ሰላም መስጊድ ድጋፍ፤ እንዲሁም በመሰረተ ልማት ለሚቸገሩ የገጠር ማህበረሰቦች የመንገድና የንጹህ መጠጥ ውሃ ፕሮጀክቶች ተሰርተዋል።',
+                descEn: 'Borderless compassion supporting Islamic community appeals (Darul Salam Mosque, Ustaz Abubeker) alongside clean water well drilling and rural roads.',
+                tag: 'Interfaith & Water',
+                color: 'text-teal-500 border-teal-500/20 bg-teal-500/10',
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40 transition-all flex flex-col justify-between space-y-3 shadow-xs"
+              >
+                <div className="space-y-2">
+                  <span className={`px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider inline-block ${item.color}`}>
+                    {item.tag}
+                  </span>
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white leading-snug">
+                    {lang === 'am' ? item.titleAm : item.titleEn}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300/90 leading-relaxed">
+                    {lang === 'am' ? item.descAm : item.descEn}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
